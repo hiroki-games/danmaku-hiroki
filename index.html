@@ -198,7 +198,7 @@ canvas{position:absolute;left:0;top:0;width:720px;height:1280px}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.1.8</div>
+ <div id="tver">Ver.1.9</div>
 </div>
 
 <div id="hud">
@@ -276,7 +276,7 @@ canvas{position:absolute;left:0;top:0;width:720px;height:1280px}
 <div id="settings" class="screen" style="background:linear-gradient(#1a0b28,#07030c)">
  <div class="hdr"><h2 class="gold">設定</h2><div class="back" id="sBack">もどる</div></div>
  <div class="panel">
-  <div class="row"><div>かんたんモード<div style="font-size:20px;color:#aaa;font-weight:700">残機+2・弾が少なめ・遅め</div></div><div class="tg" id="sEasy"></div></div>
+  <div class="row" id="rowEasy"><div>かんたんモード<div style="font-size:20px;color:#aaa;font-weight:700">残機+2・弾が少なめ・遅め</div></div><div class="tg" id="sEasy"></div></div>
   <div class="row"><div>ボムボタンの位置<div style="font-size:20px;color:#aaa;font-weight:700">左上なら、右手で操作しながら左手で押せる</div></div><button class="gbtn small" id="sBombPos" style="width:150px;margin:0"></button></div>
   <div class="row"><div>BGM・効果音</div><div class="tg" id="sSnd"></div></div>
   <div class="row"><div>ベストスコア</div><div id="sBest" style="color:#ffd34d"></div></div>
@@ -362,9 +362,10 @@ function src(n){return 'assets/'+n+(/^[zk]_/.test(n)?'.jpg':'.webp');}
 /* ---------- audio ---------- */
 const AU={c:null,m:null,bg:null,fx:null,nz:null,song:null,name:null,step:0,t:0};
 function auInit(){
- if(AU.c){if(AU.c.state==='suspended')AU.c.resume();return;}
+ if(AU.c&&AU.c.state==='closed')AU.c=null;
+ if(AU.c){if(AU.c.state!=='running'){try{AU.c.resume();}catch(e){}}return;}
  try{const C=window.AudioContext||window.webkitAudioContext;AU.c=new C();
-  AU.m=AU.c.createGain();AU.m.gain.value=1;AU.m.connect(AU.c.destination);
+  AU.m=AU.c.createGain();AU.m.gain.value=1.5;AU.m.connect(AU.c.destination);
   AU.bg=AU.c.createGain();AU.bg.gain.value=.3;AU.bg.connect(AU.m);
   AU.fx=AU.c.createGain();AU.fx.gain.value=.5;AU.fx.connect(AU.m);
   const b=AU.c.createBuffer(1,AU.c.sampleRate*.6|0,AU.c.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;AU.nz=b;
@@ -407,6 +408,9 @@ function mkBoss(){const C=[[74,77,81,86],[70,74,77,82],[72,76,79,84],[69,73,76,8
  return{bpm:168,len:64,L,B,D,lt:'square'};}
 function mkTitle(){const s=mkStage();return{bpm:104,len:64,L:s.L,B:s.B,D:s.D.map(x=>x=='k'?'k':''),lt:'triangle'};}
 const SONGS={stage:mkStage(),boss:mkBoss(),title:mkTitle()};
+function auWake(){if(AU.c&&AU.c.state!=='running')auInit();}
+['pointerdown','touchend','keydown'].forEach(ev=>document.addEventListener(ev,auWake,true));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)auWake();});
 function bgm(n){AU.name=n;AU.song=n?SONGS[n]:null;AU.step=0;if(AU.c)AU.t=AU.c.currentTime+.06;}
 setInterval(()=>{
  if(!AU.c||!AU.song||!SV.sound)return;const s=AU.song,sd=60/s.bpm/4,now=AU.c.currentTime;
@@ -2237,10 +2241,10 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));if(id)$('#'+id).classList.add('on');}
 function toTitle(){if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode==='title')guide('title');},400);}
 function startGame(){auInit();sfx('ok');BG=BGS[STAGES[curSt].ch]||BGS[1];resetGame();mode='game';show(null);$('#hud').classList.add('on');updBombBtn();if(useMsg)setTimeout(()=>toast(useMsg),300);}
-function pauseGame(on){if(mode!=='game'||over)return;paused=on;if(on){$('#pFace').src=src('hk_calm');show('pause');AU.saved=AU.name;bgm(null);}else{show(null);bgm(AU.saved||null);}}
+function pauseGame(on){if(mode!=='game'||over)return;paused=on;if(on){$('#pFace').src=src('hk_calm');show('pause');if(AU.name)AU.saved=AU.name;bgm(null);}else{show(null);bgm(AU.saved||null);AU.saved=null;}}
 function showResult(win){
  if(mode!=='game')return;over=true;CUT=null;if(DEMO){bgm(null);sfx(win?'clear':'over');demoEnd(win);return;}bgm(null);sfx(win?'clear':'over');
- runCoins=Math.round(runCoins);SV.coins+=runCoins;if(score>SV.best)SV.best=score;if(maxCombo>SV.bestCombo)SV.bestCombo=maxCombo;if(win){SV.clears++;SV.prog=Math.max(SV.prog||0,curSt+1);}save();
+ runCoins=Math.round(runCoins);SV.coins+=runCoins;if(score>SV.best)SV.best=score;if(maxCombo>SV.bestCombo)SV.bestCombo=maxCombo;if(win){SV.clears++;SV.prog=Math.max(SV.prog||0,curSt+1);}if(!win){if(SV.loseSt===curSt)SV.loseN=(SV.loseN||0)+1;else{SV.loseSt=curSt;SV.loseN=1;}if(SV.loseN>=5)SV.easyOpen=1;}else if(SV.loseSt===curSt)SV.loseN=0;save();
  $('#rTitle').textContent=win?(STAGES[curSt].ura?'TRUE END':STAGES[curSt].end?'THE END':(STAGES[curSt].rush?'ALL CLEAR':'STAGE CLEAR')):'GAME OVER';$('#rTitle').style.filter=win?'':'hue-rotate(-40deg) saturate(2)';
  $('#rFace').src=src(win?((SV.skin||'mei')!=='mei'?skinImg():'mei_happy'):'hk_rage');$('#rFace').style.borderColor=win?'#8fd0ff':'#e6b84a';
  $('#rLine').textContent=win?STAGES[curSt].win:'「'+pick(L_OVER)+'」';
@@ -2395,7 +2399,7 @@ function openDet(z){sfx('ok');zCur=z;zView(true);$('#zdName').textContent=z.name
 $('#zvR').onclick=()=>{if(REAL.includes(zCur.id)){sfx('ok');zView(true);}};$('#zvC').onclick=()=>{sfx('ok');zView(false);};
 $('#zdBack').onclick=()=>$('#zDet').classList.remove('on');
 // settings
-function openSet(){$('#sBombPos').textContent=SV.bombPos==='R'?'右下':'左上';const cs=CLOUD.st;const NA=typeof window.claude==='undefined';$('#sCloud').textContent=NA?'📱 この端末':cs==='on'?'✅ オン':cs==='ro'?'⚠️ 保存できない':'— オフ';$('#sCloud').style.color=cs==='on'?'#7dff9a':'#ffb07a';$('#sCloudN').textContent=NA?'ブラウザに自動保存。機種変更はセーブコードで引き継いでね':cs==='on'?'更新しても、別の端末でも続きから遊べます':cs==='ro'?'共有の権限が「閲覧」だと保存できません':'この画面ではクラウドに保存できません';$('#sEasy').classList.toggle('on',SV.easy);$('#sSnd').classList.toggle('on',SV.sound);$('#sBest').textContent=fmt(SV.best);$('#sReset').textContent='データを消去';show('settings');}
+function openSet(){$('#rowEasy').style.display=(SV.easyOpen||SV.easy)?'':'none';$('#sBombPos').textContent=SV.bombPos==='R'?'右下':'左上';const cs=CLOUD.st;const NA=typeof window.claude==='undefined';$('#sCloud').textContent=NA?'📱 この端末':cs==='on'?'✅ オン':cs==='ro'?'⚠️ 保存できない':'— オフ';$('#sCloud').style.color=cs==='on'?'#7dff9a':'#ffb07a';$('#sCloudN').textContent=NA?'ブラウザに自動保存。機種変更はセーブコードで引き継いでね':cs==='on'?'更新しても、別の端末でも続きから遊べます':cs==='ro'?'共有の権限が「閲覧」だと保存できません':'この画面ではクラウドに保存できません';$('#sEasy').classList.toggle('on',SV.easy);$('#sSnd').classList.toggle('on',SV.sound);$('#sBest').textContent=fmt(SV.best);$('#sReset').textContent='データを消去';show('settings');}
 $('#sBombPos').onclick=()=>{SV.bombPos=SV.bombPos==='R'?'L':'R';save();openSet();sfx('ok');};
 $('#sEasy').onclick=()=>{SV.easy=!SV.easy;save();openSet();sfx('ok');};
 $('#sSnd').onclick=()=>{SV.sound=!SV.sound;save();openSet();if(SV.sound){auInit();sfx('ok');}};
