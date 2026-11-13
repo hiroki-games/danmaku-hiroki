@@ -202,7 +202,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.0</div>
+ <div id="tver">Ver.3.1</div>
 </div>
 
 <div id="hud">
@@ -2503,12 +2503,12 @@ $('#sCheatB').onclick=()=>{const c=$('#sCheat').value.trim();$('#sCheat').value=
   if(!b){codePop('🔧 開発者モード',['戻せるデータがありません','（裏コードを使う前の状態だけ戻せます）'],1);return;}
   const o=JSON.parse(b);codePop('🔧 裏コードを使う前に戻す',['最初に裏コードを使う直前のデータに戻します',`戻したあと：コイン ${fmt(o.coins||0)} G ／ クリア ${o.prog||0}ステージ`,'⚠ 裏コードを使ったあとに遊んだ分も消えます'],0,()=>{SV=o;fixSV();save();try{localStorage.removeItem(BAK);}catch(e){}openSet();codePop('🔧 もとに戻しました',['裏コードを使う前のデータに戻りました']);},'もとに戻す');return;}
  if(c==='9999'){codePop('🔧 データを全部消す',['セーブデータを全部消して、最初からにします','⚠ コイン・アイテム・図鑑・クリア状況がすべて消えます','（消す前に「セーブコードをコピー」しておくと安心）'],0,()=>setTimeout(()=>codePop('⚠ 本当に消しますか？',['もう一度確認します','消したデータは元に戻せません'],1,()=>{try{localStorage.removeItem(SKEY);localStorage.removeItem(BAK);}catch(e){}SV={coins:300,zukan:{},easy:false,sound:true,best:0,bestCombo:0,clears:0,inv:{w_club:1,b_fire:1},eq:{w:'w_club',b:'b_fire',x1:null,x2:null},pity:0,skins:{mei:1},skin:'mei'};fixSV();save();location.reload();},'本当に消す'),50),'全部消す');return;}
- if(c==='0218'){SV.allOpen=1;const had=SV.skins.cam||0;if(!had)SV.skins.cam=1;save();rukaFX(()=>codePop(ttl,['✅ 全ステージを解放しました',had?'✅ 見守りカメラのめっち（もう仲間になっています）':'✅ 新キャラ「見守りカメラのめっち」（幻）が仲間になりました','👉 装備画面の「キャラ」から選べます']),{face:IMG.mei_cam,emo:['🍠','🍠','🍠','🍠','🌟'],rar:'幻',cols:['#ffffff','#ffd0f0','#ff8af0'],fr:165,name:'見守りカメラのめっち',sub:'全エリアも解放したよ！ おいもパーティーだ！'});}
+ if(c==='0218'){const had=SV.skins.cam||0;if(!had)SV.skins.cam=1;save();rukaFX(()=>codePop(ttl,[had?'✅ 見守りカメラのめっち（もう仲間になっています）':'✅ 新キャラ「見守りカメラのめっち」（幻）が仲間になりました','👉 装備画面の「キャラ」から選べます']),{face:IMG.mei_cam,emo:['🍠','🍠','🍠','🍠','🌟'],rar:'幻',cols:['#ffffff','#ffd0f0','#ff8af0'],fr:165,name:'見守りカメラのめっち',sub:'おいもパーティーだ！'});}
  else if(c==='0729'){const had=SV.skins.ruka||0;if(!had)SV.skins.ruka=1;save();rukaFX(()=>codePop(ttl,[had?'✅ 動物マスター ルカ（もう仲間になっています）':'✅ 新キャラ「動物マスター ルカ」（極）が仲間になりました','🥟 通常攻撃は餃子レーザー','🐾 ボムはサンちゃん＆ふっちゃん大突撃','👉 装備画面の「キャラ」から選べます']));}
  else if(c==='1001'){SV.inv.w_fang=Math.max(SV.inv.w_fang||0,6);SV.eq.w='w_fang';const had=SV.skins.fairy||0;if(!had)SV.skins.fairy=1;save();rukaFX(()=>codePop(ttl,['✅ 黄金のダンベル（20kg）+5 を手に入れて、武器に装備しました',had?'✅ 妖精ヒロキ（もう仲間になっています）':'✅ 妖精ヒロキが仲間になりました（全キャラ最弱のネタキャラ）','👉 装備画面の「キャラ」から選べます']),{face:IMG.fy_face,fig:IMG.c_fairy,emo:['💩','💩','💩','💩','🪰'],rar:'N',cols:['#ffffff','#d8c0a0','#8a6a40'],name:'妖精ヒロキ',sub:'能力は全キャラ最低です'});}
- else if(c==='1996'){SV.allOpen=1;let ni=0,ns=0,nz=0;for(const it of [...ITEMS,...MEI_ITEMS]){if(it.s==='u')continue;if(!SV.inv[it.id]){SV.inv[it.id]=1;ni++;}}for(const k of SKINS){if(k.code||k.r>=6)continue;if(!SV.skins[k.id]){SV.skins[k.id]=1;ns++;}}for(const z of ZK){if(!SV.zukan[z.id]){SV.zukan[z.id]=1;nz++;}}save();
+ else if(c==='1996'){SV.allOpen=1;let ni=0,ns=0,nz=0;for(const it of [...ITEMS,...MEI_ITEMS]){if(it.s==='u')continue;if(!SV.inv[it.id]){SV.inv[it.id]=1;ni++;}}for(const k of SKINS){if(!SV.skins[k.id]){SV.skins[k.id]=1;ns++;}}for(const z of ZK){if(!SV.zukan[z.id]){SV.zukan[z.id]=1;nz++;}}save();
   const ics=[...ITEMS,...MEI_ITEMS].map(x=>x.ic).filter(x=>x&&x.length<=4);
-  rukaFX(()=>codePop(ttl,['✅ 全ステージを解放しました',`✅ アイテム ${ni}種を新しく入手（すべて+0）`,`✅ めっち ${ns}人が新しく仲間に`,`✅ 図鑑を ${nz}件登録（全${ZK.length}件コンプリート）`,'※ ルカと妖精ヒロキは、それぞれの裏コードで手に入るよ']),{face:IMG.zf_bahamut,emo:ics,rar:'全解放',cols:['#ffffff','#fff3b0','#ffb020'],fr:170,name:'コンプリート！',sub:'全ステージ・全アイテム・全図鑑が解放されたよ'});}
+  rukaFX(()=>codePop(ttl,['✅ 全ステージを解放しました',`✅ アイテム ${ni}種を新しく入手（すべて+0）`,`✅ キャラ ${ns}人が新しく仲間に`,`✅ 図鑑を ${nz}件登録（全${ZK.length}件コンプリート）`,'🐾 ルカと妖精ヒロキも仲間になったよ']),{face:IMG.zf_bahamut,emo:ics,rar:'全解放',cols:['#ffffff','#fff3b0','#ffb020'],fr:170,name:'コンプリート！',sub:'全ステージ・全アイテム・全図鑑が解放されたよ'});}
  else codePop('……何も起きなかった',['このコードには、何の効果もないみたい','ヤドカリめいちゃんが、ヒントを知ってるかも？'],1);};
 
 let CPCB=null;
