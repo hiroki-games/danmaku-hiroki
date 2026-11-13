@@ -202,7 +202,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.2.9</div>
+ <div id="tver">Ver.3.0</div>
 </div>
 
 <div id="hud">
@@ -336,7 +336,7 @@ let DEMO=null;
 function save(){if(DEMO)return;SV.ts=Date.now();try{localStorage.setItem(SKEY,JSON.stringify(SV));}catch(e){}cloudQueue();}
 /* ---------- cloud save (artifact db) ---------- */
 const CLOUD={ref:null,st:'off',busy:false,pend:false,tm:null};
-function fixSV(){if(SV.eq&&('x1' in SV.eq)&&typeof ITM!=='undefined'){for(const k of['x1','x2']){const it=ITM[SV.eq[k]];if(it&&it.s==='o'){if(!SV.eq.o)SV.eq.o=it.id;SV.eq[k]=null;}}}if(SV.eq&&!('x1' in SV.eq)){const old=[SV.eq.a,SV.eq.c,SV.eq.o].filter(Boolean);SV.eq.x1=old[0]||null;SV.eq.x2=old[1]||null;delete SV.eq.a;delete SV.eq.c;delete SV.eq.o;delete SV.eq.u;}if(SV.inv&&typeof ITM!=='undefined'){let g=0;for(const k in SV.inv){const it=ITM[k];if(it&&it.s==='u'){g+=SV.inv[k]*20;delete SV.inv[k];}}if(g){SV.coins=(SV.coins||0)+g;SV.uConv=g;}}if(!SV.skins)SV.skins={mei:1};SV.skins.mei=1;if(!SV.skin||!(typeof SKM==='undefined'||SKM[SV.skin]))SV.skin='mei';if(typeof ITM!=='undefined'){for(const k in SV.inv)if(!ITM[k])delete SV.inv[k];if(SV.eq)for(const k in SV.eq)if(SV.eq[k]&&!ITM[SV.eq[k]])SV.eq[k]=null;}if(!SV.inv||!SV.inv.w_club)SV.inv=Object.assign({w_club:1},SV.inv||{});if(!SV.inv.b_fire)SV.inv.b_fire=1;if(!SV.eq)SV.eq={w:'w_club',b:'b_fire',a:null,c:null,u:null};if(!SV.eq.b)SV.eq.b='b_fire';if(!SV.zukan)SV.zukan={};}
+function fixSV(){if(!SV.mig27){SV.mig27=1;if((SV.prog||0)>0&&!SV.allOpen){SV.reLock=1;SV.reCh=0;SV.reNote=1;}}if(SV.eq&&('x1' in SV.eq)&&typeof ITM!=='undefined'){for(const k of['x1','x2']){const it=ITM[SV.eq[k]];if(it&&it.s==='o'){if(!SV.eq.o)SV.eq.o=it.id;SV.eq[k]=null;}}}if(SV.eq&&!('x1' in SV.eq)){const old=[SV.eq.a,SV.eq.c,SV.eq.o].filter(Boolean);SV.eq.x1=old[0]||null;SV.eq.x2=old[1]||null;delete SV.eq.a;delete SV.eq.c;delete SV.eq.o;delete SV.eq.u;}if(SV.inv&&typeof ITM!=='undefined'){let g=0;for(const k in SV.inv){const it=ITM[k];if(it&&it.s==='u'){g+=SV.inv[k]*20;delete SV.inv[k];}}if(g){SV.coins=(SV.coins||0)+g;SV.uConv=g;}}if(!SV.skins)SV.skins={mei:1};SV.skins.mei=1;if(!SV.skin||!(typeof SKM==='undefined'||SKM[SV.skin]))SV.skin='mei';if(typeof ITM!=='undefined'){for(const k in SV.inv)if(!ITM[k])delete SV.inv[k];if(SV.eq)for(const k in SV.eq)if(SV.eq[k]&&!ITM[SV.eq[k]])SV.eq[k]=null;}if(!SV.inv||!SV.inv.w_club)SV.inv=Object.assign({w_club:1},SV.inv||{});if(!SV.inv.b_fire)SV.inv.b_fire=1;if(!SV.eq)SV.eq={w:'w_club',b:'b_fire',a:null,c:null,u:null};if(!SV.eq.b)SV.eq.b='b_fire';if(!SV.zukan)SV.zukan={};}
 function cloudQueue(){if(!CLOUD.ref||CLOUD.st==='ro')return;clearTimeout(CLOUD.tm);CLOUD.tm=setTimeout(cloudPush,1500);}
 async function cloudPush(){if(!CLOUD.ref||CLOUD.st==='ro')return;if(CLOUD.busy){CLOUD.pend=true;return;}CLOUD.busy=true;
  try{await CLOUD.ref.set({sv:JSON.stringify(SV),ts:SV.ts||Date.now()});CLOUD.st='on';}
@@ -2330,23 +2330,24 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/
 
 /* ---------- screens ---------- */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));if(id)$('#'+id).classList.add('on');}
-function toTitle(){if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode==='title')guide('title');},400);}
+function toTitle(){if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode!=='title')return;if(SV.reNote){SV.reNote=0;save();codePop('📢 アップデートのお知らせ',['ボスの攻撃や弾幕が、新しくパワーアップしました！','そのため、各章のボス（X-3）をもう一度倒すと、次の章に進めるようになっています','⚔ 1章のボスから、順番に倒し直してね','✅ アイテム・コイン・図鑑・キャラはそのままです']);return;}guide('title');},400);}
 function startGame(){auInit();sfx('ok');BG=BGS[STAGES[curSt].ch]||BGS[1];resetGame();mode='game';show(null);$('#hud').classList.add('on');updBombBtn();if(useMsg)setTimeout(()=>toast(useMsg),300);}
 function pauseGame(on){if(mode!=='game'||over)return;paused=on;if(on){$('#pFace').src=src(hFace(boss&&boss.name));show('pause');if(AU.name)AU.saved=AU.name;bgm(null);}else{show(null);bgm(AU.saved||null);AU.saved=null;}}
 function showResult(win){
  if(mode!=='game')return;over=true;CUT=null;if(DEMO){bgm(null);sfx(win?'clear':'over');demoEnd(win);return;}bgm(null);sfx(win?'clear':'over');
- runCoins=Math.round(runCoins);SV.coins+=runCoins;if(score>SV.best)SV.best=score;if(maxCombo>SV.bestCombo)SV.bestCombo=maxCombo;if(win){SV.clears++;SV.prog=Math.max(SV.prog||0,curSt+1);}if(!win){if(SV.loseSt===curSt)SV.loseN=(SV.loseN||0)+1;else{SV.loseSt=curSt;SV.loseN=1;}if(SV.loseN>=5)SV.easyOpen=1;}else if(SV.loseSt===curSt)SV.loseN=0;save();
+ runCoins=Math.round(runCoins);SV.coins+=runCoins;if(score>SV.best)SV.best=score;if(maxCombo>SV.bestCombo)SV.bestCombo=maxCombo;if(win){SV.clears++;SV.prog=Math.max(SV.prog||0,curSt+1);const cs=STAGES[curSt];if(SV.reLock&&/-3$/.test(cs.id)){SV.reCh=Math.max(SV.reCh||0,cs.ch);if(SV.reCh>=8)SV.reLock=0;}}if(!win){if(SV.loseSt===curSt)SV.loseN=(SV.loseN||0)+1;else{SV.loseSt=curSt;SV.loseN=1;}if(SV.loseN>=5)SV.easyOpen=1;}else if(SV.loseSt===curSt)SV.loseN=0;save();
  $('#rTitle').textContent=win?(STAGES[curSt].ura?'TRUE END':STAGES[curSt].end?'THE END':(STAGES[curSt].rush?'ALL CLEAR':'STAGE CLEAR')):'GAME OVER';$('#rTitle').style.filter=win?'':'hue-rotate(-40deg) saturate(2)';
  $('#rFace').src=src(win?((SV.skin||'mei')!=='mei'?skinImg():'mei_happy'):hFace(boss&&boss.name));$('#rFace').style.borderColor=win?'#8fd0ff':'#e6b84a';
  $('#rLine').textContent=win?STAGES[curSt].win:'「'+pick(L_OVER)+'」';
  $('#rStats').innerHTML=`<div><span>スコア</span><b>${fmt(score)}</b></div><div><span>最大コンボ</span><b>${fmt(maxCombo)}</b></div><div><span>ボスへの総ダメージ</span><b>${fmt(totalDmg)}</b></div><div><span>撃破数</span><b>${kills}</b></div><div><span>獲得コイン</span><b>${fmt(runCoins)} G</b></div>`+(newReg.length?`<div><span>図鑑に新規登録</span><b>${newReg.length}体</b></div>`:'')+(STAGES[curSt].rush?`<div><span>連戦で倒したボス</span><b>${rushN} / ${RUSH.length+1}</b></div><div><span>最高記録</span><b>${SV.rushBest||0}</b></div>`:'')+(win&&STAGES[curSt].end?'<div style="justify-content:center;color:#ff8af0;font-size:26px">クリアおめでとう！ ボス連戦モード解放！</div>':'')+(win&&STAGES[curSt].ura?'<div style="justify-content:center;color:#ffb040;font-size:26px">裏ラスボス撃破！ 本当のエンディング！</div>':'')+(win&&STAGES[curSt].rush&&SV.rushClear?'<div style="justify-content:center;color:#ff8af0;font-size:24px">完全制覇！ 遊んでくれてありがとう！</div>':'');
- const nx=win&&STAGES[curSt+1]&&!STAGES[curSt+1].demo;$('#rNext').style.display=nx?'block':'none';
+ const nx=win&&STAGES[curSt+1]&&!STAGES[curSt+1].demo&&!reLocked(curSt+1);$('#rNext').style.display=nx?'block':'none';
  setTimeout(()=>{show('result');$('#toast').classList.remove('on');$('#hud').classList.remove('on');if(win&&STAGES[curSt].end&&!SV.uraSeen)setTimeout(()=>gogoFX(),900);},win?600:200);
 }
+function reLocked(i){const st=STAGES[i];if(!st||!SV.reLock||SV.allOpen)return false;if(st.ura||st.rush)return (SV.reCh||0)<8;return st.ch>(SV.reCh||0)+1;}
 function openStSel(){const L=$('#ssList');L.innerHTML='';let lastCh=0;const prog=SV.prog||0;
  STAGES.forEach((st,i)=>{if(st.demo)return;if(st.ch!==lastCh){lastCh=st.ch;L.insertAdjacentHTML('beforeend',`<div class="ssch">${st.ch>8?'EXTRA':'第'+st.ch+'章'}　${CHN[st.ch]}</div>`);}
   const i83=STAGES.findIndex(q=>q.end);if(st.ura&&!SV.allOpen&&prog<=i83)return;
-  const lock=!SV.allOpen&&i>prog&&!(st.rush&&prog>i83);const d=document.createElement('div');d.className='ssb'+(lock?' lock':'')+(st.ura?' ura':'');d.innerHTML=`<span>${st.id}　${st.name}</span><span class="ck">${i<prog?'✓ クリア':(lock?'🔒':'▶')}</span>`;
+  const lock=(!SV.allOpen&&i>prog&&!(st.rush&&prog>i83))||reLocked(i);const d=document.createElement('div');d.className='ssb'+(lock?' lock':'')+(st.ura?' ura':'');d.innerHTML=`<span>${st.id}　${st.name}</span><span class="ck">${i<prog?'✓ クリア':(lock?'🔒':'▶')}</span>`;
   if(!lock)d.onclick=()=>{curSt=i;startGame();};L.appendChild(d);});
  for(let c=9;c<=8;c++)L.insertAdjacentHTML('beforeend',`<div class="ssch" style="opacity:.35">第${c}章　${CHN[c]}　🔒 近日公開</div>`);
  show('stsel');guide('stage');}
