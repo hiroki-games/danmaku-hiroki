@@ -105,7 +105,9 @@ canvas{position:absolute;left:0;top:0;width:720px;height:1280px}
 .gsec{width:660px;margin:6px 0 14px;padding:14px 10px 18px;border-radius:24px;background:rgba(0,0,0,.25)}
 .gsec #gBanner,.gsec #mBanner{width:640px;height:200px;margin:0 auto}
 #mBanner{border-radius:22px;border:3px solid #ff8af0;position:relative;overflow:hidden;background:url(assets/mei_banner.webp) 50% 30%/cover;box-shadow:0 0 30px rgba(255,138,240,.5)}#mBanner::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(40,0,30,.9),rgba(40,0,30,.1))}#mBanner .gbt{color:#ffb8f0;top:30px;font-size:44px}
-.gsec .gbt{top:30px;font-size:44px}.gRates{margin:10px 0 4px;font-size:19px;color:#ccc;text-align:center;line-height:1.6}.gRates b{color:#ffd34d}
+.gsec .gbt{top:30px;font-size:44px}#mDemo{display:block;width:600px;margin:16px auto 0;font-size:30px;border:4px solid transparent;background:linear-gradient(#3a1660,#170626) padding-box,conic-gradient(#ff8af0,#ffd34d,#7dffb0,#8fd0ff,#c070ff,#ff8af0) border-box;box-shadow:0 0 22px rgba(255,138,240,.55)}
+#mDemo span{font-size:20px;color:#ffd0f0}
+.gRates{margin:10px 0 4px;font-size:19px;color:#ccc;text-align:center;line-height:1.6}.gRates b{color:#ffd34d}
 .gbtns{display:flex;gap:18px;justify-content:center;margin-top:10px}.gbtns .gbtn{width:290px;margin:0;padding:14px 0;font-size:30px}.gbtns .gbtn span{font-size:22px}
 #gTabs{display:flex;gap:12px;margin:0 0 12px}#gTabs div{padding:12px 26px;border-radius:26px;border:2px solid #e6b84a;font-size:24px;font-weight:900;color:#e6b84a;background:rgba(0,0,0,.4)}#gTabs div.on{background:linear-gradient(#ffd34d,#d98a00);color:#2a1000}
 #gBanner.mei{background-image:url(assets/mei_banner.webp);background-position:50% 30%;border-color:#ff8af0;box-shadow:0 0 30px rgba(255,138,240,.5)}#gBanner.mei .gbt{color:#ffb8f0}
@@ -196,7 +198,7 @@ canvas{position:absolute;left:0;top:0;width:720px;height:1280px}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.1.7</div>
+ <div id="tver">Ver.1.8</div>
 </div>
 
 <div id="hud">
@@ -250,6 +252,7 @@ canvas{position:absolute;left:0;top:0;width:720px;height:1280px}
   <div id="mBanner" class="mei"><div class="gbt">めっちガチャ<br><span style="font-size:26px">キャラが出るかも！</span></div><div class="gbs" id="mBS"></div></div>
   <div class="gRates" id="mRates"></div>
   <div class="gbtns"><button class="gbtn" id="m1">1回<br><span>300 G</span></button><button class="gbtn red" id="m10">10連<br><span>2700 G</span></button></div>
+  <button class="gbtn" id="mDemo">🐾 レアキャラお試し！<br><span>動物マスター ルカを体験できる（デモプレイ）</span></button>
  </div>
  <div style="margin:6px 0 40px;font-size:21px;color:#bbb;text-align:center;line-height:1.6">かぶったら +1 ずつ少しだけ強くなる（最大+10）<br>+10以降は 20G（キャラは50G）に変わります</div>
  </div>
@@ -298,7 +301,7 @@ canvas{position:absolute;left:0;top:0;width:720px;height:1280px}
 
 <div id="guide"><img id="gdImg" src="assets/mei_yado.webp" alt=""><div id="gdBox"><div id="gdName">ヤドカリめいちゃん</div><div id="gdText"></div><div id="gdNext">▼ タップ</div></div></div>
 <canvas id="fxc" width="720" height="1280"></canvas>
-<div id="codePop"><div class="cpb"><div id="cpT"></div><div id="cpL"></div><button class="gbtn" id="cpOK">OK</button></div></div><div id="toast"></div>
+<div id="codePop"><div class="cpb"><div id="cpT"></div><div id="cpL"></div><button class="gbtn" id="cpOK">OK</button><button class="gbtn small" id="cpNo" style="display:none;margin:14px auto 0;width:200px">やめる</button></div></div><div id="toast"></div>
 <div id="loading">LOADING…</div>
 </div>
 
@@ -324,7 +327,8 @@ const SKEY='danmakuHiroki_v1';
 let SV={coins:300,zukan:{},easy:false,sound:true,best:0,bestCombo:0,clears:0,inv:{w_club:1,b_fire:1},eq:{w:'w_club',b:'b_fire',x1:null,x2:null},pity:0,skins:{mei:1},skin:'mei'};
 try{const s=JSON.parse(localStorage.getItem(SKEY));if(s)Object.assign(SV,s);}catch(e){}
 if(!SV.inv||!SV.inv.w_club){SV.inv=Object.assign({w_club:1},SV.inv||{});}if(!SV.eq)SV.eq={w:'w_club',b:'b_fire',x1:null,x2:null};if(!SV.inv.b_fire)SV.inv.b_fire=1;if(!SV.eq.b)SV.eq.b='b_fire';
-function save(){SV.ts=Date.now();try{localStorage.setItem(SKEY,JSON.stringify(SV));}catch(e){}cloudQueue();}
+let DEMO=null;
+function save(){if(DEMO)return;SV.ts=Date.now();try{localStorage.setItem(SKEY,JSON.stringify(SV));}catch(e){}cloudQueue();}
 /* ---------- cloud save (artifact db) ---------- */
 const CLOUD={ref:null,st:'off',busy:false,pend:false,tm:null};
 function fixSV(){if(SV.eq&&('x1' in SV.eq)&&typeof ITM!=='undefined'){for(const k of['x1','x2']){const it=ITM[SV.eq[k]];if(it&&it.s==='o'){if(!SV.eq.o)SV.eq.o=it.id;SV.eq[k]=null;}}}if(SV.eq&&!('x1' in SV.eq)){const old=[SV.eq.a,SV.eq.c,SV.eq.o].filter(Boolean);SV.eq.x1=old[0]||null;SV.eq.x2=old[1]||null;delete SV.eq.a;delete SV.eq.c;delete SV.eq.o;delete SV.eq.u;}if(SV.inv&&typeof ITM!=='undefined'){let g=0;for(const k in SV.inv){const it=ITM[k];if(it&&it.s==='u'){g+=SV.inv[k]*20;delete SV.inv[k];}}if(g){SV.coins=(SV.coins||0)+g;SV.uConv=g;}}if(!SV.skins)SV.skins={mei:1};SV.skins.mei=1;if(!SV.skin||!(typeof SKM==='undefined'||SKM[SV.skin]))SV.skin='mei';if(typeof ITM!=='undefined'){for(const k in SV.inv)if(!ITM[k])delete SV.inv[k];if(SV.eq)for(const k in SV.eq)if(SV.eq[k]&&!ITM[SV.eq[k]])SV.eq[k]=null;}if(!SV.inv||!SV.inv.w_club)SV.inv=Object.assign({w_club:1},SV.inv||{});if(!SV.inv.b_fire)SV.inv.b_fire=1;if(!SV.eq)SV.eq={w:'w_club',b:'b_fire',a:null,c:null,u:null};if(!SV.eq.b)SV.eq.b='b_fire';if(!SV.zukan)SV.zukan={};}
@@ -1032,7 +1036,7 @@ function boom(x,y,sz,col){for(let i=0;i<Math.min(26,8+sz/4);i++){const a=rand(0,
 function dmgText(x,y,v,big){if(DT.length>40)DT.shift();DT.push({x,y,v,life:.8,big});}
 function say(target,text,dur){BUB=BUB.filter(b=>b.t!==target);if(BUB.length>3)BUB.shift();BUB.push({t:target,text,life:dur||2});}
 function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>el.classList.remove('on'),2200);}
-function reg(id){if(!SV.zukan[id]){SV.zukan[id]=1;save();const z=ZK.find(z=>z.id===id);toast('図鑑に登録：'+z.name);newReg.push(id);}}
+function reg(id){if(DEMO)return;if(!SV.zukan[id]){SV.zukan[id]=1;save();const z=ZK.find(z=>z.id===id);toast('図鑑に登録：'+z.name);newReg.push(id);}}
 function drop(x,y,type,v){IT.push({x,y,vx:rand(-90,90),vy:rand(-260,-120),type,v:v||10,t:0});}
 function cancelBullets(){let i=0;for(const b of EB){if(i++%3===0&&IT.length<260)IT.push({x:b.x,y:b.y,vx:0,vy:-60,type:'coin',v:1,t:0,small:1});part(b.x,b.y,{life:.3,max:.3,size:5,col:'#fff3b0'});}EB=[];}
 function addCombo(){combo++;comboT=1.6;comboPop=.12;if(combo>maxCombo)maxCombo=combo;}
@@ -1926,6 +1930,19 @@ function* st84(){
  bgm('boss');yield* runBoss(makeKinniku());bgm(null);yield* wait(1.2);
  yield* dialog(T_KIN_END[0]);SV.ura=1;save();showResult(true);
 }
+function* stDemo(){
+ bgm('stage');BN={t1:'お試しプレイ',t2:'動物マスター ルカ',life:2.8};yield* wait(2.6);
+ for(let i=0;i<8;i++){spawn('goblin',{x:90+i*77,vy:170,fire:F.aim1(2.6),quiet:i>0});yield* wait(.3);}
+ yield* wait(1.4);
+ for(let i=0;i<8;i++){spawn('goblin',{x:i%2?170:550,mode:'sine',amp:130,w:2.2,vy:150,fire:F.aim1(2.4),quiet:1});yield* wait(.45);}
+ yield* waitClear(6);
+ bgm(null);WN={life:3};sfx('warn');yield* wait(3);
+ bgm('boss');yield* runBoss(makeBehemoth());bgm(null);yield* wait(1);
+ showResult(true);
+}
+function demoStart(){save();DEMO={snap:JSON.stringify(SV)};SV.skin='ruka';curSt=STAGES.findIndex(q=>q.demo);startGame();FAIRY=null;}
+function demoEnd(win){const snap=DEMO.snap;$('#hud').classList.remove('on');setTimeout(()=>{SV=JSON.parse(snap);DEMO=null;toTitle();updGacha();show('gacha');
+ codePop(win?'お試しプレイ おわり！':'お試しプレイ おわり',['🥟 餃子レーザーと、サンちゃん＆ふっちゃん、どうだった？','🐾 ルカは「めっちガチャ」で 0.15% の確率で手に入るよ','※ お試し中のコインや図鑑は記録されません']);},win?1000:700);}
 const RUSH=[[1,'makeElf'],[1,'makeKing'],[2,'makeOgre'],[2,'makeBehemoth'],[3,'makeTank'],[3,'makeCentaur'],[4,'makeDarkelf'],[4,'makeBahamut'],[5,'makeLevi'],[5,'makePoseidon'],[6,'makeVampire'],[6,'makeHades'],[7,'makeDragon'],[7,'makeDragonEmp'],[8,'makePower'],[8,'makeSatan'],[8,'makeLucifer'],[8,'makeKinniku']];
 let rushN=0;
 function* stRush(){
@@ -1963,6 +1980,7 @@ const STAGES=[
  {id:'8-3',ch:8,name:'魔王の間',fn:st83,win:'「みんなのペースで、ゆっくりいこうね」',end:1},
  {id:'8-4',ch:8,name:'？？？（裏ラスボス）',fn:st84,win:'「鶏むね肉、多めに買っておこうっと」',ura:1},
  {id:'EX',ch:9,name:'ボス連戦（全19体）',fn:stRush,win:'「全部倒した！ ……ヒロキくん、ジムでも写真撮ってたんだね」',rush:1},
+ {id:'DEMO',ch:2,name:'お試しプレイ',fn:stDemo,win:'',demo:1},
 ];
 const CHN=['','ゴブリンの森','沼地','荒野','天空','海','闇の城','火山','筋肉魔王城','ボス連戦'];
 let curSt=0;
@@ -2153,7 +2171,8 @@ function drawPanel(){
 }
 function drawHUD(t){
  if(boss&&(boss.ready||boss.y>-200)&&!boss.dead)drawBossBar(boss);
- else{wtext(ctx,(STAGES[curSt].ch>8?'EXTRA':'第'+STAGES[curSt].ch+'章')+' '+STAGES[curSt].id,22,44,24,'left','#e6b84a');}
+ else{wtext(ctx,DEMO?'お試しプレイ':(STAGES[curSt].ch>8?'EXTRA':'第'+STAGES[curSt].ch+'章')+' '+STAGES[curSt].id,22,44,24,'left','#e6b84a');}
+ if(DEMO)wtext(ctx,'🐾 デモプレイ中（ストーリーでは使えません）',W/2,124,21,'center','#ff8af0');
  if(combo>=10){const sc=1+comboPop*2;ctx.save();ctx.translate(30,470);ctx.scale(sc,sc);gtext(ctx,fmt(combo),0,0,64,'left',{it:1});gtext(ctx,'COMBO!',8,50,30,'left',{it:1});if(combo>=100)gtext(ctx,'超連撃!!',8,92,32,'left',{it:1,cols:['#ffe8ff','#e070ff','#8a20d0']});ctx.restore();}
  if(boss&&boss.ready&&totalDmg>0){wtext(ctx,'総ダメージ',W-18,210,24,'right','#ffd34d');gtext(ctx,fmt(totalDmg),W-14,252,40,'right',{it:1});recent.forEach((v,i)=>wtext(ctx,fmt(v),W-18,294+i*30,21,'right','#e8d8ff',800));}
  if(BN){const a=Math.min(1,BN.life*2,(2.8-BN.life)*3);ctx.save();ctx.globalAlpha=a;ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(0,480,W,170);ctx.fillStyle='#e6b84a';ctx.fillRect(0,480,W,3);ctx.fillRect(0,647,W,3);gtext(ctx,BN.t1,W/2,545,50,'center');wtext(ctx,BN.t2,W/2,610,30,'center','#fff');ctx.restore();}
@@ -2216,21 +2235,21 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/
 
 /* ---------- screens ---------- */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));if(id)$('#'+id).classList.add('on');}
-function toTitle(){mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode==='title')guide('title');},400);}
+function toTitle(){if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode==='title')guide('title');},400);}
 function startGame(){auInit();sfx('ok');BG=BGS[STAGES[curSt].ch]||BGS[1];resetGame();mode='game';show(null);$('#hud').classList.add('on');updBombBtn();if(useMsg)setTimeout(()=>toast(useMsg),300);}
 function pauseGame(on){if(mode!=='game'||over)return;paused=on;if(on){$('#pFace').src=src('hk_calm');show('pause');AU.saved=AU.name;bgm(null);}else{show(null);bgm(AU.saved||null);}}
 function showResult(win){
- if(mode!=='game')return;over=true;CUT=null;bgm(null);sfx(win?'clear':'over');
+ if(mode!=='game')return;over=true;CUT=null;if(DEMO){bgm(null);sfx(win?'clear':'over');demoEnd(win);return;}bgm(null);sfx(win?'clear':'over');
  runCoins=Math.round(runCoins);SV.coins+=runCoins;if(score>SV.best)SV.best=score;if(maxCombo>SV.bestCombo)SV.bestCombo=maxCombo;if(win){SV.clears++;SV.prog=Math.max(SV.prog||0,curSt+1);}save();
  $('#rTitle').textContent=win?(STAGES[curSt].ura?'TRUE END':STAGES[curSt].end?'THE END':(STAGES[curSt].rush?'ALL CLEAR':'STAGE CLEAR')):'GAME OVER';$('#rTitle').style.filter=win?'':'hue-rotate(-40deg) saturate(2)';
  $('#rFace').src=src(win?((SV.skin||'mei')!=='mei'?skinImg():'mei_happy'):'hk_rage');$('#rFace').style.borderColor=win?'#8fd0ff':'#e6b84a';
  $('#rLine').textContent=win?STAGES[curSt].win:'「'+pick(L_OVER)+'」';
  $('#rStats').innerHTML=`<div><span>スコア</span><b>${fmt(score)}</b></div><div><span>最大コンボ</span><b>${fmt(maxCombo)}</b></div><div><span>ボスへの総ダメージ</span><b>${fmt(totalDmg)}</b></div><div><span>撃破数</span><b>${kills}</b></div><div><span>獲得コイン</span><b>${fmt(runCoins)} G</b></div>`+(newReg.length?`<div><span>図鑑に新規登録</span><b>${newReg.length}体</b></div>`:'')+(STAGES[curSt].rush?`<div><span>連戦で倒したボス</span><b>${rushN} / ${RUSH.length+1}</b></div><div><span>最高記録</span><b>${SV.rushBest||0}</b></div>`:'')+(win&&STAGES[curSt].end?'<div style="justify-content:center;color:#ff8af0;font-size:26px">クリアおめでとう！ ボス連戦モード解放！</div>':'')+(win&&STAGES[curSt].ura?'<div style="justify-content:center;color:#ffb040;font-size:26px">裏ラスボス撃破！ 本当のエンディング！</div>':'')+(win&&STAGES[curSt].rush&&SV.rushClear?'<div style="justify-content:center;color:#ff8af0;font-size:24px">完全制覇！ 遊んでくれてありがとう！</div>':'');
- const nx=win&&STAGES[curSt+1];$('#rNext').style.display=nx?'block':'none';
+ const nx=win&&STAGES[curSt+1]&&!STAGES[curSt+1].demo;$('#rNext').style.display=nx?'block':'none';
  setTimeout(()=>{show('result');$('#toast').classList.remove('on');$('#hud').classList.remove('on');if(win&&STAGES[curSt].end&&!SV.uraSeen)setTimeout(()=>gogoFX(),900);},win?600:200);
 }
 function openStSel(){const L=$('#ssList');L.innerHTML='';let lastCh=0;const prog=SV.prog||0;
- STAGES.forEach((st,i)=>{if(st.ch!==lastCh){lastCh=st.ch;L.insertAdjacentHTML('beforeend',`<div class="ssch">${st.ch>8?'EXTRA':'第'+st.ch+'章'}　${CHN[st.ch]}</div>`);}
+ STAGES.forEach((st,i)=>{if(st.demo)return;if(st.ch!==lastCh){lastCh=st.ch;L.insertAdjacentHTML('beforeend',`<div class="ssch">${st.ch>8?'EXTRA':'第'+st.ch+'章'}　${CHN[st.ch]}</div>`);}
   const i83=STAGES.findIndex(q=>q.end);if(st.ura&&!SV.allOpen&&prog<=i83)return;
   const lock=!SV.allOpen&&i>prog&&!(st.rush&&prog>i83);const d=document.createElement('div');d.className='ssb'+(lock?' lock':'')+(st.ura?' ura':'');d.innerHTML=`<span>${st.id}　${st.name}</span><span class="ck">${i<prog?'✓ クリア':(lock?'🔒':'▶')}</span>`;
   if(!lock)d.onclick=()=>{curSt=i;startGame();};L.appendChild(d);});
@@ -2389,8 +2408,11 @@ $('#sCheatB').onclick=()=>{const c=$('#sCheat').value.trim();$('#sCheat').value=
   rukaFX(()=>codePop(ttl,[`✅ アイテム ${ni}種を新しく入手（すべて+0）`,`✅ めっち ${ns}人が新しく仲間に`,`✅ 図鑑を ${nz}件登録（全${ZK.length}件コンプリート）`,'※ ルカと妖精ヒロキは、それぞれの裏コードで手に入るよ']),{face:IMG.hk_smile,emo:ics,rar:'全解放',cols:['#ffffff','#fff3b0','#ffb020'],fr:170,name:'コンプリート！',sub:'全アイテム・全図鑑が解放されたよ'});}
  else codePop('……何も起きなかった',['このコードには、何の効果もないみたい','ヤドカリめいちゃんが、ヒントを知ってるかも？'],1);};
 
-function codePop(title,lines,ng){$('#cpT').innerHTML=title;$('#cpL').innerHTML=lines.map(x=>`<div>${x}</div>`).join('');$('#codePop').classList.toggle('ng',!!ng);$('#codePop').classList.add('on');sfx(ng?'hit':'clear');}
-$('#cpOK').onclick=e=>{e.stopPropagation();sfx('ok');$('#codePop').classList.remove('on');if(document.querySelector('#settings.on,#settings[style*="flex"]'))openSet();};
+let CPCB=null;
+function codePop(title,lines,ng,cb,btn){CPCB=cb||null;$('#cpOK').textContent=btn||'OK';$('#cpNo').style.display=cb?'block':'none';$('#cpT').innerHTML=title;$('#cpL').innerHTML=lines.map(x=>`<div>${x}</div>`).join('');$('#codePop').classList.toggle('ng',!!ng);$('#codePop').classList.add('on');sfx(ng?'hit':'clear');}
+$('#cpNo').onclick=e=>{e.stopPropagation();sfx('ok');CPCB=null;$('#codePop').classList.remove('on');};
+$('#cpOK').onclick=e=>{e.stopPropagation();sfx('ok');$('#codePop').classList.remove('on');const f=CPCB;CPCB=null;if(f){f();return;}if(document.querySelector('#settings.on,#settings[style*="flex"]'))openSet();};
+$('#mDemo').onclick=()=>{auInit();sfx('ok');rukaFX(()=>codePop('🐾 レアキャラお試しプレイ',['動物マスター ルカで、お試しステージを1回遊べるよ','⚠ これはデモプレイです。ストーリーでは使えません','※ 手に入れたコインや図鑑は記録されません','ルカ本人は「めっちガチャ」で 0.15% の確率で手に入るよ'],0,demoStart,'あそんでみる'));};
 $('#sCopy').onclick=async()=>{const c=saveCode();try{await navigator.clipboard.writeText(c);toast('セーブコードをコピーしました');}catch(e){$('#sCode').value=c;$('#sCode').select();toast('下の欄のコードを長押しでコピーしてね');}};
 $('#sLoad').onclick=()=>{const v=$('#sCode').value;if(!v.trim()){toast('コードを貼り付けてね');return;}if(loadCode(v)){toast('セーブを復元しました');$('#sCode').value='';openSet();}else toast('コードが正しくないみたい');};
 $('#sReset').onclick=()=>{const b=$('#sReset');if(b.dataset.c!=='1'){b.dataset.c='1';b.textContent='本当に消す？もう一度タップ';return;}b.dataset.c='';localStorage.removeItem(SKEY);SV={coins:300,zukan:{},easy:false,sound:true,best:0,bestCombo:0,clears:0,inv:{w_club:1,b_fire:1},eq:{w:'w_club',b:'b_fire',x1:null,x2:null},pity:0,skins:{mei:1},skin:'mei'};save();toast('データを消去しました');openSet();};
