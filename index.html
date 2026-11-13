@@ -202,7 +202,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.6</div>
+ <div id="tver">Ver.3.7</div>
 </div>
 
 <div id="hud">
@@ -1546,11 +1546,18 @@ function* kingP3(b){b.rage=true;yield* wait(.5);yield* bigMove(b,'メガヒロ�
  }}
 let HZ=[];
 function hzWarn(){return SV.easy?1.5:(chF()<.85?1.3:1.05);}
-function addHz(o,delay){const im=o.img?IMG[o.img]:null;const th=o.th||130,dh=th*(o.sc||1.25);const len=o.mode==='beam'?40:(im?dh*im.width/im.height:o.emo?dh:th);HZ.push(Object.assign({t:-(delay||0),warn:hzWarn(),done:false,im,dh,len},o));}
+const HZSC={1:.86,2:.89,3:.92,4:.95,5:.98,6:1,7:1,8:1};
+function hzS(){const st=STAGES[curSt]||{};let c=st.rush&&RCH?RCH:st.ch;let v=HZSC[c]||1;if(boss&&boss.key==='kinniku')v=.92;return v;}
+function addHz(o,delay){const S=hzS();if(delay>0&&o.mode!=='drop'&&Math.random()>S*S+.05)return;const im=o.img?IMG[o.img]:null;const th0=o.th||130,dh=th0*(o.sc||1.25);const len=o.mode==='beam'?40:(im?dh*im.width/im.height:o.emo?dh:th0);
+ o.th=th0*(.7+.3*S);if(o.spd)o.spd*=(.75+.25*S);HZ.push(Object.assign({t:-(delay||0),warn:hzWarn()*(1+(1-S)*.8),done:false,im,dh,len},o));}
+function hzDrops(emo,n){const S=hzS(),r=70;const pts=[[pxCol(),pyBand()]];let g=0;while(pts.length<n&&g++<200){const x=rand(80,W-80),y=rand(420,PB-90);if(pts.every(q=>Math.hypot(q[0]-x,q[1]-y)>170))pts.push([x,y]);}
+ pts.forEach((q,i)=>addHz({mode:'drop',x:q[0],y:q[1],pos:0,th:r*2,r,emo},i*(.35-.12*S)));}
 function pyBand(){return Math.max(430,Math.min(PB-110,P.y));}
 function pxCol(){return Math.max(90,Math.min(W-90,P.x));}
 function other(v,lo,hi,gap){const a=v-gap,b=v+gap;return a>=lo&&(b>hi||Math.random()<.5)?a:b<=hi?b:a;}
-function updHz(dt){for(const z of HZ){z.t+=dt;if(z.t<0)continue;const a=z.t-z.warn;if(a<0){if(!z.ws){z.ws=1;sfx('warn');}continue;}
+function updHz(dt){for(const z of HZ){z.t+=dt;if(z.t<0)continue;const a=z.t-z.warn;
+  if(z.mode==='drop'){if(a<0){if(!z.ws){z.ws=1;sfx('warn');}continue;}if(a>=.22&&!z.go){z.go=1;sfx('boom');shake(.18,7);for(let i=0;i<10;i++)part(z.x,z.y,{vx:rand(-260,260),vy:rand(-260,120),life:.45,max:.45,size:7,col:'#ffd08a'});}
+   if(a>=.22&&a<.42&&!P.dead&&P.inv<=0&&Math.hypot(P.x-z.x,P.y-z.y)<z.r*.72)hitPlayer();if(a>.6)z.done=true;continue;}if(a<0){if(!z.ws){z.ws=1;sfx('warn');}continue;}
   const S=z.ax==='h'?W:PB;
   if(!z.go){z.go=1;sfx(z.mode==='beam'?'phase':'boom');shake(.2,6);if(z.img==='hz_phone')flash=.35;}
   if(z.mode==='pass'){z.tip=a*z.spd;if(z.tip-z.len>S+40)z.done=true;}
@@ -1561,6 +1568,10 @@ function updHz(dt){for(const z of HZ){z.t+=dt;if(z.t<0)continue;const a=z.t-z.wa
  HZ=HZ.filter(z=>!z.done);}
 function warnSign(x,y,a){ctx.save();ctx.translate(x,y);ctx.globalAlpha=a;ctx.fillStyle='#ffd34d';ctx.strokeStyle='#300';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(0,-34);ctx.lineTo(32,24);ctx.lineTo(-32,24);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#300';ctx.font='900 40px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('!',0,6);ctx.restore();}
 function drawHz(t){for(const z of HZ){if(z.t<0)continue;const a=z.t-z.warn;ctx.save();
+  if(z.mode==='drop'){if(a<0){const k=Math.min(1,z.t/.15),pl=.5+.5*Math.sin(z.t*20);ctx.fillStyle=`rgba(255,40,40,${(.15+.15*pl)*k})`;ctx.strokeStyle=`rgba(255,120,120,${.9*k})`;ctx.lineWidth=4;ctx.beginPath();ctx.arc(z.x,z.y,z.r,0,TAU);ctx.fill();ctx.stroke();const rr2=z.r*(1-Math.min(1,z.t/z.warn))+8;ctx.beginPath();ctx.arc(z.x,z.y,rr2,0,TAU);ctx.stroke();ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(z.x-z.r-10,z.y);ctx.lineTo(z.x+z.r+10,z.y);ctx.moveTo(z.x,z.y-z.r-10);ctx.lineTo(z.x,z.y+z.r+10);ctx.stroke();warnSign(z.x,z.y-z.r-34,Math.sin(z.t*18)>-.3?1:.35);}
+   else if(a<.22){const k=a/.22,yy=z.y-700*(1-k);ctx.globalAlpha=.4;ctx.fillStyle='#000';ctx.beginPath();ctx.ellipse(z.x,z.y,z.r*k,z.r*.4*k,0,0,TAU);ctx.fill();ctx.globalAlpha=1;ctx.font=Math.round(z.r*1.9)+'px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(z.emo,z.x,yy);}
+   else{const k=Math.min(1,(a-.22)/.38);ctx.globalAlpha=1-k;ctx.strokeStyle='#ffe0a0';ctx.lineWidth=10*(1-k)+2;ctx.beginPath();ctx.arc(z.x,z.y,z.r*(.6+k*.8),0,TAU);ctx.stroke();ctx.font=Math.round(z.r*1.9)+'px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(z.emo,z.x,z.y);}
+   ctx.restore();continue;}
   if(a<0){const fl=.18+.16*(Math.sin(z.t*20)*.5+.5),k=Math.min(1,z.t/.15);ctx.fillStyle=`rgba(255,40,40,${fl*k})`;ctx.strokeStyle=`rgba(255,120,120,${.9*k})`;ctx.lineWidth=3;ctx.setLineDash([18,12]);
    if(z.ax==='h'){ctx.fillRect(0,z.pos-z.th/2,W,z.th);ctx.strokeRect(-4,z.pos-z.th/2,W+8,z.th);}else{ctx.fillRect(z.pos-z.th/2,0,z.th,PB);ctx.strokeRect(z.pos-z.th/2,-4,z.th,PB+8);}ctx.setLineDash([]);
    const bl=Math.sin(z.t*18)>-.3?1:.35;
@@ -1579,6 +1590,7 @@ function drawHz(t){for(const z of HZ){if(z.t<0)continue;const a=z.t-z.warn;ctx.s
    if(z.spin){ctx.translate(-z.len/2,0);ctx.rotate(-(a*z.spin));ctx.drawImage(z.im,-z.len/2,-z.dh/2,z.len,z.dh);}
    else{ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.5;ctx.drawImage(SP.glow,-z.len*.35,-z.dh*.7,z.len*.7,z.dh*1.4);ctx.restore();ctx.drawImage(z.im,-z.len,-z.dh/2,z.len,z.dh);}}
   ctx.restore();}}
+const HZDROP={elf:'🌰',king:'🍖',ogre:'🪨',behemoth:'🪨',tankknight:'🛞',centaur:'🥕',darkelf:'🔮',bahamut:'☄️',leviathan:'💧',poseidon:'🐚',vampire:'🦇',hades:'💀',dragon:'☄️',dragonemp:'☄️',power:'🏋️',satan:'🔥',lucifer:'✨',gym:'📸',kinniku:'🏋️'};
 const HZDEF={
  elf(b){addHz({ax:'v',side:'T',pos:pxCol(),th:110,mode:'beam',bc:'120,255,150'});say(b,'森の光、浴びて',1.5);},
  king(b){const y=pyBand(),sd=Math.random()<.5?'L':'R';addHz({ax:'h',side:sd,pos:y,th:150,img:'c_goblin',mode:'pass',spd:850,sc:1.2});say(b,'全員、突撃',1.5);},
@@ -1608,8 +1620,8 @@ function updBoss(b,dt){
  if(b.leaving){b.y-=320*dt;if(b.y<-500){b.dead=true;b.escaped=true;}return;}
  b.x=360+Math.sin(b.t*(b.sf||.6))*b.sway;b.y=b.ty+Math.sin(b.t*1.3)*10;
  b.disp+=(b.hp-b.disp)*Math.min(1,dt*2.5);
- b.ai.next(HZ.length?dt*.55:dt);
- if(HZDEF[b.key]&&!b.leaving&&!WARN&&!b.charge){b.hzT=(b.hzT??(4.5+(1-chF())*8))-dt;if(b.hzT<=0&&!HZ.length){HZDEF[b.key](b);b.hzT=((b.rage?6:8)+rand(0,1.5))*(2-chF());}}
+ b.ai.next(HZ.length?dt*(.3+.3*hzS()):dt);
+ if(HZDEF[b.key]&&!b.leaving&&!WARN&&!b.charge){b.hzT=(b.hzT??(4.5+(1-chF())*8))-dt;if(b.hzT<=0&&!HZ.length){if(HZDROP[b.key]&&Math.random()<.45){hzDrops(HZDROP[b.key],Math.round(2+hzS()*4));say(b,pick(['上、見て','落とすから','そこ、危ないよ','動かないと当たるよ']),1.4);}else HZDEF[b.key](b);b.hzT=((b.rage?6:8)+rand(0,1.5))*(2-chF());}}
  if(b.th.length>b.phase&&b.hp<b.maxhp*b.th[b.phase]){b.phase++;WARN=null;b.charge=false;cancelBullets();b.ai=b.ais[b.phase](b);b.ai.next();say(b,b.phaseLines[b.phase-1],2.4);shake(.5,12);flash=.35;sfx('phase');}
  if(b.timeout){b.timeout-=dt;if(b.timeout<=0){b.timeout=0;b.leaving=true;cancelBullets();say(b,'もう眠いから帰る',2.4);}}
  b.lineT=(b.lineT??4)-dt;if(b.lineT<=0){b.lineT=rand(5,8);say(b,pick(L_ESTJ),2.2);}
