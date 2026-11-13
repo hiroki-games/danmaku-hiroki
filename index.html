@@ -202,7 +202,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.4</div>
+ <div id="tver">Ver.3.5</div>
 </div>
 
 <div id="hud">
@@ -1079,7 +1079,8 @@ let P,E,EB,PS,IT,PT,DT,BUB,boss,scr,gT;
 let score,combo,comboT,maxCombo,comboPop,runCoins,kills,totalDmg,recent,newReg;
 let FAIRY=null,LP=null,BM=null,ST=null,useMsg='',CUT=null,BN=null,WN=null,WARN=null,flash=0,shakeT=0,shakeM=0,bombT=0,bombTick=0,autoCollect=false;
 let slowToggle=false;const keys={};
-const CHF={1:.75,2:.84,3:.92,4:1.01,5:1.1,6:1.17,7:1.24,8:1.3,9:1.15};function chF(){const st=typeof STAGES!=='undefined'&&STAGES[curSt];return st&&CHF[st.ch]||1;}
+const CHF={1:.75,2:.84,3:.92,4:1.01,5:1.1,6:1.17,7:1.24,8:1.3,9:1.15};let RCH=0;
+function chF(){const st=typeof STAGES!=='undefined'&&STAGES[curSt];if(st&&st.rush&&RCH)return CHF[RCH]||1;return st&&CHF[st.ch]||1;}
 const EZ=()=>{const f=chF(),b=SV.easy?{n:.6,spd:.85,iv:1.4}:{n:1,spd:1,iv:1};return{n:b.n*f,spd:b.spd*(.9+.1*f),iv:b.iv/f};};
 const nn=k=>Math.max(1,Math.round(k*EZ().n));
 
@@ -2039,8 +2040,8 @@ const RUSH=[[1,'makeElf'],[1,'makeKing'],[2,'makeOgre'],[2,'makeBehemoth'],[3,'m
 let rushN=0;
 function* stRush(){
  rushN=0;bgm('boss');BN={t1:'ボス連戦',t2:'全'+(RUSH.length+1)+'体、倒せるかな？',life:2.8};yield* wait(2.6);
- for(const[ch,fn]of RUSH){BG=BGS[ch];const b=window[fn]();b.hp=b.maxhp=b.maxhp*.65;b.timeout=0;b.coins=Math.round(b.coins*.5);BN={t1:'BOSS '+(rushN+1)+' / '+(RUSH.length+1),t2:b.name,life:2};yield* runBoss(b);rushN++;SV.rushBest=Math.max(SV.rushBest||0,rushN);save();yield* wait(1.2);}
- bgm(null);BG=BGS[3];WN={life:3};sfx('warn');yield* wait(3);
+ for(const[ch,fn]of RUSH){BG=BGS[ch];RCH=ch;const b=window[fn]();b.hp=b.maxhp=b.maxhp*.65;b.timeout=0;b.coins=Math.round(b.coins*.5);BN={t1:'BOSS '+(rushN+1)+' / '+(RUSH.length+1),t2:b.name,life:2};yield* runBoss(b);rushN++;SV.rushBest=Math.max(SV.rushBest||0,rushN);save();yield* wait(1.2);}
+ bgm(null);BG=BGS[3];RCH=8;WN={life:3};sfx('warn');yield* wait(3);
  yield* cutin('z_gym','筋トレヒロキ','真の本体？');yield* dialog(T_GYM[0]);
  bgm('boss');yield* runBoss(makeGymBoss());rushN++;SV.rushBest=Math.max(SV.rushBest||0,rushN);SV.rushClear=1;save();bgm(null);yield* wait(1);
  yield* dialog(T_GYM_DOWN[0]);showResult(true);
