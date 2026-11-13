@@ -202,7 +202,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.5</div>
+ <div id="tver">Ver.3.6</div>
 </div>
 
 <div id="hud">
@@ -2139,7 +2139,7 @@ function update(dt){
  // items
  for(const it of IT){it.t+=dt;const d=Math.hypot(P.x-it.x,P.y-it.y);
   if((autoCollect||d<(ST.mag?220:110)||P.y<300)&&!P.dead&&it.t>.25){const a=Math.atan2(P.y-it.y,P.x-it.x),s=900;it.x+=Math.cos(a)*s*dt;it.y+=Math.sin(a)*s*dt;}
-  else{it.vy=Math.min(170,it.vy+420*dt);it.vx*=.96;it.x+=it.vx*dt;it.y+=it.vy*dt;}
+  else{it.vy=Math.min(170,it.vy+420*dt);it.vx*=.96;it.x+=it.vx*dt;it.y+=it.vy*dt;const R2=ST.mag?340:230;if(d<R2&&!P.dead&&it.t>.25){const k=(1-d/R2)*320*dt;it.x+=(P.x-it.x)/d*k;it.y+=(P.y-it.y)/d*k;}}
   if(d<42&&!P.dead){it.got=true;
    if(it.type==='coin'){runCoins+=it.v*P.coinMul*.8;score+=it.v*10;sfx('coin');}
    else if(it.type==='bomb'){if(P.bombs<5){P.bombs++;updBombBtn();toast('ボム+1');}else score+=5000;sfx('pow');}
@@ -2335,7 +2335,9 @@ function toTitle(){if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT
 function startGame(){auInit();sfx('ok');BG=BGS[STAGES[curSt].ch]||BGS[1];resetGame();mode='game';show(null);$('#hud').classList.add('on');updBombBtn();if(useMsg)setTimeout(()=>toast(useMsg),300);}
 function pauseGame(on){if(mode!=='game'||over)return;paused=on;if(on){$('#pFace').src=src(hFace(boss&&boss.name));show('pause');if(AU.name)AU.saved=AU.name;bgm(null);}else{show(null);bgm(AU.saved||null);AU.saved=null;}}
 function showResult(win){
- if(mode!=='game')return;over=true;CUT=null;if(DEMO){bgm(null);sfx(win?'clear':'over');demoEnd(win);return;}bgm(null);sfx(win?'clear':'over');
+ if(mode!=='game')return;
+ if(win&&!showResult.w&&!DEMO&&IT.some(i=>i.type==='coin')){showResult.w=1;autoCollect=true;const t0=Date.now();const iv=setInterval(()=>{if(mode!=='game'||!IT.some(i=>i.type==='coin')||Date.now()-t0>1800){clearInterval(iv);setTimeout(()=>{showResult.w=0;showResult(win);},250);}},60);return;}
+ if(showResult.w)return;over=true;CUT=null;if(DEMO){bgm(null);sfx(win?'clear':'over');demoEnd(win);return;}bgm(null);sfx(win?'clear':'over');
  runCoins=Math.round(runCoins);SV.coins+=runCoins;if(score>SV.best)SV.best=score;if(maxCombo>SV.bestCombo)SV.bestCombo=maxCombo;if(win){SV.clears++;SV.prog=Math.max(SV.prog||0,curSt+1);const cs=STAGES[curSt];if(SV.reLock&&/-3$/.test(cs.id)){SV.reCh=Math.max(SV.reCh||0,cs.ch);if(SV.reCh>=8)SV.reLock=0;}}if(!win){if(SV.loseSt===curSt)SV.loseN=(SV.loseN||0)+1;else{SV.loseSt=curSt;SV.loseN=1;}if(SV.loseN>=5)SV.easyOpen=1;}else if(SV.loseSt===curSt)SV.loseN=0;save();
  $('#rTitle').textContent=win?(STAGES[curSt].ura?'TRUE END':STAGES[curSt].end?'THE END':(STAGES[curSt].rush?'ALL CLEAR':'STAGE CLEAR')):'GAME OVER';$('#rTitle').style.filter=win?'':'hue-rotate(-40deg) saturate(2)';
  $('#rFace').src=src(win?((SV.skin||'mei')!=='mei'?skinImg():'mei_happy'):hFace(boss&&boss.name));$('#rFace').style.borderColor=win?'#8fd0ff':'#e6b84a';
