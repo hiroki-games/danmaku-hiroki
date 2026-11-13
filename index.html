@@ -215,7 +215,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.15</div>
+ <div id="tver">Ver.3.16</div>
 </div>
 
 <div id="hud">
@@ -1109,7 +1109,7 @@ let FAIRY=null,LP=null,BM=null,ST=null,useMsg='',CUT=null,BN=null,WN=null,WARN=n
 let slowToggle=false;const keys={};
 const CHF={1:.75,2:.84,3:.92,4:1.01,5:1.1,6:1.17,7:1.24,8:1.3,9:1.15};let RCH=0;
 const UCHF={1:1.1,2:1.16,3:1.22,4:1.28,5:1.34,6:1.4,7:1.45,8:1.5};
-function chF(){const st=typeof STAGES!=='undefined'&&STAGES[curSt];if(st&&st.rush&&RCH)return CHF[RCH]||1;if(st&&st.um)return UCHF[st.ch]||1.3;return st&&CHF[st.ch]||1;}
+function chF(){const st=typeof STAGES!=='undefined'&&STAGES[curSt];if(st&&st.urush)return 1.6;if(st&&st.rush&&RCH)return CHF[RCH]||1;if(st&&st.um)return UCHF[st.ch]||1.3;return st&&CHF[st.ch]||1;}
 const EZ=()=>{const f=chF(),b=SV.easy?{n:.6,spd:.85,iv:1.4}:{n:1,spd:1,iv:1};return{n:b.n*f,spd:b.spd*(.9+.1*f),iv:b.iv/f};};
 const nn=k=>Math.max(1,Math.round(k*EZ().n));
 
@@ -1536,7 +1536,7 @@ function* behP3(b){b.rage=true;yield* wait(.5);yield* bigMove(b,'ベヒーモス
   yield* rockRain(2.2,7);
  }}
 function* cutin(img,name,sub){const me=CUT={img:IMG[img],chibi:img.startsWith('c_'),name,sub,life:2.6,max:2.6};sfx('phase');while(CUT===me&&me.life>0)yield;if(CUT===me)CUT=null;}
-function* runBoss(b){const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}if((STAGES[curSt]||{}).um){b.maxhp*=1.3;b.hp=b.maxhp;if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}boss=b;while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
+function* runBoss(b){const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}{const us=STAGES[curSt]||{};if(us.um&&!us.rush){b.maxhp*=1.3;b.hp=b.maxhp;}}if((STAGES[curSt]||{}).um){if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}boss=b;while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
 function mz(b){return[b.x+b.mx,b.y+b.my];}
 function* spiral(b,dur,iv,arms,rot,sp,spr,both){let a=rand(0,TAU),t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;a+=rot*dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);for(let k=0;k<arms;k++){eb(x,y,a+k/arms*TAU,sp,spr);if(both)eb(x,y,-a+k/arms*TAU,sp*.85,SP.oPink);}sfx('eshot');}}}
 function* stream(b,dur,iv,sp,spr){let t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);eb(x,y,aim(x,y),sp,spr);sfx('eshot');}}}
@@ -2080,12 +2080,21 @@ function demoEnd(win){const snap=DEMO.snap;$('#hud').classList.remove('on');setT
  codePop(win?'お試しプレイ おわり！':'お試しプレイ おわり',['🥟 餃子レーザーと、サンちゃん＆ふっちゃん、どうだった？','🐾 ルカは「めっちガチャ」で 0.025% の確率で手に入るよ','※ お試し中のコインや図鑑は記録されません']);},win?1000:700);}
 const RUSH=[[1,'makeElf'],[1,'makeKing'],[2,'makeOgre'],[2,'makeBehemoth'],[3,'makeTank'],[3,'makeCentaur'],[4,'makeDarkelf'],[4,'makeBahamut'],[5,'makeLevi'],[5,'makePoseidon'],[6,'makeVampire'],[6,'makeHades'],[7,'makeDragon'],[7,'makeDragonEmp'],[8,'makePower'],[8,'makeSatan'],[8,'makeLucifer'],[8,'makeKinniku']];
 let rushN=0;
+let RUSHHP=.55,URHP=.53;
 function* stRush(){
- rushN=0;bgm('boss');BN={t1:'ボス連戦',t2:'全'+(RUSH.length+1)+'体、倒せるかな？',life:2.8};yield* wait(2.6);
- for(const[ch,fn]of RUSH){BG=BGS[ch];RCH=ch;const b=window[fn]();b.hp=b.maxhp=b.maxhp*.65;b.timeout=0;b.coins=Math.round(b.coins*.5);BN={t1:'BOSS '+(rushN+1)+' / '+(RUSH.length+1),t2:b.name,life:2};yield* runBoss(b);rushN++;SV.rushBest=Math.max(SV.rushBest||0,rushN);save();yield* wait(1.2);}
+ rushN=0;bgm('boss');BN={t1:'ボス連戦',t2:'全'+(RUSH.length+1)+'体、倒せるかな？',life:2.8};yield* wait(2.6);BN={t1:'ボス連戦のルール',t2:'連戦用に、ボスの体力は調整されています',life:2.8};toast('※ 連戦用に、ボスの体力は調整されています');yield* wait(2.6);
+ for(const[ch,fn]of RUSH){BG=BGS[ch];RCH=ch;const b=window[fn]();b.hp=b.maxhp=b.maxhp*RUSHHP;b.timeout=0;b.coins=Math.round(b.coins*.5);BN={t1:'BOSS '+(rushN+1)+' / '+(RUSH.length+1),t2:b.name,life:2};yield* runBoss(b);rushN++;SV.rushBest=Math.max(SV.rushBest||0,rushN);save();yield* wait(1.2);}
  bgm(null);BG=BGS[3];RCH=8;WN={life:3};sfx('warn');yield* wait(3);
  yield* cutin('z_gym','筋トレヒロキ','真の本体？');yield* dialog(T_GYM[0]);
  bgm('boss');yield* runBoss(makeGymBoss());rushN++;SV.rushBest=Math.max(SV.rushBest||0,rushN);SV.rushClear=1;save();bgm(null);yield* wait(1);
+ yield* dialog(T_GYM_DOWN[0]);showResult(true);
+}
+function* stRushU(){
+ rushN=0;bgm('boss');BN={t1:'裏・ボス連戦',t2:'全'+(RUSH.length+1)+'体の裏ヒロキ',life:2.8};yield* wait(2.6);BN={t1:'裏・ボス連戦のルール',t2:'連戦用に、ボスの体力は調整されています',life:2.8};toast('※ 連戦用に、ボスの体力は調整されています');yield* wait(2.6);
+ for(const[ch,fn]of RUSH){BG=BGS[ch];RCH=ch;const b=window[fn]();b.hp=b.maxhp=b.maxhp*URHP;b.timeout=0;b.coins=Math.round(b.coins*.5);BN={t1:'裏 BOSS '+(rushN+1)+' / '+(RUSH.length+1),t2:b.name,life:2};yield* runBoss(b);rushN++;SV.uRushBest=Math.max(SV.uRushBest||0,rushN);save();yield* wait(1.2);}
+ bgm(null);BG=BGS[3];RCH=8;WN={life:3};sfx('warn');yield* wait(3);
+ yield* cutin('z_gym','筋トレヒロキ','裏の本体？');yield* dialog(T_GYM[0]);
+ bgm('boss');{const g=makeGymBoss();g.hp=g.maxhp=g.maxhp*URHP;yield* runBoss(g);}rushN++;SV.uRushBest=Math.max(SV.uRushBest||0,rushN);SV.uRushClear=1;save();bgm(null);yield* wait(1);
  yield* dialog(T_GYM_DOWN[0]);showResult(true);
 }
 const STAGES=[
@@ -2119,6 +2128,7 @@ const STAGES=[
 ];
 {const UW={1:'「森のヒロキくんたち、目が赤かった……。ちゃんと眠れてないのかな」',2:'「沼の空気、重かったね。でも少しずつ晴れてきた気がする」',3:'「荒野の風、さっきより冷たかった……。もう少しだけがんばろう」',4:'「空まで紫色だった……。何かにとりつかれてるのかも」',5:'「海の底から、ずっと見られてる気がした……」',6:'「お城の中、表よりずっと暗かったね。灯り、持ってくればよかった」',7:'「火山の熱さより、ヒロキくんたちの目のほうがこわかった……」',8:'「あと少し。みんなの目、元に戻してあげようね」'};
  const U=STAGES.filter(q=>q.ch<=8&&!q.rush&&!q.demo).map(q=>({id:'裏'+q.id,ch:q.ch,name:q.ura?'？？？（真・裏ラスボス）':'裏・'+q.name,fn:q.fn,win:q.ura?'「……目の色、戻ったみたい。よかった。帰りに鶏むね肉、買っていこうね」':UW[q.ch],um:1,umEnd:q.ura?1:0}));
+ U.push({id:'裏EX',ch:9,name:'裏・ボス連戦（全19体）',fn:stRushU,win:'「全部倒した……。みんなの目、ちゃんと元に戻ってるといいな」',rush:1,um:1,urush:1});
  STAGES.splice(STAGES.findIndex(q=>q.demo),0,...U);}
 const CHN=['','ゴブリンの森','沼地','荒野','天空','海','闇の城','火山','筋肉魔王城','ボス連戦'];
 let curSt=0;
@@ -2387,21 +2397,21 @@ function showResult(win){
  if(win&&!showResult.w&&!DEMO&&IT.some(i=>i.type==='coin')){showResult.w=1;autoCollect=true;const t0=Date.now();const iv=setInterval(()=>{if(mode!=='game'||!IT.some(i=>i.type==='coin')||Date.now()-t0>1800){clearInterval(iv);setTimeout(()=>{showResult.w=0;showResult(win);},250);}},60);return;}
  if(showResult.w)return;over=true;CUT=null;if(DEMO){bgm(null);sfx(win?'clear':'over');demoEnd(win);return;}bgm(null);sfx(win?'clear':'over');
  runCoins=Math.round(runCoins);SV.coins+=runCoins;if(score>SV.best)SV.best=score;if(maxCombo>SV.bestCombo)SV.bestCombo=maxCombo;if(win){SV.clears++;SV.prog=Math.max(SV.prog||0,curSt+1);const cs=STAGES[curSt];if(SV.reLock&&/-3$/.test(cs.id)){SV.reCh=Math.max(SV.reCh||0,cs.ch);if(SV.reCh>=8)SV.reLock=0;}}if(!win){if(SV.loseSt===curSt)SV.loseN=(SV.loseN||0)+1;else{SV.loseSt=curSt;SV.loseN=1;}if(SV.loseN>=5)SV.easyOpen=1;}else if(SV.loseSt===curSt)SV.loseN=0;save();
- $('#rTitle').textContent=win?(STAGES[curSt].umEnd?'裏 TRUE END':STAGES[curSt].ura?'TRUE END':STAGES[curSt].end?'THE END':(STAGES[curSt].rush?'ALL CLEAR':'STAGE CLEAR')):'GAME OVER';$('#rTitle').style.filter=win?'':'hue-rotate(-40deg) saturate(2)';
+ $('#rTitle').textContent=win?(STAGES[curSt].urush?'裏 ALL CLEAR':STAGES[curSt].umEnd?'裏 TRUE END':STAGES[curSt].ura?'TRUE END':STAGES[curSt].end?'THE END':(STAGES[curSt].rush?'ALL CLEAR':'STAGE CLEAR')):'GAME OVER';$('#rTitle').style.filter=win?'':'hue-rotate(-40deg) saturate(2)';
  $('#rFace').src=src(win?((SV.skin||'mei')!=='mei'?skinImg():'mei_happy'):hFace(boss&&boss.name));$('#rFace').style.borderColor=win?'#8fd0ff':'#e6b84a';
  $('#rLine').textContent=win?STAGES[curSt].win:'「'+pick(L_OVER)+'」';
- $('#rStats').innerHTML=`<div><span>スコア</span><b>${fmt(score)}</b></div><div><span>最大コンボ</span><b>${fmt(maxCombo)}</b></div><div><span>ボスへの総ダメージ</span><b>${fmt(totalDmg)}</b></div><div><span>撃破数</span><b>${kills}</b></div><div><span>獲得コイン</span><b>${fmt(runCoins)} G</b></div>`+(newReg.length?`<div><span>図鑑に新規登録</span><b>${newReg.length}体</b></div>`:'')+(STAGES[curSt].rush?`<div><span>連戦で倒したボス</span><b>${rushN} / ${RUSH.length+1}</b></div><div><span>最高記録</span><b>${SV.rushBest||0}</b></div>`:'')+(win&&STAGES[curSt].end?'<div style="justify-content:center;color:#ff8af0;font-size:26px">クリアおめでとう！ ボス連戦モード解放！</div>':'')+(win&&STAGES[curSt].ura?'<div style="justify-content:center;color:#ffb040;font-size:26px">裏ラスボス撃破！ 本当のエンディング！</div>':'')+(win&&STAGES[curSt].rush&&SV.rushClear?'<div style="justify-content:center;color:#ff8af0;font-size:24px">完全制覇！ 遊んでくれてありがとう！</div>':'');
+ $('#rStats').innerHTML=`<div><span>スコア</span><b>${fmt(score)}</b></div><div><span>最大コンボ</span><b>${fmt(maxCombo)}</b></div><div><span>ボスへの総ダメージ</span><b>${fmt(totalDmg)}</b></div><div><span>撃破数</span><b>${kills}</b></div><div><span>獲得コイン</span><b>${fmt(runCoins)} G</b></div>`+(newReg.length?`<div><span>図鑑に新規登録</span><b>${newReg.length}体</b></div>`:'')+(STAGES[curSt].rush?`<div><span>連戦で倒したボス</span><b>${rushN} / ${RUSH.length+1}</b></div><div><span>最高記録</span><b>${(STAGES[curSt].urush?SV.uRushBest:SV.rushBest)||0}</b></div>`:'')+(win&&STAGES[curSt].end?'<div style="justify-content:center;color:#ff8af0;font-size:26px">クリアおめでとう！ ボス連戦モード解放！</div>':'')+(win&&STAGES[curSt].ura?'<div style="justify-content:center;color:#ffb040;font-size:26px">裏ラスボス撃破！ 本当のエンディング！</div>':'')+(win&&STAGES[curSt].rush&&SV.rushClear?'<div style="justify-content:center;color:#ff8af0;font-size:24px">完全制覇！ 遊んでくれてありがとう！</div>':'');
  if(win&&STAGES[curSt].umEnd&&!DEMO){SV.uraClear=1;save();}const nS=STAGES[curSt+1],cS=STAGES[curSt];const nx=win&&nS&&!nS.demo&&!nS.rush&&!cS.rush&&!!nS.um===!!cS.um&&!stLock(curSt+1);$('#rNext').style.display=nx?'block':'none';
  setTimeout(()=>{show('result');$('#toast').classList.remove('on');$('#hud').classList.remove('on');if(win&&STAGES[curSt].end&&!SV.uraSeen)setTimeout(()=>gogoFX(),900);},win?600:200);
 }
-function stLock(i){const st=STAGES[i];if(!st)return true;if(SV.allOpen)return false;const prog=SV.prog||0,i83=STAGES.findIndex(q=>q.end);if(st.um){if(!SV.ura)return true;const iu=STAGES.findIndex(q=>q.um);return i>Math.max(prog,iu)||reLocked(i);}return (i>prog&&!(st.rush&&prog>i83))||reLocked(i);}
+function stLock(i){const st=STAGES[i];if(!st)return true;if(SV.allOpen)return false;const prog=SV.prog||0,i83=STAGES.findIndex(q=>q.end);if(st.urush)return !SV.uraClear||reLocked(i);if(st.um){if(!SV.ura)return true;const iu=STAGES.findIndex(q=>q.um);return i>Math.max(prog,iu)||reLocked(i);}return (i>prog&&!(st.rush&&prog>i83))||reLocked(i);}
 function reLocked(i){const st=STAGES[i];if(!st||!SV.reLock||SV.allOpen)return false;if(st.ura||st.rush||st.um)return (SV.reCh||0)<8;return st.ch>(SV.reCh||0)+1;}
 let SSCAT='n';
-function openMode(){const L=$('#mdList');L.innerHTML='';if(SV.ura||SV.allOpen)loadUra();const iR=STAGES.findIndex(q=>q.rush),iU=STAGES.findIndex(q=>q.um);
+function openMode(){const L=$('#mdList');L.innerHTML='';if(SV.ura||SV.allOpen)loadUra();const iR=STAGES.findIndex(q=>q.rush&&!q.um),iU=STAGES.findIndex(q=>q.um),iUR=STAGES.findIndex(q=>q.urush);
  const M=[{c:'n',ic:'⚔️',t:'ステージ',s:'ゴブリンの森から筋肉魔王城へ',open:true,go:()=>openStSel('n')},
   {c:'r',ic:'👑',t:'ボス連戦',s:'全19体のヒロキと連続バトル',open:!stLock(iR),go:()=>{curSt=iR;startGame();}},
   {c:'u',ic:'🌑',t:'裏の世界',s:'赤い目のヒロキたちが待っている',open:!stLock(iU),go:()=>openStSel('u')},
-  {c:'ur',ic:'🩸',t:'裏・ボス連戦',s:'',open:false}];
+  {c:'ur',ic:'🩸',t:'裏・ボス連戦',s:'赤い目のヒロキ全員と連続バトル',open:!stLock(iUR),go:()=>{curSt=iUR;startGame();}}];
  M.forEach(m=>{const d=document.createElement('div');d.className='mdc '+(m.open?m.c:'lock');d.innerHTML=m.open?`<div class="t">${m.t}</div><div class="s">${m.s}</div><div class="ic">${m.ic}</div>`:`<div class="t">？？？</div><div class="s">まだ解放されていません</div><div class="ic">🔒</div>`;
   d.onclick=()=>{auInit();if(m.open){sfx('ok');m.go();}else{sfx('hit');d.classList.remove('shake');void d.offsetWidth;d.classList.add('shake');toast('🔒 まだ解放されていません');}};L.appendChild(d);});
  show('modesel');if(SV.ura&&!SV.uraNote){SV.uraNote=1;save();setTimeout(()=>codePop('🌑 裏の世界が解放されました',['「出撃」に「裏の世界」が出てきました','敵はぜんぶ、赤い目の裏ヒロキ。弾幕もパワーアップしています','ボスは早めに本気モードになるので気をつけてね','コインは1.3倍もらえます（ボムは出にくくなります）']),300);}}
