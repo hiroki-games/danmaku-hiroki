@@ -214,7 +214,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.10</div>
+ <div id="tver">Ver.3.11</div>
 </div>
 
 <div id="hud">
@@ -445,6 +445,9 @@ setInterval(()=>{
 
 /* ---------- sprites ---------- */
 function mk(w,h,f){const c=document.createElement('canvas');c.width=w;c.height=h;f(c.getContext('2d'),w,h);return c;}
+let BMA=null;const BXA=['b_bear'];function loadBX(id){if(!BXA.includes(id)||IMG['bx_'+id]||loadBX[id])return;loadBX[id]=1;const i=new Image();i.onload=()=>{IMG['bx_'+id]=i;};i.src=src('bx_'+id);}
+function bxFeather(im){if(im._fz)return im._fz;const w=im.width,h=im.height;im._fz=mk(w,h,g=>{g.drawImage(im,0,0);g.globalCompositeOperation='destination-in';const f=.1;let gr=g.createLinearGradient(0,0,w,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(f,'#000');gr.addColorStop(1-f,'#000');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,w,h);gr=g.createLinearGradient(0,0,0,h);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(f*1.6,'#000');gr.addColorStop(1-f*1.6,'#000');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,w,h);});return im._fz;}
+function drawBombArt(){if(!BMA)return;const k=(T-BMA.t0)/BMA.dur;if(k>=1||k<0){BMA=null;return;}const im=bxFeather(BMA.im),sc=1+.08*k,w=W*1.04*sc,h=w*im.height/im.width,a=k<.12?k/.12:k>.62?(1-k)/.38:1;ctx.save();ctx.globalAlpha=.6*a;ctx.drawImage(im,W/2-w/2,560-h/2,w,h);ctx.restore();}
 let URA_ON=false,URAP=null;const UZF=['elf','king','ogre','behemoth','tankknight','centaur','darkelf','bahamut','leviathan','poseidon','vampire','hades','dragon','dragonemp','power','satan','lucifer','gym','kinniku'],UORIG={};
 function loadUra(){if(URAP)return URAP;const L=[...CHIBI.flatMap(n=>['c_'+n+'_r','c_'+n+'_a']),...UZF.flatMap(n=>['z_'+n+'_r','zf_'+n+'_r'])];
  URAP=Promise.all(L.map(n=>new Promise(r=>{const i=new Image();i.onload=()=>{IMG[n]=i;r();};i.onerror=()=>r();i.src=src(n);}))).then(()=>{for(const n of CHIBI){const R=IMG['c_'+n+'_r'],A=IMG['c_'+n+'_a'];if(R&&A){R._aura=A;R._auraR=mk(A.width,A.height,g=>{g.drawImage(A,0,0);g.globalCompositeOperation='source-atop';g.fillStyle='rgba(255,30,80,.6)';g.fillRect(0,0,A.width,A.height);});}}loadUra.done=1;});return URAP;}
@@ -1155,7 +1158,7 @@ function playerShoot(){
 }
 function doBomb(){
  if(mode!=='game'||paused||over||P.dead||BM||P.bombs<=0||D.active)return;
- P.bombs--;const bi=ST.bomb;BM={bs:bi.bs,col:bi.col,r:(bi.rad||0)*ST.brad,x:P.x,y:P.y,t:0,dur:bi.bs==='pets'?1.9:bi.bs==='wave'?1.1:bi.bs==='circle'?.55:.8,dmg:BASE_DPS*ST.bpow,hit:new Set()};bombT=BM.dur;P.inv=Math.max(P.inv,1.2);flash=.25;shake(.35,8);sfx('bomb');say(P,'えいっ！',1.2);
+ P.bombs--;const bi=ST.bomb;BM={bs:bi.bs,col:bi.col,r:(bi.rad||0)*ST.brad,x:P.x,y:P.y,t:0,dur:bi.bs==='pets'?1.9:bi.bs==='wave'?1.1:bi.bs==='circle'?.55:.8,dmg:BASE_DPS*ST.bpow,hit:new Set()};bombT=BM.dur;{const ba=IMG['bx_'+bi.id];if(ba)BMA={im:ba,t0:T,dur:Math.max(BM.dur+1,2.1)};}P.inv=Math.max(P.inv,1.2);flash=.25;shake(.35,8);sfx('bomb');say(P,'えいっ！',1.2);
  if(bi.bs==='pets'){BM.faces=[];BM.lt=0;for(let i=0;i<10;i++){const a=-Math.PI/2+(i/9-.5)*1.7,sp=rand(950,1300);BM.faces.push({x:P.x,y:P.y-20,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,dog:i%2===0,rot:0,vr:rand(-7,7),hit:new Set(),r:64});}say(P,'サンちゃん！ ふっちゃん！ いけーっ！',1.6);flash=.15;}
  if(boss&&boss.ready&&!boss.dying&&Math.random()<.6)say(boss,pick(['今のはノーカン','フォームは完璧だった','それズルくない？']),1.8);
  updBombBtn();
@@ -2337,6 +2340,7 @@ function render(dt,t){
  if(shakeT>0)ctx.translate(rand(-shakeM,shakeM),rand(-shakeM,shakeM));
  const moving=mode==='game'&&!paused&&!D.active;
  drawBG(dt,mode==='game'?(moving?1:0):.5);
+ if(mode==='game')drawBombArt();
  if(mode==='title'){const im=IMG.z_satan;if(im){ctx.save();ctx.globalAlpha=.4;ctx.drawImage(im,0,420+Math.sin(t*.8)*8,720,720*im.height/im.width);ctx.restore();}const L=['goblin','slime','king','orc','elf'];L.forEach((n,i)=>drawChibi(ctx,IMG['c_'+n],null,90+i*135,1130+Math.abs(Math.sin(t*4+i))*-10,n==='king'?160:120,{br:Math.sin(t*6+i)*.03}));}
  if(mode==='game'){
   if(boss)drawBoss(boss,t);
@@ -2372,7 +2376,7 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/
 /* ---------- screens ---------- */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));if(id)$('#'+id).classList.add('on');}
 function toTitle(){uraSwap(false);if(SV.ura||SV.allOpen)setTimeout(loadUra,1500);if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode!=='title')return;if(SV.reNote){SV.reNote=0;save();codePop('📢 アップデートのお知らせ',['ボスの攻撃や弾幕が、新しくパワーアップしました！','そのため、各章のボス（X-3）をもう一度倒すと、次の章に進めるようになっています','⚔ 1章のボスから、順番に倒し直してね','✅ アイテム・コイン・図鑑・キャラはそのままです']);return;}guide('title');},400);}
-function startGame(){const ust=STAGES[curSt];if(ust&&ust.um&&!loadUra.done){toast('裏の世界を読み込み中…');loadUra().then(()=>startGame());return;}uraSwap(ust&&ust.um);auInit();sfx('ok');BG=BGS[STAGES[curSt].ch]||BGS[1];resetGame();mode='game';show(null);$('#hud').classList.add('on');updBombBtn();if(useMsg)setTimeout(()=>toast(useMsg),300);}
+function startGame(){BMA=null;if(SV.eq&&SV.eq.b)loadBX(SV.eq.b);const ust=STAGES[curSt];if(ust&&ust.um&&!loadUra.done){toast('裏の世界を読み込み中…');loadUra().then(()=>startGame());return;}uraSwap(ust&&ust.um);auInit();sfx('ok');BG=BGS[STAGES[curSt].ch]||BGS[1];resetGame();mode='game';show(null);$('#hud').classList.add('on');updBombBtn();if(useMsg)setTimeout(()=>toast(useMsg),300);}
 function pauseGame(on){if(mode!=='game'||over)return;paused=on;if(on){$('#pFace').src=src(hFace(boss&&boss.name));show('pause');if(AU.name)AU.saved=AU.name;bgm(null);}else{show(null);bgm(AU.saved||null);AU.saved=null;}}
 function showResult(win){
  if(mode!=='game')return;
