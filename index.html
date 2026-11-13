@@ -125,6 +125,7 @@ html,body{touch-action:manipulation}
 .gc{width:124px;height:186px;border-radius:14px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transform:scale(.3) rotateY(90deg);animation:gin .45s ease-out forwards}
 .gc.one{width:300px;height:450px}.gc.one .ic{font-size:150px}.gc.one .nm{font-size:30px}.gc.one .rr{font-size:44px}
 @keyframes gin{to{opacity:1;transform:none}}
+.phic{width:1.2em;height:1.2em;object-fit:contain;vertical-align:middle;display:inline-block}
 .gc .ic{font-size:60px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.6))}
 .gc .nm{font-size:15px;font-weight:900;text-align:center;padding:4px 6px 0;line-height:1.25}
 .gc .rr{position:absolute;top:6px;left:8px;font-size:22px;font-weight:900;font-style:italic}
@@ -214,7 +215,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.11</div>
+ <div id="tver">Ver.3.12</div>
 </div>
 
 <div id="hud">
@@ -373,7 +374,7 @@ function loadCode(c){try{const o=JSON.parse(decodeURIComponent(escape(atob(c.tri
 
 /* ---------- images ---------- */
 const CHIBI=['ifrit','cerberus','phoenix','skeleton','zombie','gargoyle','medusa','fairy','minotaur','tankknight','goblin', 'slime', 'orc', 'elf', 'king', 'lizard', 'troll', 'ogre', 'behemoth', 'cyclops', 'gym', 'golem', 'centaur', 'harpy', 'wyvern', 'darkelf', 'bahamut', 'kraken', 'leviathan', 'poseidon', 'dullahan', 'deathknight', 'vampire', 'hades', 'dragon', 'dragonemp', 'wizard', 'power', 'satan', 'lucifer', 'kinniku'];
-const IMGN=['hk_grin','hk_glare','hk_wink','hk_rage','hk_smile','hk_frown','hk_wide','hk_shock','hk_calm','mei_main','mei_happy','ruka_face','ruka_crawl','fy_face','zf_bahamut','hz_arm','hz_hand','hz_drag','hz_fist','hz_bell','hz_phone','ruka_dog','ruka_cat','mei_udon','mei_oyatsu','mei_muffler','mei_towel','mei_close','mei_cam','z_elf','z_satan','z_king','z_ogre','z_behemoth','z_tankknight','z_centaur','z_darkelf','z_bahamut','z_leviathan','z_poseidon','z_vampire','z_hades','z_dragon','z_dragonemp','z_power','z_lucifer','z_gym','z_kinniku',...CHIBI.map(n=>'c_'+n)];
+const IMGN=['hk_grin','hk_glare','hk_wink','hk_rage','hk_smile','hk_frown','hk_wide','hk_shock','hk_calm','mei_main','mei_happy','ruka_face','ruka_crawl','fy_face','zf_bahamut','hz_arm','hz_hand','hz_drag','hz_fist','hz_bell','hz_phone','ruka_dog','ruka_cat','mei_udon','mei_oyatsu','mei_muffler','mei_towel','mei_close','mei_cam','z_elf','z_satan','z_king','z_ogre','z_behemoth','z_tankknight','z_centaur','z_darkelf','z_bahamut','z_leviathan','z_poseidon','z_vampire','z_hades','z_dragon','z_dragonemp','z_power','z_lucifer','z_gym','z_kinniku',...CHIBI.map(n=>'c_'+n),'ph_w_fang','ph_w_rod','ph_w_hakucho'];
 const IMG={};
 function loadImgs(){return Promise.all(IMGN.map(n=>new Promise(r=>{const i=new Image();i.onload=()=>{IMG[n]=i;r();};i.onerror=()=>r();i.src=src(n);})));}
 const SIL={},SILR={};
@@ -839,8 +840,8 @@ const ITEMS=[
  {id:'w_spear',s:'w',r:3,ic:'〰️',n:'EZバー',shot:'triple',d:'ぐにゃっと曲がったバー。二頭筋のためだけに生まれてきた。'},
  {id:'w_fan',s:'w',r:3,ic:'🪭',n:'房州うちわ',shot:'spread5',d:'千葉の伝統工芸。あおぐと風が出る。ヒロキはそれで汗を乾かしている。'},
  {id:'w_tantan',s:'w',r:3,ic:'🌶️',n:'勝浦タンタンメン',shot:'triple',home:1,dm:.85,d:'真っ赤なラー油が飛ぶ。食べた後のヒロキは、だいたい汗だく。'},
- {id:'w_fang',s:'w',r:4,ic:'🏆',n:'黄金のダンベル（20kg）',shot:'triple',home:1,d:'ジムの大会でもらったらしい。毎晩、布で磨いている。'},
- {id:'w_rod',s:'w',r:4,ic:'📟',n:'IQOS ILUMA',shot:'spread5',home:1,d:'ヒロキの右手が定位置。充電が切れると、本人の機嫌も切れる。'},
+ {id:'w_fang',ph:'ph_w_fang',s:'w',r:4,ic:'🏆',n:'黄金のダンベル（20kg）',shot:'triple',home:1,d:'ジムの大会でもらったらしい。毎晩、布で磨いている。'},
+ {id:'w_rod',ph:'ph_w_rod',s:'w',r:4,ic:'📟',n:'IQOS ILUMA',shot:'spread5',home:1,d:'ヒロキの右手が定位置。充電が切れると、本人の機嫌も切れる。'},
  // ===== ボム
  {id:'b_fire',s:'b',r:0,ic:'🍈',n:'メロンソーダの炭酸ばくはつ',bs:'circle',rad:150,bd:1.5,col:'#7dff6a',d:'振ってから開けるとこうなる。ヒロキは「普通振らないでしょ」と言う。'},
  {id:'b_smoke',s:'b',r:0,ic:'💠',n:'オアシスパールの煙',bs:'circle',rad:180,bd:.8,col:'#9fe8ff',d:'ヒロキの吸う方。ほんのりメンソール。威力は弱いが、範囲は少し広い。'},
@@ -903,7 +904,7 @@ const ITEMS=[
  {id:'w_doitsu',s:'w',r:2,ic:'🍺',n:'東京ドイツ村の入場券',shot:'spread5',dm:.8,d:'千葉県袖ケ浦市にある。東京でもドイツでもない。なのに毎年イルミネーションは混む。'},
  {id:'w_kuma',s:'w',r:3,ic:'🐻',n:'木彫りの熊',shot:'triple',home:1,dm:.9,d:'北海道の家に1つはある。鮭をくわえている。誰が買ってきたのかは、誰も覚えていない。'},
  {id:'w_steel',s:'w',r:3,ic:'🏭',n:'室蘭の鉄',shot:'spread5',dm:.95,d:'鉄の街・室蘭の鉄。ヒロキは「現場で使えそう」と言って持ち帰ろうとした。'},
- {id:'w_hakucho',s:'w',r:4,ic:'🌉',n:'白鳥大橋',shot:'spread5',home:1,dm:1.05,d:'東日本最大級の吊り橋。夜はライトアップされる。ヒロキは渡るたびに「この鋼材すごい」と言う。'},
+ {id:'w_hakucho',ph:'ph_w_hakucho',s:'w',r:4,ic:'🌉',n:'白鳥大橋',shot:'spread5',home:1,dm:1.05,d:'東日本最大級の吊り橋。夜はライトアップされる。ヒロキは渡るたびに「この鋼材すごい」と言う。'},
  {id:'b_jam',s:'b',r:0,ic:'🚗',n:'アクアラインの大渋滞',bs:'circle',rad:170,bd:1.2,col:'#ff9a3c',d:'海ほたるで夕日を見ていたら、帰りの渋滞が3時間になっていた。'},
  {id:'b_bell',s:'b',r:0,ic:'🔔',n:'熊よけの鈴',bs:'circle',rad:160,bd:1.3,col:'#ffe08a',d:'鳴らしながら歩く。でも熊は来るときは来る。'},
  {id:'b_hell',s:'b',r:1,ic:'♨️',n:'登別地獄谷の湯けむり',bs:'circle',rad:230,bd:1.6,col:'#c8f0e0',d:'硫黄の匂いで、3日は服から温泉の匂いがする。'},
@@ -998,6 +999,7 @@ const SKINS=[
 const SKM={};SKINS.forEach(k=>SKM[k.id]=k);
 const ALL_ITEMS=[...ITEMS,...MEI_ITEMS];
 const ITM={};ALL_ITEMS.forEach(i=>ITM[i.id]=i);
+function icH(it){return it&&it.ph?`<img src="${src(it.ph)}" class="phic">`:(it?it.ic:'');}
 function skinOf(){return SKM[SV.skin]||SKM.mei;}
 function skinImg(){return skinOf().img;}
 fixSV();if(!SV.eq.w)SV.eq.w='w_club';if(!SV.eq.b)SV.eq.b='b_fire';
@@ -1040,11 +1042,11 @@ function pullMei(guar){
  return{it,isNew:before===0,lv:lvOf(it.id),conv};}
 function doGacha(n,mm){if(mm){const cost=n===10?4500:500;if(SV.coins<cost){toast('コインが足りません');sfx('hit');return;}SV.coins-=cost;const res=[];for(let i=0;i<n;i++)res.push(pullMei(n===10&&i===9&&!res.some(x=>x.it.r>=2)));save();showPull(res);return;}const cost=n===10?1800:200;if(SV.coins<cost){toast('コインが足りません');sfx('hit');return;}
  SV.coins-=cost;const res=[];for(let i=0;i<n;i++)res.push(pullOne(n===10&&i===9&&!res.some(x=>x.it.r>=2)));save();showPull(res);}
-function cardHTML(it,o){o=o||{};const lv=it.s==='k'?(o.lv??skLv(it.id)):(o.lv??lvOf(it.id));return `<div class="gc r${it.r}${o.cls||''}" style="${o.st||''}"><div class="rr" style="color:${RCOL[it.r]}">${RN[it.r]}</div>${o.isNew?'<div class="nw">NEW</div>':''}<div class="ic">${it.s==='k'?`<img src="${src(it.img)}" class="skimg">${it.s==='k'&&o.isNew!==undefined?'':''}`:it.ic}</div><div class="nm">${it.n}</div>${it.s==='u'?`<div class="lv">×${SV.inv[it.id]||0}</div>`:(lv>0?`<div class="lv">+${lv}</div>`:'')}</div>`;}
+function cardHTML(it,o){o=o||{};const lv=it.s==='k'?(o.lv??skLv(it.id)):(o.lv??lvOf(it.id));return `<div class="gc r${it.r}${o.cls||''}" style="${o.st||''}"><div class="rr" style="color:${RCOL[it.r]}">${RN[it.r]}</div>${o.isNew?'<div class="nw">NEW</div>':''}<div class="ic">${it.s==='k'?`<img src="${src(it.img)}" class="skimg">${it.s==='k'&&o.isNew!==undefined?'':''}`:icH(it)}</div><div class="nm">${it.n}</div>${it.s==='u'?`<div class="lv">×${SV.inv[it.id]||0}</div>`:(lv>0?`<div class="lv">+${lv}</div>`:'')}</div>`;}
 function pullFX(x,cb){const it=x.it,r=it.r;if(it.id==='ruka')return rukaFX(cb);const isK=it.s==='k';
  const cols=r===5?['#ffffff','#ffd0f0','#ff8af0']:['#ffffff','#fff3b0','#ffb020'];
  const sub=(x.isNew?'NEW！ ':'かぶり +1　')+(isK?'めっちガチャ':'ヒロキの落とし物ガチャ');
- rukaFX(cb,{face:isK?IMG[it.img]:null,icon:isK?null:it.ic,fr:isK?170:150,emo:isK?['💖','✨','⭐','🌸']:[it.ic,it.ic,'✨','⭐'],rar:RN[r],cols,name:it.n,sub});}
+ rukaFX(cb,{face:isK?IMG[it.img]:(it.ph&&IMG[it.ph])||null,icon:(isK||(it.ph&&IMG[it.ph]))?null:it.ic,fr:isK?170:150,emo:isK?['💖','✨','⭐','🌸']:[it.ic,it.ic,'✨','⭐'],rar:RN[r],cols,name:it.n,sub});}
 function showPull(res){if(!res._fx){res._fx=1;const seen=new Set();const q=res.filter(x=>x.it.r>=4).sort((a,b)=>b.it.r-a.it.r).filter(x=>!seen.has(x.it.id)&&seen.add(x.it.id)).slice(0,3);
   if(q.length){let i=0;const nx=()=>{if(i>=q.length){showPull(res);return;}pullFX(q[i++],nx);};nx();return;}}
  const top=Math.max(...res.map(x=>x.it.r));const fl=$('#gFlash');fl.style.background=top>=5?'linear-gradient(135deg,#ff6ad5,#8a5cff,#4fd0ff,#ffe06a)':top===4?'radial-gradient(#fff6c8,#ffb020)':top===3?'radial-gradient(#ffd34d,#a05000)':'radial-gradient(#c070ff,#2a0a50)';
@@ -1073,7 +1075,7 @@ function openEquip(){
   if(k==='k'){const sk=skinOf();d.className='es has r'+sk.r;d.innerHTML=`<div class="sl">キャラ</div><div class="ic"><img src="${src(sk.img)}" class="skimg" style="width:64px"></div><div class="nm">${sk.n}</div>`;d.onclick=()=>{eTab='k';openEquip();};sl.appendChild(d);continue;}
   if(ruka){d.className='es has r6';d.innerHTML=`<div class="sl">${SLOTN[k]}</div><div class="ic">${fy?(k==='w'?'✨':k==='b'?'💨':k==='x1'?'🧚':'💩'):(k==='w'?'🥟':k==='b'?'🐾':k==='x1'?'🐈':'💖')}</div><div class="nm">搭載済み</div>`;d.onclick=rukaLock;sl.appendChild(d);continue;}
   const it=ITM[SV.eq[k]];d.className='es'+(it?' has r'+it.r:'');
-  d.innerHTML=`<div class="sl">${SLOTN[k]}</div>`+(it?`<div class="ic">${it.ic}</div><div class="nm">${it.n}${lvOf(it.id)?' +'+lvOf(it.id):''}</div>`:'<div class="ic" style="opacity:.25">＋</div><div class="nm" style="color:#888">なし</div>');
+  d.innerHTML=`<div class="sl">${SLOTN[k]}</div>`+(it?`<div class="ic">${icH(it)}</div><div class="nm">${it.n}${lvOf(it.id)?' +'+lvOf(it.id):''}</div>`:'<div class="ic" style="opacity:.25">＋</div><div class="nm" style="color:#888">なし</div>');
   d.onclick=()=>{eTab=k.startsWith('x')?'x':k;openEquip();};sl.appendChild(d);}
  const st=calcStats();
  $('#eStats').innerHTML=`武器：<b>${st.wname}</b>（${SHOTN[st.shot]}${st.home?'＋追尾弾':''}）　攻撃力 <b>${st.pow.toFixed(2)}倍</b><br>ボム：<b>${st.bomb.n}</b>（${BSHAPE[st.bomb.bs]}・威力${st.bpow.toFixed(1)}）<br>残機 <b>${st.lives}</b>　ボム <b>${st.bombs}</b>　バリア <b>${st.bar}</b>　当たり判定 <b>${Math.round(st.hb*100)}%</b>　コイン <b>×${st.coin.toFixed(2)}</b>`;
@@ -1087,7 +1089,7 @@ function openEquip(){
  show('equip');
 }
 function openEDet(it){eSel=it;sfx('ok');$('#edEq').style.display='';if(it.s==='k'){$('#edIcon').innerHTML=it.id==='fairy'?`<img src="${src('c_fairy')}" style="height:240px;display:block;margin:0 auto">`:it.id==='ruka'?`<img src="${src('ruka_crawl')}" style="width:300px;display:block;margin:0 auto;filter:drop-shadow(0 0 12px #ff8af0)">`:`<img src="${src(it.img)}" class="skimg" style="width:180px">`;$('#edName').innerHTML=`<span style="color:${RCOL[it.r]}">${RN[it.r]}</span>　${it.n}`;$('#edEff').textContent=it.id==='fairy'?'全ステータス最低／当たり判定+30%／パーツ装備不可／ネタキャラ':it.id==='ruka'?'餃子レーザー＋サンちゃん＆ふっちゃんが攻撃／攻撃力10倍／ボム：犬猫大突撃／残機+4／ボム+3／バリア2回／当たり判定-30%／パーツ装備不可':effText(it,skLv(it.id)).replace('効果なし','見た目だけ変わる');$('#edName').innerHTML+=skLv(it.id)?' +'+skLv(it.id):'';$('#edDesc').textContent=it.d;const on=(SV.skin||'mei')===it.id;$('#edEq').textContent=on?'使用中':'このキャラにする';$('#edEq').classList.toggle('dim',on);$('#eDet').classList.add('on');return;}
- $('#edIcon').textContent=it.ic;$('#edName').innerHTML=`<span style="color:${RCOL[it.r]}">${RN[it.r]}</span>　${it.n}`+(lvOf(it.id)?' +'+lvOf(it.id):'');$('#edEff').textContent=effText(it,lvOf(it.id));$('#edDesc').textContent=it.d;
+ $('#edIcon').innerHTML=icH(it);$('#edName').innerHTML=`<span style="color:${RCOL[it.r]}">${RN[it.r]}</span>　${it.n}`+(lvOf(it.id)?' +'+lvOf(it.id):'');$('#edEff').textContent=effText(it,lvOf(it.id));$('#edDesc').textContent=it.d;
  const acc=isAcc(it);const on=acc?(SV.eq.x1===it.id||SV.eq.x2===it.id):SV.eq[it.s]===it.id;
  $('#edEq').textContent=on?(acc?'はずす':'装備中'):'装備する';$('#edEq').classList.toggle('dim',on&&!acc);$('#eDet').classList.add('on');}
 $('#edEq').onclick=()=>{const it=eSel;if(it.s==='k'){SV.skin=it.id;save();sfx('pow');$('#eDet').classList.remove('on');openEquip();return;}
