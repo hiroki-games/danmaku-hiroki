@@ -928,7 +928,7 @@ function pullOne(guar){SV.pity=(SV.pity||0)+1;let r=rollR(guar);if(SV.pity>=50&&
 let gMode='h';
 function pullMei(guar){
  const x=Math.random()*100;
- if(x<.5){const had=SV.skins.ruka||0;let cv=0;if(had>=11){SV.coins+=50;cv=2;}else SV.skins.ruka=had+1;return{it:Object.assign({s:'k',ic:''},SKM.ruka),isNew:!had,lv:skLv('ruka'),conv:cv};}
+ if(x<.1){const had=SV.skins.ruka||0;let cv=0;if(had>=11){SV.coins+=50;cv=2;}else SV.skins.ruka=had+1;return{it:Object.assign({s:'k',ic:''},SKM.ruka),isNew:!had,lv:skLv('ruka'),conv:cv};}
  if(x<10){const y=Math.random()*10;const r=y<.4?5:y<2?4:y<5?3:2;const k=pick(SKINS.filter(s=>s.r===r));const had=SV.skins[k.id]||0;let cv=0;if(had>=11){SV.coins+=50;cv=2;}else SV.skins[k.id]=had+1;return{it:Object.assign({s:'k',ic:''},k),isNew:!had,lv:skLv(k.id),conv:cv};}
  let r=x<55?0:x<83?1:x<95?2:3;if(guar&&r<2)r=2;
  const it=pick(MEI_ITEMS.filter(i=>i.r===r));const before=SV.inv[it.id]||0;let conv=0;if(before>=11){SV.coins+=20;conv=1;}else SV.inv[it.id]=before+1;
@@ -955,7 +955,7 @@ function updGacha(){$('#gCoin').textContent=fmt(SV.coins);
  $('#gBS').innerHTML='武器・ボム・アクセサリー 全'+ITEMS.filter(i=>i.s!=='u').length+'種';
  $('#gRates').innerHTML='N 50% ／ R 30% ／ SR 14% ／ SSR 5% ／ UR 0.9% ／ <span style="color:#ff8af0">幻 0.1%</span><br>10連は SR以上 1つ確定　／　<b>UR確定まで あと'+(50-(SV.pity||0))+'回</b>';
  $('#mBS').innerHTML='おやつ 全'+MEI_ITEMS.length+'種 ＋ <b style="color:#ff8af0">めっち '+(SKINS.filter(k=>!k.code).length-1)+'人</b>';
- $('#mRates').innerHTML='<b style="color:#fff">？？？ 0.5%</b> ／ <b style="color:#ff8af0">キャラ 9.5%</b> ／ おやつ N 55%・R 28%・SR 12%・SSR 5%<br>10連は SR以上 1つ確定';
+ $('#mRates').innerHTML='<b style="color:#fff">？？？ 0.1%</b> ／ <b style="color:#ff8af0">キャラ 9.9%</b> ／ おやつ N 55%・R 28%・SR 12%・SSR 5%<br>10連は SR以上 1つ確定';
  for(const id of['g1','m1'])$('#'+id).classList.toggle('dim',SV.coins<100);for(const id of['g10','m10'])$('#'+id).classList.toggle('dim',SV.coins<900);}
 $('#g1').onclick=()=>doGacha(1);$('#g10').onclick=()=>doGacha(10);$('#m1').onclick=()=>doGacha(1,1);$('#m10').onclick=()=>doGacha(10,1);
 // equip screen
