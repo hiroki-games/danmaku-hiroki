@@ -215,7 +215,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.12</div>
+ <div id="tver">Ver.3.13</div>
 </div>
 
 <div id="hud">
@@ -446,9 +446,9 @@ setInterval(()=>{
 
 /* ---------- sprites ---------- */
 function mk(w,h,f){const c=document.createElement('canvas');c.width=w;c.height=h;f(c.getContext('2d'),w,h);return c;}
-let BMA=null;const BXA=['b_bear'];function loadBX(id){if(!BXA.includes(id)||IMG['bx_'+id]||loadBX[id])return;loadBX[id]=1;const i=new Image();i.onload=()=>{IMG['bx_'+id]=i;};i.src=src('bx_'+id);}
+let BMA=null;const BXA=['b_bear','b_judge','b_tsunami'];function loadBX(id){if(!BXA.includes(id)||IMG['bx_'+id]||loadBX[id])return;loadBX[id]=1;const i=new Image();i.onload=()=>{IMG['bx_'+id]=i;};i.src=src('bx_'+id);}
 function bxFeather(im){if(im._fz)return im._fz;const w=im.width,h=im.height;im._fz=mk(w,h,g=>{g.drawImage(im,0,0);g.globalCompositeOperation='destination-in';const f=.1;let gr=g.createLinearGradient(0,0,w,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(f,'#000');gr.addColorStop(1-f,'#000');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,w,h);gr=g.createLinearGradient(0,0,0,h);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(f*1.6,'#000');gr.addColorStop(1-f*1.6,'#000');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,w,h);});return im._fz;}
-function drawBombArt(){if(!BMA)return;const k=(T-BMA.t0)/BMA.dur;if(k>=1||k<0){BMA=null;return;}const im=bxFeather(BMA.im),sc=1+.08*k,w=W*1.04*sc,h=w*im.height/im.width,a=k<.12?k/.12:k>.62?(1-k)/.38:1;ctx.save();ctx.globalAlpha=.6*a;ctx.drawImage(im,W/2-w/2,560-h/2,w,h);ctx.restore();}
+function drawBombArt(){if(!BMA)return;const k=(T-BMA.t0)/BMA.dur;if(k>=1||k<0){BMA=null;return;}const im=bxFeather(BMA.im),sc=1+.08*k,fz=Math.min(W*1.04/im.width,620/im.height),w=im.width*fz*sc,h=im.height*fz*sc,a=k<.12?k/.12:k>.62?(1-k)/.38:1;ctx.save();ctx.globalAlpha=.6*a;ctx.drawImage(im,W/2-w/2,560-h/2,w,h);ctx.restore();}
 let URA_ON=false,URAP=null;const UZF=['elf','king','ogre','behemoth','tankknight','centaur','darkelf','bahamut','leviathan','poseidon','vampire','hades','dragon','dragonemp','power','satan','lucifer','gym','kinniku'],UORIG={};
 function loadUra(){if(URAP)return URAP;const L=[...CHIBI.flatMap(n=>['c_'+n+'_r','c_'+n+'_a']),...UZF.flatMap(n=>['z_'+n+'_r','zf_'+n+'_r'])];
  URAP=Promise.all(L.map(n=>new Promise(r=>{const i=new Image();i.onload=()=>{IMG[n]=i;r();};i.onerror=()=>r();i.src=src(n);}))).then(()=>{for(const n of CHIBI){const R=IMG['c_'+n+'_r'],A=IMG['c_'+n+'_a'];if(R&&A){R._aura=A;R._auraR=mk(A.width,A.height,g=>{g.drawImage(A,0,0);g.globalCompositeOperation='source-atop';g.fillStyle='rgba(255,30,80,.6)';g.fillRect(0,0,A.width,A.height);});}}loadUra.done=1;});return URAP;}
