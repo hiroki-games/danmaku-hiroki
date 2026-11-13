@@ -215,7 +215,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.13</div>
+ <div id="tver">Ver.3.14</div>
 </div>
 
 <div id="hud">
@@ -374,7 +374,7 @@ function loadCode(c){try{const o=JSON.parse(decodeURIComponent(escape(atob(c.tri
 
 /* ---------- images ---------- */
 const CHIBI=['ifrit','cerberus','phoenix','skeleton','zombie','gargoyle','medusa','fairy','minotaur','tankknight','goblin', 'slime', 'orc', 'elf', 'king', 'lizard', 'troll', 'ogre', 'behemoth', 'cyclops', 'gym', 'golem', 'centaur', 'harpy', 'wyvern', 'darkelf', 'bahamut', 'kraken', 'leviathan', 'poseidon', 'dullahan', 'deathknight', 'vampire', 'hades', 'dragon', 'dragonemp', 'wizard', 'power', 'satan', 'lucifer', 'kinniku'];
-const IMGN=['hk_grin','hk_glare','hk_wink','hk_rage','hk_smile','hk_frown','hk_wide','hk_shock','hk_calm','mei_main','mei_happy','ruka_face','ruka_crawl','fy_face','zf_bahamut','hz_arm','hz_hand','hz_drag','hz_fist','hz_bell','hz_phone','ruka_dog','ruka_cat','mei_udon','mei_oyatsu','mei_muffler','mei_towel','mei_close','mei_cam','z_elf','z_satan','z_king','z_ogre','z_behemoth','z_tankknight','z_centaur','z_darkelf','z_bahamut','z_leviathan','z_poseidon','z_vampire','z_hades','z_dragon','z_dragonemp','z_power','z_lucifer','z_gym','z_kinniku',...CHIBI.map(n=>'c_'+n),'ph_w_fang','ph_w_rod','ph_w_hakucho'];
+const IMGN=['hk_grin','hk_glare','hk_wink','hk_rage','hk_smile','hk_frown','hk_wide','hk_shock','hk_calm','mei_main','mei_happy','ruka_face','ruka_crawl','fy_face','zf_bahamut','hz_arm','hz_hand','hz_drag','hz_fist','hz_bell','hz_phone','ruka_dog','ruka_cat','mei_udon','mei_oyatsu','mei_muffler','mei_towel','mei_close','mei_cam','z_elf','z_satan','z_king','z_ogre','z_behemoth','z_tankknight','z_centaur','z_darkelf','z_bahamut','z_leviathan','z_poseidon','z_vampire','z_hades','z_dragon','z_dragonemp','z_power','z_lucifer','z_gym','z_kinniku',...CHIBI.map(n=>'c_'+n),'ph_w_fang','ph_w_rod','ph_w_hakucho','ph_b_bear','ph_b_judge','ph_b_tsunami'];
 const IMG={};
 function loadImgs(){return Promise.all(IMGN.map(n=>new Promise(r=>{const i=new Image();i.onload=()=>{IMG[n]=i;r();};i.onerror=()=>r();i.src=src(n);})));}
 const SIL={},SILR={};
@@ -851,8 +851,8 @@ const ITEMS=[
  {id:'b_ice',s:'b',r:2,ic:'🌊',n:'銚子の荒波',bs:'circle',rad:270,bd:2,col:'#7fe0ff',d:'犬吠埼の荒波を呼びよせる。しぶきが冷たい。'},
  {id:'b_roar',s:'b',r:3,ic:'💥',n:'デッドリフトの衝撃',bs:'beam',rad:140,bd:5.5,col:'#ff6a1a',d:'200kgを床に置いた瞬間の衝撃。ジムの床がへこんだ。'},
  {id:'b_scythe',s:'b',r:3,ic:'⛰️',n:'鋸山の地獄のぞき',bs:'cross',rad:80,bd:5,col:'#c24dff',d:'千葉の絶景スポットから十字に切り裂く。高いところは平気らしい。'},
- {id:'b_tsunami',s:'b',r:4,ic:'🏄',n:'九十九里の大波',bs:'wave',rad:0,bd:6.5,col:'#3ab0ff',d:'下から画面全体を押し流す。サーファーたちも巻き込まれた。'},
- {id:'b_judge',s:'b',r:4,ic:'💪',n:'ジム全館パンプアップ',bs:'full',rad:0,bd:7.5,col:'#fff3b0',d:'ジムにいる全員の筋肉が同時にパンプする。画面全体が光る。'},
+ {id:'b_tsunami',ph:'ph_b_tsunami',s:'b',r:4,ic:'🏄',n:'九十九里の大波',bs:'wave',rad:0,bd:6.5,col:'#3ab0ff',d:'下から画面全体を押し流す。サーファーたちも巻き込まれた。'},
+ {id:'b_judge',ph:'ph_b_judge',s:'b',r:4,ic:'💪',n:'ジム全館パンプアップ',bs:'full',rad:0,bd:7.5,col:'#fff3b0',d:'ジムにいる全員の筋肉が同時にパンプする。画面全体が光る。'},
  // ===== 防具
  {id:'a_rag',s:'a',r:0,ic:'🎽',n:'ジムのタンクトップ',inv:.5,d:'肩まわりが大きく開いている。見せるための服。'},
  {id:'a_lid',s:'a',r:0,ic:'🧘',n:'ヨガマット',life:1,d:'ストレッチ用。ヒロキは「ストレッチしない人、ケガするよ」と毎回言う。'},
@@ -912,7 +912,7 @@ const ITEMS=[
  {id:'b_yakei',s:'b',r:2,ic:'🎆',n:'工場夜景の炎',bs:'beam',rad:100,bd:3.8,col:'#ff7a3a',d:'室蘭の工場夜景。煙突の炎は一晩じゅう燃えている。「ロマンチック」と言ったのはキムだけ。'},
  {id:'b_enma',s:'b',r:2,ic:'⚖️',n:'閻魔大王の審判',bs:'cross',rad:90,bd:4.6,col:'#ff3a3a',d:'登別の閻魔堂。時間になると顔が変わって怒り出す。子どもは泣く。ヒロキは「声量がいい」と褒めた。'},
  {id:'b_chikyu',s:'b',r:3,ic:'🌍',n:'地球岬の大パノラマ',bs:'circle',rad:330,bd:4.5,col:'#7fd0ff',d:'地球が丸く見える岬。……と言われているが、霧で何も見えない日のほうが多い。'},
- {id:'b_bear',s:'b',r:4,ic:'🐻',n:'クマ牧場の大行進',bs:'wave',rad:0,bd:6.5,col:'#c08a50',d:'登別のクマ牧場。クマが手を振っておやつをねだる。人間が檻に入る展示もある。'},
+ {id:'b_bear',ph:'ph_b_bear',s:'b',r:4,ic:'🐻',n:'クマ牧場の大行進',bs:'wave',rad:0,bd:6.5,col:'#c08a50',d:'登別のクマ牧場。クマが手を振っておやつをねだる。人間が檻に入る展示もある。'},
  {id:'a_mimi',s:'a',r:0,ic:'🐭',n:'ネズミの耳つき帽子',inv:.4,d:'「東京」のお土産。千葉で買った。'},
  {id:'a_yukata',s:'a',r:0,ic:'👘',n:'登別温泉の浴衣',life:1,d:'帯の結び方を、ヒロキに3回直された。'},
  {id:'a_muffler',s:'a',r:0,ic:'🧣',n:'霧で湿ったマフラー',inv:.3,d:'室蘭の霧を吸ってしっとりしている。乾く日は来ない。'},
