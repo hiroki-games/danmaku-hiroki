@@ -202,7 +202,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.2.7</div>
+ <div id="tver">Ver.2.8</div>
 </div>
 
 <div id="hud">
@@ -868,6 +868,49 @@ const ITEMS=[
  {id:'u_scroll',s:'u',r:1,ic:'🥤',n:'プロテインシェイカー',ubar:1,d:'出撃時に1つ使う。バリア+1。ちゃんと洗ってある方。'},
  {id:'u_melon',s:'u',r:1,ic:'🍈',n:'メロンソーダ',ulife:1,d:'出撃時に1つ使う。残機+1。ヒロキの好きな飲み物。'},
  {id:'u_gold',s:'u',r:2,ic:'🏅',n:'金のシェイカー',ucoin:.5,d:'出撃時に1つ使う。そのステージのコイン1.5倍。'},
+ // ===== 追加：千葉ブラックジョーク・北海道・室蘭・登別
+ {id:'w_mouse',s:'w',r:0,ic:'🎀',n:'ネズミーランドのカチューシャ',shot:'twin',dm:.85,d:'「TOKYO」と書いてあるが、買ったのは千葉県浦安市。誰も気にしていない。'},
+ {id:'w_tokei',s:'w',r:0,ic:'🕰️',n:'札幌時計台のミニチュア',shot:'single',dm:1.0,d:'日本三大がっかり名所の模型。本物を見たヒロキは「思ってたより小さい」と10回言った。'},
+ {id:'w_yakitori',s:'w',r:0,ic:'🍢',n:'室蘭やきとり',shot:'twin',dm:.9,d:'やきとりなのに豚肉。玉ねぎと洋がらし付き。ヒロキは「鶏じゃないなら意味ない」と言って食べない。'},
+ {id:'w_bolt',s:'w',r:1,ic:'🔩',n:'室蘭のボルト人形',shot:'spread3',dm:.95,d:'ボルトとナットでできた室蘭名物の人形。かわいいが、普通に重い。投げると痛い。'},
+ {id:'w_curry',s:'w',r:1,ic:'🍛',n:'室蘭カレーラーメン',shot:'triple',dm:.85,d:'カレーなのかラーメンなのか、はっきりしろとヒロキは言う。スープは最後まで飲む派。'},
+ {id:'w_jingis',s:'w',r:1,ic:'🐑',n:'ジンギスカン鍋',shot:'spread3',dm:.9,d:'服に匂いが3日残る。ヒロキは食べたあと、必ず全身に消臭スプレーをかける。'},
+ {id:'w_oni',s:'w',r:2,ic:'👹',n:'登別の鬼の金棒',shot:'triple',dm:.95,d:'登別の街には、あちこちに鬼がいる。金棒は思ったよりプラスチック。'},
+ {id:'w_doitsu',s:'w',r:2,ic:'🍺',n:'東京ドイツ村の入場券',shot:'spread5',dm:.8,d:'千葉県袖ケ浦市にある。東京でもドイツでもない。なのに毎年イルミネーションは混む。'},
+ {id:'w_kuma',s:'w',r:3,ic:'🐻',n:'木彫りの熊',shot:'triple',home:1,dm:.9,d:'北海道の家に1つはある。鮭をくわえている。誰が買ってきたのかは、誰も覚えていない。'},
+ {id:'w_steel',s:'w',r:3,ic:'🏭',n:'室蘭の鉄',shot:'spread5',dm:.95,d:'鉄の街・室蘭の鉄。ヒロキは「現場で使えそう」と言って持ち帰ろうとした。'},
+ {id:'w_hakucho',s:'w',r:4,ic:'🌉',n:'白鳥大橋',shot:'spread5',home:1,dm:1.05,d:'東日本最大級の吊り橋。夜はライトアップされる。ヒロキは渡るたびに「この鋼材すごい」と言う。'},
+ {id:'b_jam',s:'b',r:0,ic:'🚗',n:'アクアラインの大渋滞',bs:'circle',rad:170,bd:1.2,col:'#ff9a3c',d:'海ほたるで夕日を見ていたら、帰りの渋滞が3時間になっていた。'},
+ {id:'b_bell',s:'b',r:0,ic:'🔔',n:'熊よけの鈴',bs:'circle',rad:160,bd:1.3,col:'#ffe08a',d:'鳴らしながら歩く。でも熊は来るときは来る。'},
+ {id:'b_hell',s:'b',r:1,ic:'♨️',n:'登別地獄谷の湯けむり',bs:'circle',rad:230,bd:1.6,col:'#c8f0e0',d:'硫黄の匂いで、3日は服から温泉の匂いがする。'},
+ {id:'b_fog',s:'b',r:1,ic:'🌫️',n:'室蘭の霧',bs:'circle',rad:240,bd:1.8,col:'#e0e8ff',d:'夏でも霧。せっかく地球岬に行ったのに、地球どころか前も見えなかった。'},
+ {id:'b_yakei',s:'b',r:2,ic:'🎆',n:'工場夜景の炎',bs:'beam',rad:100,bd:3.8,col:'#ff7a3a',d:'室蘭の工場夜景。煙突の炎は一晩じゅう燃えている。「ロマンチック」と言ったのはキムだけ。'},
+ {id:'b_enma',s:'b',r:2,ic:'⚖️',n:'閻魔大王の審判',bs:'cross',rad:90,bd:4.6,col:'#ff3a3a',d:'登別の閻魔堂。時間になると顔が変わって怒り出す。子どもは泣く。ヒロキは「声量がいい」と褒めた。'},
+ {id:'b_chikyu',s:'b',r:3,ic:'🌍',n:'地球岬の大パノラマ',bs:'circle',rad:330,bd:4.5,col:'#7fd0ff',d:'地球が丸く見える岬。……と言われているが、霧で何も見えない日のほうが多い。'},
+ {id:'b_bear',s:'b',r:4,ic:'🐻',n:'クマ牧場の大行進',bs:'wave',rad:0,bd:6.5,col:'#c08a50',d:'登別のクマ牧場。クマが手を振っておやつをねだる。人間が檻に入る展示もある。'},
+ {id:'a_mimi',s:'a',r:0,ic:'🐭',n:'ネズミの耳つき帽子',inv:.4,d:'「東京」のお土産。千葉で買った。'},
+ {id:'a_yukata',s:'a',r:0,ic:'👘',n:'登別温泉の浴衣',life:1,d:'帯の結び方を、ヒロキに3回直された。'},
+ {id:'a_muffler',s:'a',r:0,ic:'🧣',n:'霧で湿ったマフラー',inv:.3,d:'室蘭の霧を吸ってしっとりしている。乾く日は来ない。'},
+ {id:'a_steelhelm',s:'a',r:1,ic:'🪖',n:'製鉄所のヘルメット',life:1,inv:.3,d:'鉄の街の安全第一。ヒロキはかぶった瞬間「サイズ合ってる」と満足した。'},
+ {id:'a_fur',s:'a',r:1,ic:'🐾',n:'熊の毛皮のベスト',bar:1,d:'本物かどうかは、聞かないでほしい。'},
+ {id:'a_snowglove',s:'a',r:1,ic:'🧤',n:'雪かき用の手袋',hb:.85,d:'北海道では冬の朝の日課。千葉育ちのヒロキは1日で腰を痛めた。'},
+ {id:'a_ninja',s:'a',r:2,ic:'🥷',n:'時代村の忍者装束',hb:.7,d:'登別の時代村で忍者ショーを見たヒロキが、帰りに買った。一度も着ていない。'},
+ {id:'a_narita',s:'a',r:2,ic:'🧳',n:'成田空港のスーツケース',life:1,bar:1,d:'「東京の空の玄関」。住所は千葉県成田市。都内から1時間かかる。'},
+ {id:'a_nyx',s:'a',r:3,ic:'🏰',n:'登別のお城の水族館',bar:2,d:'お城の形の水族館。ペンギンが行進する。ヒロキはペンギンの「列の乱れ」が気になって楽しめない。'},
+ {id:'a_chibainu',s:'a',r:3,ic:'🐕',n:'千葉県の形のクッション',life:2,d:'千葉県民は自分の県を「犬の形」と言い張る。埼玉県民はそれを見て黙る。'},
+ {id:'a_hokkaido',s:'a',r:4,ic:'🗾',n:'北海道まるごと',life:2,hb:.75,d:'でっかいどう。隣の町まで車で2時間。「近い」の感覚が壊れる。'},
+ {id:'c_shiroku',s:'c',r:0,ic:'🍪',n:'白くない恋人',coin:.05,d:'北海道の有名なお土産……のパロディ。中身はふつうのクッキー。'},
+ {id:'c_kani',s:'c',r:0,ic:'🦀',n:'毛ガニの殻',d:'身はヒロキが全部食べた。殻だけキムに渡された。'},
+ {id:'c_etc',s:'c',r:0,ic:'🎫',n:'アクアラインの通行券',coin:.05,d:'往復の通行料で、ランチが2回食べられる。'},
+ {id:'c_nyuyoku',s:'c',r:0,ic:'🛁',n:'登別温泉の素',coin:.05,d:'家の風呂に入れても、地獄谷の匂いはしない。ヒロキは「再現度が低い」と文句を言う。'},
+ {id:'c_yubari',s:'c',r:1,ic:'🍈',n:'夕張メロン（1玉5千円）',coin:.1,d:'高すぎて、ありがたみがすごい。半分はヒロキが食べた。'},
+ {id:'c_potato',s:'c',r:1,ic:'🥔',n:'空港限定のじゃがいもスナック',mag:1,d:'「空港でしか買えない」と言われて10箱買った。普通に通販でも買える。'},
+ {id:'c_toba',s:'c',r:1,ic:'🐟',n:'鮭とば',bomb:1,d:'噛みすぎて、あごが筋肉痛。ヒロキは「あごの筋トレ」と呼んでいる。'},
+ {id:'c_lavender',s:'c',r:2,ic:'💜',n:'ラベンダーソフト',brad:.25,d:'富良野のラベンダー味。香りは完全にトイレの芳香剤。'},
+ {id:'c_makuhari',s:'c',r:2,ic:'🎤',n:'幕張メッセの遠征グッズ',coin:.2,d:'「東京公演」と書いてあるが、会場は千葉。千葉県民は毎回小さく傷つく。'},
+ {id:'c_mazui',s:'c',r:3,ic:'🥖',n:'まずい棒',coin:.3,mag:1,d:'銚子の電鉄が生き残るために売っている名物。味はふつうにおいしい。'},
+ {id:'c_marimo',s:'c',r:3,ic:'🟢',n:'阿寒湖のまりも',bomb:2,d:'大事に育てようとして、3日で存在を忘れた。今もどこかの棚で生きている。'},
+ {id:'c_enmabook',s:'c',r:4,ic:'📕',n:'閻魔大王の帳簿',home:1,slow:.1,d:'登別の閻魔大王の帳簿。ヒロキが言った「普通でしょ」の回数が全部書いてある。ページが足りない。'},
 ];
 // ===== めっちガチャ：おやつ（キャラに装着）
 const MEI_ITEMS=[
@@ -1034,7 +1077,9 @@ function resetGame(){HZ=[];CUT=null;
 
 /* ---------- helpers ---------- */
 function aim(x,y){return Math.atan2(P.y-y,P.x-x);}
-function eb(x,y,a,sp,spr,o){if(EB.length>1100)return null;if(boss&&boss.ready&&Math.abs(x-boss.x)<170&&Math.abs(y-boss.y)<170)boss.atk=.35;const s=sp*EZ().spd*.85*(1-(ST?ST.eslow:0));const b={x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,spr,r:spr.hr,acc:0,t:0};if(o)Object.assign(b,o);EB.push(b);return b;}
+const BTE={elf:['🍃','🌿'],king:['🍖','👑'],ogre:['🦴','🪨'],behemoth:['⚡','🦴'],tankknight:['🛞','🧽'],centaur:['🥕','🐎'],darkelf:['🔮','🌙'],bahamut:['⚡','🔥'],leviathan:['💧','🐟'],poseidon:['🐚','🔱'],vampire:['🦇','🌹'],hades:['💀','👻'],dragon:['🔥','🌋'],dragonemp:['♨️','🔥'],power:['💪','🔥'],satan:['👟','😈'],lucifer:['🪶','✨'],gym:['📸','🥤'],kinniku:['🥦','🍗']};const BTS={};
+function emoSpr(ch){if(BTS[ch])return BTS[ch];return BTS[ch]={img:mk(56,56,(g)=>{const gr=g.createRadialGradient(28,28,4,28,28,28);gr.addColorStop(0,'rgba(255,255,255,.95)');gr.addColorStop(.55,'rgba(255,240,200,.55)');gr.addColorStop(.75,'rgba(40,0,20,.55)');gr.addColorStop(1,'rgba(40,0,20,0)');g.fillStyle=gr;g.fillRect(0,0,56,56);g.font='30px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(ch,28,30);}),hr:10,rot:false};}
+function eb(x,y,a,sp,spr,o){if(EB.length>1100)return null;if(boss&&boss.ready&&!boss.dying&&BTE[boss.key]&&spr&&spr.hr<16&&Math.random()<.45)spr=emoSpr(pick(BTE[boss.key]));if(boss&&boss.ready&&Math.abs(x-boss.x)<170&&Math.abs(y-boss.y)<170)boss.atk=.35;const s=sp*EZ().spd*.85*(1-(ST?ST.eslow:0));const b={x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,spr,r:spr.hr,acc:0,t:0};if(o)Object.assign(b,o);EB.push(b);return b;}
 function fan(x,y,a,k,spread,sp,spr){for(let i=0;i<k;i++)eb(x,y,a+(k>1?(i/(k-1)-.5)*spread:0),sp,spr);}
 function ring(x,y,k,sp,spr,off){for(let i=0;i<k;i++)eb(x,y,(off||0)+i/k*TAU,sp,spr);}
 function shake(t,m){shakeT=Math.max(shakeT,t);shakeM=Math.max(shakeM,m);}
