@@ -228,7 +228,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.39</div>
+ <div id="tver">Ver.3.40</div>
 </div>
 
 <div id="hud">
@@ -2473,7 +2473,7 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/
 
 /* ---------- screens ---------- */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));if(id)$('#'+id).classList.add('on');}
-function toTitle(){uraSwap(false);if(SV.ura||SV.allOpen)setTimeout(loadUra,1500);if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode!=='title')return;if(SV.reNote){SV.reNote=0;save();codePop('📢 アップデートのお知らせ',['ボスの攻撃や弾幕が、新しくパワーアップしました！','そのため、各章のボス（X-3）をもう一度倒すと、次の章に進めるようになっています','⚔ 1章のボスから、順番に倒し直してね','✅ アイテム・コイン・図鑑・キャラはそのままです']);return;}guide('title');},400);}
+function toTitle(){uraSwap(false);setTimeout(autoUpd,800);if(SV.ura||SV.allOpen)setTimeout(loadUra,1500);if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode!=='title')return;if(SV.reNote){SV.reNote=0;save();codePop('📢 アップデートのお知らせ',['ボスの攻撃や弾幕が、新しくパワーアップしました！','そのため、各章のボス（X-3）をもう一度倒すと、次の章に進めるようになっています','⚔ 1章のボスから、順番に倒し直してね','✅ アイテム・コイン・図鑑・キャラはそのままです']);return;}guide('title');},400);}
 function startGame(){BMA=null;if(SV.eq&&SV.eq.b)loadBX(SV.eq.b);const ust=STAGES[curSt];if(ust&&ust.um&&!loadUra.done){toast('裏の世界を読み込み中…');loadUra().then(()=>startGame());return;}uraSwap(ust&&ust.um);RUNBUY=PENDBUY||{};PENDBUY=null;PFX=null;if(RUNBUY.punch&&!IMG.fx_punch){const pi=new Image();pi.onload=()=>{IMG.fx_punch=pi;};pi.src=src('fx_punch');}auInit();sfx('ok');BG=BGS[STAGES[curSt].ch]||BGS[1];resetGame();mode='game';show(null);$('#hud').classList.add('on');updBombBtn();if(useMsg)setTimeout(()=>toast(useMsg),300);}
 function pauseGame(on){if(mode!=='game'||over)return;paused=on;if(on){$('#pFace').src=src(hFace(boss&&boss.name));show('pause');if(AU.name)AU.saved=AU.name;bgm(null);}else{show(null);bgm(AU.saved||null);AU.saved=null;}}
 function showResult(win){
@@ -2638,7 +2638,9 @@ function rukaFX(cb,o){o=o||{};
 $('#tHelp').onclick=()=>{auInit();sfx('ok');guide('all',true);};
 const CURVER=($('#tver').textContent.match(/Ver\.[0-9.]+/)||[''])[0];let NEWVER=null;
 function chkUpd(){return fetch('index.html?chk='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(t=>{const m=t.match(/<div id="tver">(Ver\.[0-9.]+)<\/div>/);NEWVER=m&&m[1]!==CURVER?m[1]:null;const b=$('#tUpd');if(NEWVER){b.textContent='🔄 '+NEWVER+' に更新';b.classList.add('new');}else{b.textContent='🔄 更新を確認';b.classList.remove('new');}return NEWVER;}).catch(()=>null);}
-setTimeout(chkUpd,1200);
+function autoUpd(){if(mode!=='title'||DEMO)return;chkUpd().then(v=>{if(!v||mode!=='title')return;if(document.querySelector('#codePop.on')||$('#fxc').style.display==='block')return;let last=0;try{last=+sessionStorage.getItem('dhAU')||0;}catch(e){}if(Date.now()-last<60000)return;try{sessionStorage.setItem('dhAU',Date.now());}catch(e){}save();toast('🔄 '+v+' に自動で更新します');setTimeout(()=>{if(mode==='title')location.replace(location.pathname+'?v='+Date.now());},900);});}
+setTimeout(autoUpd,1200);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(autoUpd,600);});
 $('#tUpd').onclick=()=>{sfx('ok');const b=$('#tUpd');b.textContent='確認中…';chkUpd().then(v=>{if(v){save();toast(v+' に更新します');setTimeout(()=>location.replace(location.pathname+'?v='+Date.now()),500);}else{b.textContent='🔄 更新を確認';toast('最新版です（'+CURVER+'）');}});};
 $('#tStart').onclick=()=>{auInit();sfx('ok');openMode();};$('#mdBack').onclick=()=>{sfx('ok');toTitle();};$('#ssBack').onclick=()=>{sfx('ok');openMode();};
 $('#tZukan').onclick=()=>{auInit();sfx('ok');openZukan();guide('zukan');};
