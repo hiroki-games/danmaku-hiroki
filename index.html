@@ -192,6 +192,8 @@ html,body{touch-action:manipulation}
 #gdNext{position:absolute;right:24px;bottom:10px;font-size:22px;color:#ffb8f0;animation:bl 1s infinite}
 #tYado{position:absolute;right:14px;bottom:10px;width:140px;filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 12px rgba(255,138,240,.8)) drop-shadow(0 6px 8px rgba(0,0,0,.5));cursor:pointer;animation:yd 2.6s ease-in-out infinite}#tYado img{width:100%;display:block}
 #tYbub{position:absolute;right:160px;bottom:50px;width:400px;padding:18px 22px;border-radius:20px;background:rgba(255,255,255,.96);color:#2a0a20;font-size:23px;font-weight:800;line-height:1.55;opacity:0;transition:opacity .25s;pointer-events:none;border:3px solid #ff8af0}#tYbub.on{opacity:1}#tYbub::after{content:'';position:absolute;right:-16px;bottom:30px;border:10px solid transparent;border-left:14px solid #fff}
+#rAdv{display:none;align-items:center;gap:14px;width:640px;margin:6px auto 14px;text-align:left}#rAdv img{width:120px;height:auto;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}#rAdvT{flex:1;background:rgba(40,10,50,.85);border:3px solid #ff8af0;border-radius:22px;padding:14px 18px;font-size:23px;font-weight:800;line-height:1.5;color:#fff}#rAdvT b{color:#ffb8f0}
+#tUpd{position:absolute;top:62px;left:50%;transform:translateX(-50%);padding:6px 18px;border-radius:24px;background:rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.35);font-size:19px;font-weight:900;color:rgba(255,255,255,.8);white-space:nowrap;cursor:pointer}#tUpd.new{border-color:#ffd34d;color:#ffd34d;background:rgba(80,50,0,.75);animation:updP 1.2s ease-in-out infinite}@keyframes updP{50%{box-shadow:0 0 18px #ffd34d}}
 #tHelp{position:absolute;top:24px;left:24px;padding:8px 18px;border-radius:30px;background:rgba(0,0,0,.6);border:2px solid #ff8af0;font-size:22px;font-weight:900;color:#ffb8f0}
 #fxc{position:absolute;left:0;top:0;width:720px;height:1280px;display:none;z-index:80}
 #toast{position:absolute;top:170px;left:50%;transform:translateX(-50%);padding:14px 28px;border-radius:30px;background:rgba(0,0,0,.8);border:2px solid #e6b84a;font-size:24px;font-weight:900;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
@@ -215,7 +217,8 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.24</div>
+<div id="tUpd">🔄 更新を確認</div>
+ <div id="tver">Ver.3.25</div>
 </div>
 
 <div id="hud">
@@ -246,6 +249,7 @@ html,body{touch-action:manipulation}
  <img class="face" id="rFace" alt="">
  <div class="line" id="rLine"></div>
  <div class="stats" id="rStats"></div>
+ <div id="rAdv"><img src="assets/mei_yado.webp" alt=""><div id="rAdvT"></div></div>
  <button class="gbtn red" id="rNext" style="font-size:36px;padding:20px 0">次のステージへ</button>
  <button class="gbtn" id="rRetry">もう一度</button>
  <button class="gbtn small" id="rTitleB">タイトルへ</button>
@@ -1217,7 +1221,7 @@ function updPlayer(dt){
 
 /* ---------- enemies ---------- */
 function spawn(kind,o){
- const T=ET[kind];const MUST=!!(o.hpm&&/-1$/.test((STAGES[curSt]||{}).id||''));const ZH={6:.75,7:.65,8:.6},ZE={1:.8,2:.85,3:.9},zs=STAGES[curSt]||{};const e={kind,x:o.x,y:o.y??-50,hp:T.hp*(o.hpm||1)*(ZH[zs.ch]||1)*((!zs.um&&ZE[zs.ch])||1),r:T.r,size:T.h*.5,h:T.h,img:IMG['c_'+kind],sil:SIL[kind],t:0,seed:rand(0,10),lx:o.x,tilt:0,mode:o.mode||'down',vx:o.vx||0,vy:o.vy??150,fire:o.fire,fireT:o.fireDelay??rand(.6,1.4),flash:0,acc:0,accT:0,x0:o.x,amp:o.amp||0,w:o.w||2,ph:o.ph||0,ty:o.ty||220,stay:o.stay||3,st:0};
+ const T=ET[kind];const MUST=!!(o.hpm&&/-1$/.test((STAGES[curSt]||{}).id||''));const ZH={6:.75,7:.65,8:.6},ZE={1:.8,2:.85,3:.9,4:.75,5:.75},zs=STAGES[curSt]||{};const e={kind,x:o.x,y:o.y??-50,hp:T.hp*(o.hpm||1)*(ZH[zs.ch]||1)*((!zs.um&&ZE[zs.ch])||1),r:T.r,size:T.h*.5,h:T.h,img:IMG['c_'+kind],sil:SIL[kind],t:0,seed:rand(0,10),lx:o.x,tilt:0,mode:o.mode||'down',vx:o.vx||0,vy:o.vy??150,fire:o.fire,fireT:o.fireDelay??rand(.6,1.4),flash:0,acc:0,accT:0,x0:o.x,amp:o.amp||0,w:o.w||2,ph:o.ph||0,ty:o.ty||220,stay:o.stay||3,st:0};
  if(MUST){e.stay=1e9;e.must=1;if(!E.some(q=>q.must)){BN={t1:'中ボス出現！',t2:'倒さないと先に進めないよ',life:2.4};sfx('warn');}}E.push(e);if(!o.quiet&&Math.random()<(kind==='orc'||kind==='troll'||ET[kind].big?.6:.12))say(e,pick(kind==='orc'?L_ORC:(ET[kind].lines||L_ESTJ)),2.2);if(kind==='gym')say(e,pick(ET.gym.lines),3);return e;
 }
 const F={
@@ -1257,7 +1261,7 @@ function hitEnemy(e,d){
  e.hp-=d;e.flash=.06;e.acc+=d;if(e.accT<=0)e.accT=.12;addCombo();score+=d/1e5|0;sfx('hit');
  if(e.hp<=0&&!e.dead){e.dead=true;e.gone=true;kills++;score+=ET[e.kind].score;boom(e.x,e.y,e.size,null);sfx('boom');if(e.acc>0)dmgText(e.x,e.y-20,e.acc);
   for(let i=0;i<ET[e.kind].coins;i++)drop(e.x,e.y,'coin',4);
-  const big=e.kind==='orc'||e.kind==='troll'||ET[e.kind].big;if(e.must||Math.random()<(big?.2:.008))drop(e.x,e.y,'bomb');
+  const big=e.kind==='orc'||e.kind==='troll'||ET[e.kind].big;if(e.must||Math.random()<(big?.15:.008))drop(e.x,e.y,'bomb');
   if(big&&Math.random()<.2)drop(e.x,e.y,'chicken');
   if(e.kind==='fairy'){for(let i=0;i<60;i++)drop(e.x+rand(-60,60),e.y+rand(-60,60),'coin',5);autoCollect=true;setTimeout(()=>{if(mode==='game'&&!boss)autoCollect=false;},2500);flash=.5;sfx('clear');setTimeout(()=>toast('✨ 幻のヒロキを倒した！ コイン大量ゲット！'),2300);}
   reg(e.kind);}
@@ -2409,6 +2413,7 @@ function showResult(win){
  if(win&&!showResult.w&&!DEMO&&IT.some(i=>i.type==='coin')){showResult.w=1;autoCollect=true;const t0=Date.now();const iv=setInterval(()=>{if(mode!=='game'||!IT.some(i=>i.type==='coin')||Date.now()-t0>1800){clearInterval(iv);setTimeout(()=>{showResult.w=0;showResult(win);},250);}},60);return;}
  if(showResult.w)return;over=true;CUT=null;if(DEMO){bgm(null);sfx(win?'clear':'over');demoEnd(win);return;}bgm(null);sfx(win?'clear':'over');
  runCoins=Math.round(runCoins);SV.coins+=runCoins;if(score>SV.best)SV.best=score;if(maxCombo>SV.bestCombo)SV.bestCombo=maxCombo;if(win){SV.clears++;SV.prog=Math.max(SV.prog||0,curSt+1);const cs=STAGES[curSt];if(SV.reLock&&/-3$/.test(cs.id)){SV.reCh=Math.max(SV.reCh||0,cs.ch);if(SV.reCh>=8)SV.reLock=0;}}if(!win){if(SV.loseSt===curSt)SV.loseN=(SV.loseN||0)+1;else{SV.loseSt=curSt;SV.loseN=1;}if(SV.loseN>=5)SV.easyOpen=1;}else if(SV.loseSt===curSt)SV.loseN=0;save();
+ {const av=(!win&&SV.loseN>=2)?advice():null;$('#rAdv').style.display=av?'flex':'none';if(av)$('#rAdvT').innerHTML=av;}
  $('#rTitle').textContent=win?(STAGES[curSt].urush?'裏 ALL CLEAR':STAGES[curSt].umEnd?'裏 TRUE END':STAGES[curSt].ura?'TRUE END':STAGES[curSt].end?'THE END':(STAGES[curSt].rush?'ALL CLEAR':'STAGE CLEAR')):'GAME OVER';$('#rTitle').style.filter=win?'':'hue-rotate(-40deg) saturate(2)';
  $('#rFace').src=src(win?((SV.skin||'mei')!=='mei'?skinImg():'mei_happy'):hFace(boss&&boss.name));$('#rFace').style.borderColor=win?'#8fd0ff':'#e6b84a';
  $('#rLine').textContent=win?STAGES[curSt].win:'「'+pick(L_OVER)+'」';
@@ -2416,6 +2421,15 @@ function showResult(win){
  if(win&&STAGES[curSt].umEnd&&!DEMO){SV.uraClear=1;save();}const nS=STAGES[curSt+1],cS=STAGES[curSt];const nx=win&&nS&&!nS.demo&&!nS.rush&&!cS.rush&&!!nS.um===!!cS.um&&!stLock(curSt+1);$('#rNext').style.display=nx?'block':'none';
  setTimeout(()=>{show('result');$('#toast').classList.remove('on');$('#hud').classList.remove('on');if(win&&STAGES[curSt].end&&!SV.uraSeen)setTimeout(()=>gogoFX(),900);},win?600:200);
 }
+function advice(){const S=[],st=STAGES[curSt]||{},left=P?P.bombs:0,w=ITM[SV.eq.w]||{r:0},n=SV.loseN||0;
+ if(SV.bombPos!=='D')S.push('ボムは<b>設定で「2回タップ」</b>にもできるよ。指をはなさずに、画面を2回トントンで撃てるの');
+ if(!SV.eq.x1||!SV.eq.x2||!SV.eq.o)S.push('<b>アクセや防具の枠</b>があいてるよ。つけると残機やボムが増えるものもあるよ');
+ if(SV.coins>=200&&!st.um&&!st.rush)S.push(`コインが<b>${SV.coins}G</b>あるよ。ガチャで装備を強くしてみない？`);
+ if(st.ch>=3&&!st.um&&(w.r||0)<Math.min(3,st.ch-2))S.push('武器がちょっと心細いかも。<b>同じ装備がかぶると強化</b>されるよ');
+ const G=['弾が多いところは、<b>低速ボタン</b>を押しながら動くと、細かくよけられるよ','当たり判定は、<b>めいちゃんの真ん中の小さい点</b>だけなの。見た目より小さいから、すきまを通れるよ','<b>赤い矢印や円</b>が出たら、大技の合図。早めにその場所からはなれてね','敵の真正面は弾が集まりやすいよ。<b>少しずれた位置</b>から撃つと、楽なときもあるよ','ボス戦の前には、<b>ボムが1個流れてくる</b>よ。忘れずにひろってね'];
+ const t=[];if(left>0)t.push(`ボム、まだ<b>${left}個</b>残ってたよ。あぶないと思ったら、迷わず使っていいからね`);
+ if(S.length)t.push(S[n%S.length]);t.push(G[(n+curSt)%G.length]);
+ return 'ねえねえ、ちょっとアドバイス！<br>'+t.slice(0,2).join('<br>');}
 function stLock(i){const st=STAGES[i];if(!st)return true;if(SV.allOpen)return false;const prog=SV.prog||0,i83=STAGES.findIndex(q=>q.end);if(st.urush)return !SV.uraClear||reLocked(i);if(st.um){if(!SV.ura)return true;const iu=STAGES.findIndex(q=>q.um);return i>Math.max(prog,iu)||reLocked(i);}return (i>prog&&!(st.rush&&prog>i83))||reLocked(i);}
 function reLocked(i){const st=STAGES[i];if(!st||!SV.reLock||SV.allOpen)return false;if(st.ura||st.rush||st.um)return (SV.reCh||0)<8;return st.ch>(SV.reCh||0)+1;}
 let SSCAT='n';
@@ -2540,6 +2554,10 @@ function rukaFX(cb,o){o=o||{};
  c.onpointerdown=e=>{e.stopPropagation();if((performance.now()-t0)/1000<4.3)return;done=true;c.style.display='none';c.onpointerdown=null;if(mode==='title')bgm('title');cb&&cb();};
 }
 $('#tHelp').onclick=()=>{auInit();sfx('ok');guide('all',true);};
+const CURVER=($('#tver').textContent.match(/Ver\.[0-9.]+/)||[''])[0];let NEWVER=null;
+function chkUpd(){return fetch('index.html?chk='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(t=>{const m=t.match(/<div id="tver">(Ver\.[0-9.]+)<\/div>/);NEWVER=m&&m[1]!==CURVER?m[1]:null;const b=$('#tUpd');if(NEWVER){b.textContent='🔄 '+NEWVER+' に更新';b.classList.add('new');}else{b.textContent='🔄 更新を確認';b.classList.remove('new');}return NEWVER;}).catch(()=>null);}
+setTimeout(chkUpd,1200);
+$('#tUpd').onclick=()=>{sfx('ok');const b=$('#tUpd');b.textContent='確認中…';chkUpd().then(v=>{if(v){save();toast(v+' に更新します');setTimeout(()=>location.replace(location.pathname+'?v='+Date.now()),500);}else{b.textContent='🔄 更新を確認';toast('最新版です（'+CURVER+'）');}});};
 $('#tStart').onclick=()=>{auInit();sfx('ok');openMode();};$('#mdBack').onclick=()=>{sfx('ok');toTitle();};$('#ssBack').onclick=()=>{sfx('ok');openMode();};
 $('#tZukan').onclick=()=>{auInit();sfx('ok');openZukan();guide('zukan');};
 $('#tGacha').onclick=()=>{auInit();sfx('ok');updGacha();show('gacha');$('#gScroll').scrollTop=0;guide('gacha');};
