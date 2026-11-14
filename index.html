@@ -225,7 +225,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.32</div>
+ <div id="tver">Ver.3.33</div>
 </div>
 
 <div id="hud">
@@ -1567,7 +1567,7 @@ function* behP3(b){b.rage=true;yield* wait(.5);yield* bigMove(b,'ベヒーモス
  }}
 const FACEC={"z_king":[375,237],"z_ogre":[324,152],"z_behemoth":[321,152],"z_tankknight":[374,76],"z_centaur":[300,116],"z_darkelf":[417,200],"z_bahamut":[355,187],"z_leviathan":[266,229],"z_poseidon":[337,208],"z_vampire":[352,142],"z_hades":[358,185],"z_dragon":[295,179],"z_dragonemp":[353,174],"z_power":[352,157],"z_satan":[371,240],"z_lucifer":[374,273],"z_gym":[352,169],"z_kinniku":[364,149],"z_elf":[313,143]};
 function* cutin(img,name,sub){const me=CUT={key:img,img:IMG[img],chibi:img.startsWith('c_'),name,sub,life:2.6,max:2.6};sfx('phase');while(CUT===me&&me.life>0)yield;if(CUT===me)CUT=null;}
-function* runBoss(b){{const ps=STAGES[curSt]||{};if(!ps.rush&&!preBomb){preBomb=1;drop(rand(220,500),200,'bomb');if(!(RUNBUY.punch&&!RUNBUY.punchUsed))toast('ボムが流れてきた！');}}const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}{const es=STAGES[curSt]||{},EH={1:.8,2:.85,3:.9};if(!es.um&&!es.rush&&EH[es.ch]){b.maxhp*=es.id==='3-3'?.85:EH[es.ch];b.hp=b.maxhp;}}{const us=STAGES[curSt]||{};if(us.um&&!us.rush){b.maxhp*=1.3;b.hp=b.maxhp;}}if((STAGES[curSt]||{}).um){if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}const doPunch=RUNBUY.punch&&!RUNBUY.punchUsed;if(doPunch)RUNBUY.punchUsed=1;boss=b;if(doPunch){while(!b.ready&&!b.dead)yield;if(!b.dead){PFX={t:0,dur:2.6,b,hit:0};$('#toast').classList.remove('on');}}while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
+function* runBoss(b){{const ps=STAGES[curSt]||{};if(!ps.rush&&!preBomb){preBomb=1;drop(rand(220,500),200,'bomb');if(!(RUNBUY.punch&&!RUNBUY.punchUsed))toast('ボムが流れてきた！');}}const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}{const es=STAGES[curSt]||{},EH={1:.8,2:.85,3:.9};if(!es.um&&!es.rush&&EH[es.ch]){b.maxhp*=({'1-3':.6,'2-3':.6,'3-3':.85})[es.id]||EH[es.ch];b.hp=b.maxhp;}}{const us=STAGES[curSt]||{};if(us.um&&!us.rush){b.maxhp*=1.3;b.hp=b.maxhp;}}if((STAGES[curSt]||{}).um){if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}const doPunch=RUNBUY.punch&&!RUNBUY.punchUsed;if(doPunch)RUNBUY.punchUsed=1;boss=b;if(doPunch){while(!b.ready&&!b.dead)yield;if(!b.dead){PFX={t:0,dur:2.6,b,hit:0};$('#toast').classList.remove('on');}}while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
 function mz(b){return[b.x+b.mx,b.y+b.my];}
 function* spiral(b,dur,iv,arms,rot,sp,spr,both){let a=rand(0,TAU),t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;a+=rot*dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);for(let k=0;k<arms;k++){eb(x,y,a+k/arms*TAU,sp,spr);if(both)eb(x,y,-a+k/arms*TAU,sp*.85,SP.oPink);}sfx('eshot');}}}
 function* stream(b,dur,iv,sp,spr){let t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);eb(x,y,aim(x,y),sp,spr);sfx('eshot');}}}
@@ -1606,7 +1606,7 @@ function* kingP3(b){b.rage=true;yield* wait(.5);yield* bigMove(b,'メガヒロ�
  }}
 let HZ=[];
 function hzWarn(){return SV.easy?1.5:(chF()<.85?1.3:1.05);}
-const HZSC={1:.86,2:.89,3:.92,4:.95,5:.98,6:1,7:1,8:1};
+const HZSC={1:.82,2:.85,3:.88,4:.91,5:.98,6:1,7:1,8:1};
 function hzS(){const st=STAGES[curSt]||{};if(st.um)return 1;let c=st.rush&&RCH?RCH:st.ch;let v=HZSC[c]||1;if(boss&&boss.key==='kinniku')v=.92;return v;}
 function addHz(o,delay){const S=hzS();if(delay>0&&o.mode!=='drop'&&Math.random()>S*S+.05)return;const im=o.img?IMG[o.img]:null;const th0=o.th||130,dh=th0*(o.sc||1.25);const len=o.mode==='beam'?40:(im?dh*im.width/im.height:o.emo?dh:th0);
  o.th=th0*(.7+.3*S);if(o.spd)o.spd*=(.75+.25*S);HZ.push(Object.assign({t:-(delay||0),warn:hzWarn()*(1+(1-S)*.8),done:false,im,dh,len},o));}
