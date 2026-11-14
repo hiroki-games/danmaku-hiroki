@@ -205,7 +205,7 @@ html,body{touch-action:manipulation}
 #tYbub{position:absolute;right:160px;bottom:50px;width:400px;padding:18px 22px;border-radius:20px;background:rgba(255,255,255,.96);color:#2a0a20;font-size:23px;font-weight:800;line-height:1.55;opacity:0;transition:opacity .25s;pointer-events:none;border:3px solid #ff8af0}#tYbub.on{opacity:1}#tYbub::after{content:'';position:absolute;right:-16px;bottom:30px;border:10px solid transparent;border-left:14px solid #fff}
 #rAdv{display:none;align-items:center;gap:14px;width:640px;margin:6px auto 14px;text-align:left}#rAdv img{width:120px;height:auto;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}#rAdvT{flex:1;background:rgba(40,10,50,.85);border:3px solid #ff8af0;border-radius:22px;padding:14px 18px;font-size:23px;font-weight:800;line-height:1.5;color:#fff}#rAdvT b{color:#ffb8f0}
 #tUpd{position:absolute;bottom:36px;left:28px;padding:6px 18px;border-radius:24px;background:rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.35);font-size:19px;font-weight:900;color:rgba(255,255,255,.8);white-space:nowrap;cursor:pointer}#tUpd.new{border-color:#ffd34d;color:#ffd34d;background:rgba(80,50,0,.75);animation:updP 1.2s ease-in-out infinite}@keyframes updP{50%{box-shadow:0 0 18px #ffd34d}}
-#tDaily{position:absolute;top:84px;left:24px;padding:8px 18px;border-radius:30px;background:rgba(0,0,0,.6);border:2px solid #7fd8ff;font-size:22px;font-weight:900;color:#bfeaff;cursor:pointer}#tDaily .dot{display:none;position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#ff3a5a;box-shadow:0 0 10px #ff3a5a}#tDaily.new .dot{display:block}
+#tDaily{position:absolute;top:84px;left:24px;padding:8px 18px;border-radius:30px;background:rgba(0,0,0,.6);border:2px solid #7fd8ff;font-size:22px;font-weight:900;color:#bfeaff;cursor:pointer}#tDaily.new{border-color:#ffd34d;color:#fff3c0;animation:updP 1.2s ease-in-out infinite}#tDaily .dot{display:none;position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#ff3a5a;box-shadow:0 0 10px #ff3a5a}#tDaily.new .dot{display:block}
 #dyTop{width:640px;margin:6px auto 14px;display:flex;align-items:center;gap:14px}#dyTop img{width:130px;flex:none}#dyBub{flex:1;background:rgba(10,40,60,.85);border:3px solid #7fd8ff;border-radius:22px;padding:14px 18px;font-size:24px;font-weight:800;line-height:1.5}
 #dyList{width:640px;margin:0 auto;display:flex;flex-direction:column;gap:14px}.dym{padding:16px 20px;border-radius:18px;border:3px solid #3a6a8a;background:linear-gradient(#123248,#081624)}.dym .h{display:flex;justify-content:space-between;align-items:center;gap:10px}.dym .lv{font-size:19px;font-weight:900;padding:2px 12px;border-radius:12px;margin-right:8px}.dym .nm{font-size:27px;font-weight:900;flex:1}.dym .rw{font-size:26px;font-weight:900;color:#ffd34d;white-space:nowrap}
 .dym .bar{height:14px;border-radius:8px;background:rgba(255,255,255,.12);margin-top:12px;overflow:hidden}.dym .bar i{display:block;height:100%;background:linear-gradient(90deg,#7fd8ff,#bfffd8)}.dym .pg{font-size:19px;color:#bfeaff;margin-top:6px;text-align:right}
@@ -235,7 +235,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.45</div>
+ <div id="tver">Ver.3.46</div>
 </div>
 
 <div id="hud">
@@ -411,7 +411,7 @@ function loadCode(c){try{const o=JSON.parse(decodeURIComponent(escape(atob(c.tri
 
 /* ---------- images ---------- */
 const CHIBI=['ifrit','cerberus','phoenix','skeleton','zombie','gargoyle','medusa','fairy','minotaur','tankknight','goblin', 'slime', 'orc', 'elf', 'king', 'lizard', 'troll', 'ogre', 'behemoth', 'cyclops', 'gym', 'golem', 'centaur', 'harpy', 'wyvern', 'darkelf', 'bahamut', 'kraken', 'leviathan', 'poseidon', 'dullahan', 'deathknight', 'vampire', 'hades', 'dragon', 'dragonemp', 'wizard', 'power', 'satan', 'lucifer', 'kinniku'];
-const IMGN=['hk_grin','hk_glare','hk_wink','hk_rage','hk_smile','hk_frown','hk_wide','hk_shock','hk_calm','mei_main','mei_happy','ruka_face','ruka_crawl','fy_face','zf_bahamut','hz_arm','hz_hand','hz_drag','hz_fist','hz_bell','hz_phone','ruka_dog','ruka_cat','mei_udon','mei_oyatsu','mei_muffler','mei_towel','mei_close','mei_cam','z_elf','z_satan','z_king','z_ogre','z_behemoth','z_tankknight','z_centaur','z_darkelf','z_bahamut','z_leviathan','z_poseidon','z_vampire','z_hades','z_dragon','z_dragonemp','z_power','z_lucifer','z_gym','z_kinniku',...CHIBI.map(n=>'c_'+n),'ph_w_fang','ph_w_rod','ph_w_hakucho','ph_b_bear','ph_b_judge','ph_b_tsunami','ph_c_kimu','ph_c_ash','ph_o_melojoy'];
+const IMGN=['hk_grin','hk_glare','hk_wink','hk_rage','hk_smile','hk_frown','hk_wide','hk_shock','hk_calm','mei_main','mei_happy','ruka_face','ruka_crawl','fy_face','zf_bahamut','hz_arm','hz_hand','hz_drag','hz_fist','hz_bell','hz_phone','ruka_dog','ruka_cat','mei_udon','mei_visu','mei_oyatsu','mei_muffler','mei_towel','mei_close','mei_cam','z_elf','z_satan','z_king','z_ogre','z_behemoth','z_tankknight','z_centaur','z_darkelf','z_bahamut','z_leviathan','z_poseidon','z_vampire','z_hades','z_dragon','z_dragonemp','z_power','z_lucifer','z_gym','z_kinniku',...CHIBI.map(n=>'c_'+n),'ph_w_fang','ph_w_rod','ph_w_hakucho','ph_b_bear','ph_b_judge','ph_b_tsunami','ph_c_kimu','ph_c_ash','ph_o_melojoy'];
 const IMG={};
 function loadImgs(){return Promise.all(IMGN.map(n=>new Promise(r=>{const i=new Image();i.onload=()=>{IMG[n]=i;r();};i.onerror=()=>r();i.src=src(n);})));}
 const SIL={},SILR={};
@@ -1030,6 +1030,7 @@ const SKINS=[
  {id:'oyatsu',r:2,img:'mei_oyatsu',n:'おやつ中のきむちゃん',mag:1,d:'おやつを邪魔されると、少しだけ目つきが鋭くなる。アイテム吸い寄せUP。'},
  {id:'muffler',r:3,img:'mei_muffler',n:'マフラーめいちゃん',inv:.4,d:'寒がり。マフラーを巻くと防御力が上がる（気がする）。被弾後の無敵+0.4秒。'},
  {id:'towel',r:3,img:'mei_towel',n:'お風呂上がりめっち',bomb:1,d:'髪を乾かす前に出撃してしまった。ボム+1。'},
+ {id:'visu',r:4,img:'mei_visu',n:'ビジュいいめっち',life:1,coin:.2,d:'写真を撮るときだけ、角度と光の当たり方が完ぺきになる。残機+1、コイン+20%。'},
  {id:'close',r:4,img:'mei_close',n:'近すぎるきむちゃん',life:1,hb:.85,d:'ビデオ通話のたびに画面いっぱいになる。残機+1、当たり判定-15%。'},
  {id:'ruka',r:6,img:'ruka_face',n:'動物マスター ルカ',d:'めっちのお姉ちゃん。どんな動物もすぐなつく動物マスター。大好物は餃子で、通常攻撃も餃子レーザー。愛犬サンちゃんと愛猫ふっちゃんが一緒に戦ってくれる、全キャラ最強。'},
  {id:'fairy',r:0,img:'fy_face',code:1,n:'妖精ヒロキ',d:'裏コードでしか手に入らない、全キャラ最弱のネタキャラ。羽はあるが、筋肉が重すぎてほとんど飛べない。本人は「これはこれで有酸素運動」と言っている。'},
@@ -2583,8 +2584,9 @@ function openDaily(){const D_=dailyEnsure();const L=$('#dyList');L.innerHTML='';
  show('daily');guide('daily');}
 $('#tDaily').onclick=()=>{auInit();sfx('ok');openDaily();};$('#dyBack').onclick=()=>{sfx('ok');toTitle();};
 function isStandalone(){try{return navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;}catch(e){return false;}}
+function dailyPop(){const t=dToday();if(SV.dPop===t||mode!=='title')return;SV.dPop=t;save();const D_=dailyEnsure();codePop('📅 今日のデイリーミッション',[...D_.m.map(m=>`${DLV[m.lv][0]}：${m.n}　<b style="color:#ffd34d">${DRW[m.lv]}G</b>`),`3つぜんぶで ボーナス <b style="color:#ffd34d">${DBONUS}G</b>`],0,openDaily,'見に行く');}
 function titleTips(){const q=[];if(SV.fevSeen&&!(SV.seen||{}).fever)q.push(['fever',0]);if(!isStandalone()&&(!SV.homeT||Date.now()-SV.homeT>3*86400000))q.push(['home',1]);
- const nx=()=>{const k=q.shift();if(!k||mode!=='title')return;if(k[0]==='home'){SV.homeT=Date.now();save();}guide(k[0],k[1],nx);};nx();}
+ const nx=()=>{const k=q.shift();if(!k){if(mode==='title')setTimeout(dailyPop,300);return;}if(mode!=='title')return;if(k[0]==='home'){SV.homeT=Date.now();save();}guide(k[0],k[1],nx);};nx();}
 function stLock(i){const st=STAGES[i];if(!st)return true;if(SV.allOpen)return false;const prog=SV.prog||0,i83=STAGES.findIndex(q=>q.end);if(st.urush)return !SV.uraClear||reLocked(i);if(st.um){if(!SV.ura)return true;const iu=STAGES.findIndex(q=>q.um);return i>Math.max(prog,iu)||reLocked(i);}return (i>prog&&!(st.rush&&prog>i83))||reLocked(i);}
 function reLocked(i){const st=STAGES[i];if(!st||!SV.reLock||SV.allOpen)return false;if(st.ura||st.rush||st.um)return (SV.reCh||0)<8;return st.ch>(SV.reCh||0)+1;}
 let SSCAT='n';
