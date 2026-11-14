@@ -205,6 +205,11 @@ html,body{touch-action:manipulation}
 #tYbub{position:absolute;right:160px;bottom:50px;width:400px;padding:18px 22px;border-radius:20px;background:rgba(255,255,255,.96);color:#2a0a20;font-size:23px;font-weight:800;line-height:1.55;opacity:0;transition:opacity .25s;pointer-events:none;border:3px solid #ff8af0}#tYbub.on{opacity:1}#tYbub::after{content:'';position:absolute;right:-16px;bottom:30px;border:10px solid transparent;border-left:14px solid #fff}
 #rAdv{display:none;align-items:center;gap:14px;width:640px;margin:6px auto 14px;text-align:left}#rAdv img{width:120px;height:auto;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}#rAdvT{flex:1;background:rgba(40,10,50,.85);border:3px solid #ff8af0;border-radius:22px;padding:14px 18px;font-size:23px;font-weight:800;line-height:1.5;color:#fff}#rAdvT b{color:#ffb8f0}
 #tUpd{position:absolute;bottom:36px;left:28px;padding:6px 18px;border-radius:24px;background:rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.35);font-size:19px;font-weight:900;color:rgba(255,255,255,.8);white-space:nowrap;cursor:pointer}#tUpd.new{border-color:#ffd34d;color:#ffd34d;background:rgba(80,50,0,.75);animation:updP 1.2s ease-in-out infinite}@keyframes updP{50%{box-shadow:0 0 18px #ffd34d}}
+#tDaily{position:absolute;top:84px;left:24px;padding:8px 18px;border-radius:30px;background:rgba(0,0,0,.6);border:2px solid #7fd8ff;font-size:22px;font-weight:900;color:#bfeaff;cursor:pointer}#tDaily .dot{display:none;position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#ff3a5a;box-shadow:0 0 10px #ff3a5a}#tDaily.new .dot{display:block}
+#dyTop{width:640px;margin:6px auto 14px;display:flex;align-items:center;gap:14px}#dyTop img{width:130px;flex:none}#dyBub{flex:1;background:rgba(10,40,60,.85);border:3px solid #7fd8ff;border-radius:22px;padding:14px 18px;font-size:24px;font-weight:800;line-height:1.5}
+#dyList{width:640px;margin:0 auto;display:flex;flex-direction:column;gap:14px}.dym{padding:16px 20px;border-radius:18px;border:3px solid #3a6a8a;background:linear-gradient(#123248,#081624)}.dym .h{display:flex;justify-content:space-between;align-items:center;gap:10px}.dym .lv{font-size:19px;font-weight:900;padding:2px 12px;border-radius:12px;margin-right:8px}.dym .nm{font-size:27px;font-weight:900;flex:1}.dym .rw{font-size:26px;font-weight:900;color:#ffd34d;white-space:nowrap}
+.dym .bar{height:14px;border-radius:8px;background:rgba(255,255,255,.12);margin-top:12px;overflow:hidden}.dym .bar i{display:block;height:100%;background:linear-gradient(90deg,#7fd8ff,#bfffd8)}.dym .pg{font-size:19px;color:#bfeaff;margin-top:6px;text-align:right}
+.dym.ok{border-color:#ffd34d;box-shadow:0 0 16px rgba(255,211,77,.5)}.dym.got{opacity:.45}.dym .cl{width:220px;margin:12px 0 0 auto;padding:10px 0;font-size:24px}#dyNote{text-align:center;font-size:20px;color:rgba(255,255,255,.55);margin-top:16px}
 #tHelp{position:absolute;top:24px;left:24px;padding:8px 18px;border-radius:30px;background:rgba(0,0,0,.6);border:2px solid #ff8af0;font-size:22px;font-weight:900;color:#ffb8f0}
 #fxc{position:absolute;left:0;top:0;width:720px;height:1280px;display:none;z-index:80}
 #toast{position:absolute;top:170px;left:50%;transform:translateX(-50%);padding:14px 28px;border-radius:30px;background:rgba(0,0,0,.8);border:2px solid #e6b84a;font-size:24px;font-weight:900;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
@@ -218,6 +223,7 @@ html,body{touch-action:manipulation}
 
 <div id="title" class="screen">
  <div id="tHelp">？ あそびかた</div>
+ <div id="tDaily">📅 デイリー<span class="dot"></span></div>
  <div id="tcoin">● <span id="tcoinV">0</span> G</div>
  <div id="logo"><div class="s">弾幕</div><div class="b gold">ヒロキ</div><div class="e">DANMAKU HIROKI</div></div>
  <div id="tsub">〜勇者めいちゃん、筋肉魔王軍を止めに行く〜</div>
@@ -229,7 +235,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.44</div>
+ <div id="tver">Ver.3.45</div>
 </div>
 
 <div id="hud">
@@ -318,6 +324,12 @@ html,body{touch-action:manipulation}
  <div id="ssList"></div>
 </div>
 
+<div id="daily" class="screen" style="background:linear-gradient(#0e2433,#07030c)">
+ <div class="hdr"><h2 class="gold">デイリーミッション</h2><div class="back" id="dyBack">もどる</div></div>
+ <div id="dyTop"><img src="assets/mei_yado.webp" alt=""><div id="dyBub"></div></div>
+ <div id="dyList"></div>
+ <div id="dyNote">毎日0時に、新しいミッションに変わります</div>
+</div>
 <div id="settings" class="screen" style="background:linear-gradient(#1a0b28,#07030c)">
  <div class="hdr"><h2 class="gold">設定</h2><div class="back" id="sBack">もどる</div></div>
  <div class="panel">
@@ -1068,7 +1080,7 @@ function pullMei(guar){
  const it=pick(MEI_ITEMS.filter(i=>i.r===r));const before=SV.inv[it.id]||0;let conv=0;if(before>=11){SV.coins+=20;conv=1;}else SV.inv[it.id]=before+1;
  return{it,isNew:before===0,lv:lvOf(it.id),conv};}
 function pullTkH(){const x=Math.random()*100;const r=x<.05?5:x<.5?4:3;const it=pick(ITEMS.filter(i=>i.r===r&&i.s!=='u'));const before=SV.inv[it.id]||0;let conv=0;if(before>=11){SV.coins+=20;conv=1;}else SV.inv[it.id]=before+1;return{it,isNew:before===0,lv:lvOf(it.id),conv};}
-function useTicket(mm){const k=mm?'tkM':'tkH';if(!(SV[k]>0))return;SV[k]--;const res=[mm?pullMei(true):pullTkH()];save();revealPull(res);}
+function useTicket(mm){const k=mm?'tkM':'tkH';if(!(SV[k]>0))return;dailyAdd('gacha',1);SV[k]--;const res=[mm?pullMei(true):pullTkH()];save();revealPull(res);}
 $('#gT').onclick=()=>useTicket(0);$('#mT').onclick=()=>useTicket(1);
 function fairyFX(cb,o){const c=$('#fxc'),g=c.getContext('2d');c.style.display='block';auInit();sfx('phase');
  const fig=IMG.c_fairy,sp=[],t0=performance.now();let done=false,last=t0;
@@ -1124,8 +1136,8 @@ function gekiFX(cb,vv){const c=$('#fxc'),g=c.getContext('2d');c.style.display='b
   if(t>=DUR)fin();if(!done)requestAnimationFrame(frame);}
  function fin(){if(done)return;done=true;c.style.display='none';c.onpointerdown=null;cb&&cb();}
  sfx('warn');requestAnimationFrame(frame);c.onpointerdown=e=>{e.stopPropagation();if((performance.now()-t0)/1000>1.2)fin();};}
-function doGacha(n,mm){if(mm){const cost=n===10?4500:500;if(SV.coins<cost){toast('コインが足りません');sfx('hit');return;}SV.coins-=cost;const res=[];for(let i=0;i<n;i++)res.push(pullMei(n===10&&i===9&&!res.some(x=>x.it.r>=2)));save();revealPull(res);return;}const cost=n===10?1800:200;if(SV.coins<cost){toast('コインが足りません');sfx('hit');return;}
- SV.coins-=cost;const res=[];for(let i=0;i<n;i++)res.push(pullOne(n===10&&i===9&&!res.some(x=>x.it.r>=2)));save();revealPull(res);}
+function doGacha(n,mm){if(mm){const cost=n===10?4500:500;if(SV.coins<cost){toast('コインが足りません');sfx('hit');return;}dailyAdd('gacha',n);SV.coins-=cost;const res=[];for(let i=0;i<n;i++)res.push(pullMei(n===10&&i===9&&!res.some(x=>x.it.r>=2)));save();revealPull(res);return;}const cost=n===10?1800:200;if(SV.coins<cost){toast('コインが足りません');sfx('hit');return;}
+ dailyAdd('gacha',n);SV.coins-=cost;const res=[];for(let i=0;i<n;i++)res.push(pullOne(n===10&&i===9&&!res.some(x=>x.it.r>=2)));save();revealPull(res);}
 function cardHTML(it,o){o=o||{};const lv=it.s==='k'?(o.lv??skLv(it.id)):(o.lv??lvOf(it.id));return `<div class="gc r${it.r}${o.cls||''}" style="${o.st||''}"><div class="rr" style="color:${RCOL[it.r]}">${RN[it.r]}</div>${o.isNew?'<div class="nw">NEW</div>':''}<div class="ic">${it.s==='k'?`<img src="${src(it.img)}" class="skimg">${it.s==='k'&&o.isNew!==undefined?'':''}`:icH(it)}</div><div class="nm">${it.n}</div>${it.s==='u'?`<div class="lv">×${SV.inv[it.id]||0}</div>`:(lv>0?`<div class="lv">+${lv}</div>`:'')}</div>`;}
 function pullFX(x,cb){const it=x.it,r=it.r;if(it.id==='ruka')return rukaFX(cb);const isK=it.s==='k';
  const cols=r===5?['#ffffff','#ffd0f0','#ff8af0']:['#ffffff','#fff3b0','#ffb020'];
@@ -1197,7 +1209,7 @@ const EZ=()=>{const f=chF(),b=SV.easy?{n:.6,spd:.85,iv:1.4}:{n:1,spd:1,iv:1};ret
 const nn=k=>Math.max(1,Math.round(k*EZ().n));
 
 let preBomb=0;
-function resetGame(){HZ=[];CUT=null;preBomb=0;FEV=0;fevNext=300;
+function resetGame(){HZ=[];CUT=null;preBomb=0;FEV=0;fevNext=300;runHits=0;runBombs=0;runFev=0;runBossK=0;
  ST=calcStats();
  P={x:360,y:960,lives:ST.lives+(RUNBUY.chicken?1:0),bombs:ST.bombs+(RUNBUY.bomb?1:0),bar:ST.bar+(RUNBUY.barrier?1:0),hr:4*ST.hb,inv:2,fireT:0,slow:false,t:0,dead:false,coinMul:ST.coin};
  const u=null;useMsg='';if(u&&(SV.inv[u.id]||0)>0){SV.inv[u.id]--;if(u.ulife)P.lives++;if(u.ubomb)P.bombs++;if(u.ubar)P.bar++;if(u.ucoin)P.coinMul+=u.ucoin;useMsg=u.n+'を使った！';if(SV.inv[u.id]<=0)SV.eq.u=null;save();}
@@ -1228,8 +1240,8 @@ function toast(t){if(typeof PFX!=='undefined'&&PFX)return;const el=$('#toast');e
 function reg(id){if(DEMO)return;if(!SV.zukan[id]){SV.zukan[id]=1;save();const z=ZK.find(z=>z.id===id);toast('図鑑に登録：'+z.name);newReg.push(id);}}
 function drop(x,y,type,v){IT.push({x,y,vx:rand(-90,90),vy:rand(-260,-120),type,v:v||10,t:0});}
 function cancelBullets(){let i=0;for(const b of EB){if(i++%3===0&&IT.length<260)IT.push({x:b.x,y:b.y,vx:0,vy:-60,type:'coin',v:1,t:0,small:1});part(b.x,b.y,{life:.3,max:.3,size:5,col:'#fff3b0'});}EB=[];}
-let FEV=0,fevNext=300;
-function addCombo(){combo++;comboT=2.5;comboPop=.12;if(combo>maxCombo)maxCombo=combo;if(combo>=fevNext){fevNext+=300;FEV=8;flash=Math.max(flash,.2);sfx('clear');if(P)say(P,'フィーバー！',1.2);}}
+let FEV=0,fevNext=300,runHits=0,runBombs=0,runFev=0,runBossK=0;
+function addCombo(){combo++;comboT=2.5;comboPop=.12;if(combo>maxCombo)maxCombo=combo;if(combo>=fevNext){fevNext+=300;FEV=8;runFev++;if(!SV.fevSeen){SV.fevSeen=1;}flash=Math.max(flash,.2);sfx('clear');if(P)say(P,'フィーバー！',1.2);}}
 
 /* ---------- player ---------- */
 function clampP(){P.x=Math.max(24,Math.min(W-24,P.x));P.y=Math.max(70,Math.min(PB-36,P.y));}
@@ -1247,7 +1259,7 @@ function playerShoot(){
 }
 function doBomb(){
  if(mode!=='game'||paused||over||P.dead||BM||P.bombs<=0||D.active)return;
- P.bombs--;const bi=ST.bomb;BM={bs:bi.bs,col:bi.col,r:(bi.rad||0)*ST.brad,x:P.x,y:P.y,t:0,dur:bi.bs==='pets'?1.9:bi.bs==='wave'?1.1:bi.bs==='circle'?.55:.8,dmg:BASE_DPS*ST.bpow,hit:new Set()};bombT=BM.dur;{const ba=IMG['bx_'+bi.id];if(ba)BMA={im:ba,t0:T,dur:Math.max(BM.dur+1,2.1)};}P.inv=Math.max(P.inv,1.2);flash=.25;shake(.35,8);sfx('bomb');say(P,'えいっ！',1.2);
+ P.bombs--;runBombs++;const bi=ST.bomb;BM={bs:bi.bs,col:bi.col,r:(bi.rad||0)*ST.brad,x:P.x,y:P.y,t:0,dur:bi.bs==='pets'?1.9:bi.bs==='wave'?1.1:bi.bs==='circle'?.55:.8,dmg:BASE_DPS*ST.bpow,hit:new Set()};bombT=BM.dur;{const ba=IMG['bx_'+bi.id];if(ba)BMA={im:ba,t0:T,dur:Math.max(BM.dur+1,2.1)};}P.inv=Math.max(P.inv,1.2);flash=.25;shake(.35,8);sfx('bomb');say(P,'えいっ！',1.2);
  if(bi.bs==='pets'){BM.faces=[];BM.lt=0;for(let i=0;i<10;i++){const a=-Math.PI/2+(i/9-.5)*1.7,sp=rand(950,1300);BM.faces.push({x:P.x,y:P.y-20,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,dog:i%2===0,rot:0,vr:rand(-7,7),hit:new Set(),r:64});}say(P,'サンちゃん！ ふっちゃん！ いけーっ！',1.6);flash=.15;}
  if(boss&&boss.ready&&!boss.dying&&Math.random()<.6)say(boss,pick(['今のはノーカン','フォームは完璧だった','それズルくない？']),1.8);
  updBombBtn();
@@ -1281,6 +1293,7 @@ function drawBM(){const b=BM,k=b.t/b.dur,a=Math.max(0,1-k);ctx.save();ctx.global
 function updBombBtn(){const D2=SV.bombPos==='D',L=SV.bombPos!=='R';$('#bBomb').style.display=D2?'none':'';$('#bBomb').classList.toggle('lt',L&&!D2);$('#bSlow').classList.toggle('rt',L);$('#bBomb').classList.toggle('no',!P||P.bombs<=0);$('#bBomb').innerHTML='BOMB<br><span style="font-size:20px">×'+(P?P.bombs:0)+'</span>';}
 function hitPlayer(){
  if(P.inv>0||over)return;
+ runHits++;
  if(P.bar>0){P.bar--;P.inv=1.5;cancelBullets();sfx('bomb');flash=.3;part(P.x,P.y,{type:'ring',life:.5,max:.5,size:120,col:'#8fe0ff'});say(P,'バリア！',1.2);return;}
  P.lives--;boom(P.x,P.y,70,'#8fd0ff');boom(P.x,P.y,40,'#ffffff');sfx('die');shake(.5,14);flash=.4;
  try{navigator.vibrate&&navigator.vibrate(120);}catch(e){}
@@ -1756,7 +1769,7 @@ function updBoss(b,dt){
 function hitBoss(b,d){
  if(FEV>0)d*=1.1;b.hp-=d;b.flash=.05;totalDmg+=d;addCombo();score+=d/1e5|0;sfx('hit');
  b.acc=(b.acc||0)+d;b.accT=b.accT>0?b.accT:.15;
- if(b.hp<=0){b.hp=0;b.dying=true;HZ=[];WARN=null;b.dieT=1.9;cancelBullets();sfx('big');shake(1.9,10);autoCollect=true;reg(b.key);for(let i=0;i<b.coins;i++)drop(b.x+rand(-80,80),b.y+rand(-60,40),'coin',8);{const ds=STAGES[curSt]||{};if((ds.rush&&b.key!=='gym')||(/8-3$/.test(ds.id||'')&&b.key==='satan'))drop(b.x,b.y,'bomb');}}
+ if(b.hp<=0){b.hp=0;b.dying=true;runBossK++;HZ=[];WARN=null;b.dieT=1.9;cancelBullets();sfx('big');shake(1.9,10);autoCollect=true;reg(b.key);for(let i=0;i<b.coins;i++)drop(b.x+rand(-80,80),b.y+rand(-60,40),'coin',8);{const ds=STAGES[curSt]||{};if((ds.rush&&b.key!=='gym')||(/8-3$/.test(ds.id||'')&&b.key==='satan'))drop(b.x,b.y,'bomb');}}
 }
 
 /* ---------- stage script ---------- */
@@ -2508,7 +2521,7 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/
 
 /* ---------- screens ---------- */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));if(id)$('#'+id).classList.add('on');}
-function toTitle(){uraSwap(false);setTimeout(autoUpd,800);if(SV.ura||SV.allOpen)setTimeout(loadUra,1500);if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode!=='title')return;if(SV.reNote){SV.reNote=0;save();codePop('📢 アップデートのお知らせ',['ボスの攻撃や弾幕が、新しくパワーアップしました！','そのため、各章のボス（X-3）をもう一度倒すと、次の章に進めるようになっています','⚔ 1章のボスから、順番に倒し直してね','✅ アイテム・コイン・図鑑・キャラはそのままです']);return;}guide('title');},400);}
+function toTitle(){uraSwap(false);setTimeout(autoUpd,800);if(SV.ura||SV.allOpen)setTimeout(loadUra,1500);if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode!=='title')return;if(SV.reNote){SV.reNote=0;save();codePop('📢 アップデートのお知らせ',['ボスの攻撃や弾幕が、新しくパワーアップしました！','そのため、各章のボス（X-3）をもう一度倒すと、次の章に進めるようになっています','⚔ 1章のボスから、順番に倒し直してね','✅ アイテム・コイン・図鑑・キャラはそのままです']);return;}guide('title',0,titleTips);updDailyDot();$('#tcoinV').textContent=fmt(SV.coins);},400);}
 function startGame(){BMA=null;if(SV.eq&&SV.eq.b)loadBX(SV.eq.b);const ust=STAGES[curSt];if(ust&&ust.um&&!loadUra.done){toast('裏の世界を読み込み中…');loadUra().then(()=>startGame());return;}uraSwap(ust&&ust.um);RUNBUY=PENDBUY||{};PENDBUY=null;PFX=null;if(RUNBUY.punch&&!IMG.fx_punch){const pi=new Image();pi.onload=()=>{IMG.fx_punch=pi;};pi.src=src('fx_punch');}auInit();sfx('ok');BG=BGS[STAGES[curSt].ch]||BGS[1];resetGame();mode='game';show(null);$('#hud').classList.add('on');updBombBtn();if(useMsg)setTimeout(()=>toast(useMsg),300);}
 function pauseGame(on){if(mode!=='game'||over)return;paused=on;if(on){$('#pFace').src=src(hFace(boss&&boss.name));show('pause');if(AU.name)AU.saved=AU.name;bgm(null);}else{show(null);bgm(AU.saved||null);AU.saved=null;}}
 function showResult(win){
@@ -2516,6 +2529,7 @@ function showResult(win){
  if(win&&!showResult.w&&!DEMO&&IT.some(i=>i.type==='coin')){showResult.w=1;autoCollect=true;const t0=Date.now();const iv=setInterval(()=>{if(mode!=='game'||!IT.some(i=>i.type==='coin')||Date.now()-t0>1800){clearInterval(iv);setTimeout(()=>{showResult.w=0;showResult(win);},250);}},60);return;}
  if(showResult.w)return;over=true;CUT=null;if(DEMO){bgm(null);sfx(win?'clear':'over');demoEnd(win);return;}bgm(null);sfx(win?'clear':'over');
  runCoins=Math.round(runCoins);SV.coins+=runCoins;if(score>SV.best)SV.best=score;if(maxCombo>SV.bestCombo)SV.bestCombo=maxCombo;if(win){SV.clears++;SV.prog=Math.max(SV.prog||0,curSt+1);const cs=STAGES[curSt];if(SV.reLock&&/-3$/.test(cs.id)){SV.reCh=Math.max(SV.reCh||0,cs.ch);if(SV.reCh>=8)SV.reLock=0;}}if(!win){if(SV.loseSt===curSt)SV.loseN=(SV.loseN||0)+1;else{SV.loseSt=curSt;SV.loseN=1;}if(SV.loseN>=5)SV.easyOpen=1;}else if(SV.loseSt===curSt)SV.loseN=0;save();
+ if(!DEMO)dailyRun(win);
  if(win&&!DEMO){const ub=RUNBUY||{};if(!(ub.punch||ub.chicken||ub.bomb||ub.barrier)){if(!SV.gold)SV.gold={};SV.gold[STAGES[curSt].id]=1;save();}giftCheck();}
  {const av=(!win&&SV.loseN>=2)?advice():null;$('#rAdv').style.display=av?'flex':'none';if(av)$('#rAdvT').innerHTML=av;}
  $('#rTitle').textContent=win?(STAGES[curSt].urush?'裏 ALL CLEAR':STAGES[curSt].umEnd?'裏 TRUE END':STAGES[curSt].ura?'TRUE END':STAGES[curSt].end?'THE END':(STAGES[curSt].rush?'ALL CLEAR':'STAGE CLEAR')):'GAME OVER';$('#rTitle').style.filter=win?'':'hue-rotate(-40deg) saturate(2)';
@@ -2547,6 +2561,30 @@ function renderPrep(){const st=STAGES[curSt],noBoss=/-1$/.test(st.id),L=$('#ppLi
   d.innerHTML=`${fr&&!dis?'<div class="fr">1回だけサービス</div>':''}<div class="ck">✅</div><div class="ic">${dis?'🔒':x.ic}</div><div class="tx"><div class="nm">${x.n}</div><div class="ef">${dis?'ボスがいないエリアでは使えません':x.d}</div></div><div class="pr">${fr&&!dis?`<s>${x.p}G</s>0G`:x.p+'G'}</div>`;
   d.onclick=()=>{if(!can){sfx('hit');if(!dis)toast('コインが足りません');return;}sfx('ok');PPSEL[x.id]=!PPSEL[x.id];renderPrep();};L.appendChild(d);}
  $('#ppGo').textContent=tot?`出撃（−${tot}G）`:'出撃';}
+const DPOOL={e:[['clear1','ステージを1回クリアする','clear',1],['kill100','敵を100体たおす','kill',100],['gacha1','ガチャを1回引く','gacha',1],['coin1k','ステージでコインを1000G拾う','coin',1000]],
+ n:[['clear3','ステージを3回クリアする','clear',3],['combo300','コンボを300つなげる','combo',300],['fever2','フィーバーを2回起こす','fever',2],['boss2','ボスを2体たおす','boss',2],['kill300','敵を300体たおす','kill',300],['nobomb','ボムを使わずに1ステージクリア','nobomb',1]],
+ h:[['nohit','ノーミス（被弾0）で1ステージクリア','nohit',1],['combo800','コンボを800つなげる','combo',800],['goldx3','アイテムなしでボスステージ（X-3）をクリア','goldx3',1],['boss5','ボスを5体たおす','boss',5],['fever5','フィーバーを5回起こす','fever',5]]};
+const DRW={e:150,n:300,h:500},DBONUS=300,DLV={e:['かんたん','#7dff9a'],n:['ふつう','#7fd8ff'],h:['むずかしい','#ff8a8a']};
+function dToday(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function dailyEnsure(){const t=dToday();if(SV.daily&&SV.daily.d===t)return SV.daily;SV.daily={d:t,m:['e','n','h'].map(k=>{const x=pick(DPOOL[k]);return{id:x[0],lv:k,n:x[1],ty:x[2],goal:x[3],pg:0,cl:0};}),bonus:0};save();return SV.daily;}
+function dailyAdd(ty,v,isMax){const D_=dailyEnsure();const done=[];for(const m of D_.m){if(m.ty!==ty||m.pg>=m.goal)continue;m.pg=isMax?Math.max(m.pg,v):m.pg+v;if(m.pg>=m.goal){m.pg=m.goal;done.push(m.n);}}if(done.length){save();setTimeout(()=>toast('📅 デイリー達成！「'+done[0]+'」'),1500);}updDailyDot();}
+function dailyRun(win){if(DEMO)return;const st=STAGES[curSt]||{},ub=RUNBUY||{},items=!!(ub.punch||ub.chicken||ub.bomb||ub.barrier);
+ dailyAdd('kill',kills);dailyAdd('coin',Math.round(runCoins));dailyAdd('combo',maxCombo,1);dailyAdd('fever',runFev);dailyAdd('boss',runBossK);
+ if(win){dailyAdd('clear',1);if(runHits===0)dailyAdd('nohit',1);if(runBombs===0)dailyAdd('nobomb',1);if(/-3$/.test(st.id||'')&&!items)dailyAdd('goldx3',1);}}
+function dailyClaimable(){const D_=dailyEnsure();return D_.m.some(m=>m.pg>=m.goal&&!m.cl)||(D_.m.every(m=>m.cl)&&!D_.bonus);}
+function updDailyDot(){const e=$('#tDaily');if(e)e.classList.toggle('new',dailyClaimable());}
+function openDaily(){const D_=dailyEnsure();const L=$('#dyList');L.innerHTML='';const all=D_.m.every(m=>m.cl);
+ $('#dyBub').innerHTML=all?(D_.bonus?'今日のミッション、ぜんぶ終わり！<br>また明日ね〜':'ぜんぶクリア！ すごい！<br>ボーナスも受け取ってね'):'今日のお題だよ！<br>クリアしたらコインをあげるね';
+ for(const m of D_.m){const ok=m.pg>=m.goal,d=document.createElement('div');d.className='dym'+(m.cl?' got':ok?' ok':'');const lv=DLV[m.lv];
+  d.innerHTML=`<div class="h"><span class="lv" style="background:${lv[1]};color:#081624">${lv[0]}</span><span class="nm">${m.n}</span><span class="rw">${DRW[m.lv]}G</span></div><div class="bar"><i style="width:${Math.min(100,m.pg/m.goal*100)}%"></i></div><div class="pg">${m.cl?'受け取りずみ':fmt(m.pg)+' / '+fmt(m.goal)}</div>`;
+  if(ok&&!m.cl){const b=document.createElement('button');b.className='gbtn small cl';b.textContent='受け取る';b.onclick=()=>{m.cl=1;SV.coins+=DRW[m.lv];save();sfx('clear');toast('💰 '+DRW[m.lv]+'G もらった！');openDaily();};d.appendChild(b);}L.appendChild(d);}
+ {const d=document.createElement('div');d.className='dym'+(D_.bonus?' got':all?' ok':'');d.innerHTML=`<div class="h"><span class="lv" style="background:#ffd34d;color:#3a2000">ボーナス</span><span class="nm">3つぜんぶクリア</span><span class="rw">${DBONUS}G</span></div><div class="pg">${D_.bonus?'受け取りずみ':D_.m.filter(m=>m.cl).length+' / 3'}</div>`;
+  if(all&&!D_.bonus){const b=document.createElement('button');b.className='gbtn small cl';b.textContent='受け取る';b.onclick=()=>{D_.bonus=1;SV.coins+=DBONUS;save();sfx('clear');toast('🎉 ボーナス '+DBONUS+'G もらった！');openDaily();};d.appendChild(b);}L.appendChild(d);}
+ show('daily');guide('daily');}
+$('#tDaily').onclick=()=>{auInit();sfx('ok');openDaily();};$('#dyBack').onclick=()=>{sfx('ok');toTitle();};
+function isStandalone(){try{return navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;}catch(e){return false;}}
+function titleTips(){const q=[];if(SV.fevSeen&&!(SV.seen||{}).fever)q.push(['fever',0]);if(!isStandalone()&&(!SV.homeT||Date.now()-SV.homeT>3*86400000))q.push(['home',1]);
+ const nx=()=>{const k=q.shift();if(!k||mode!=='title')return;if(k[0]==='home'){SV.homeT=Date.now();save();}guide(k[0],k[1],nx);};nx();}
 function stLock(i){const st=STAGES[i];if(!st)return true;if(SV.allOpen)return false;const prog=SV.prog||0,i83=STAGES.findIndex(q=>q.end);if(st.urush)return !SV.uraClear||reLocked(i);if(st.um){if(!SV.ura)return true;const iu=STAGES.findIndex(q=>q.um);return i>Math.max(prog,iu)||reLocked(i);}return (i>prog&&!(st.rush&&prog>i83))||reLocked(i);}
 function reLocked(i){const st=STAGES[i];if(!st||!SV.reLock||SV.allOpen)return false;if(st.ura||st.rush||st.um)return (SV.reCh||0)<8;return st.ch>(SV.reCh||0)+1;}
 let SSCAT='n';
@@ -2564,8 +2602,12 @@ function openStSel(cat){if(cat)SSCAT=cat;const U=SSCAT==='u';const L=$('#ssList'
   const lock=stLock(i);const d=document.createElement('div');d.className='ssb'+(lock?' lock':'')+(st.ura?' ura':'')+(st.um?' um':'');d.innerHTML=`<span>${st.id}　${st.name}</span><span class="ck${i<prog&&SV.gold&&SV.gold[st.id]?' gd':''}">${i<prog?(SV.gold&&SV.gold[st.id]?'★ クリア':'✓ クリア'):(lock?'🔒':'▶')}</span>`;
   if(!lock)d.onclick=()=>{auInit();goStage(i);};L.appendChild(d);});
  for(let c=9;c<=8;c++)L.insertAdjacentHTML('beforeend',`<div class="ssch" style="opacity:.35">第${c}章　${CHN[c]}　🔒 近日公開</div>`);
- show('stsel');guide('stage');}
+ show('stsel');guide('stage',0,()=>{if(Object.keys(SV.gold||{}).length)guide('gold');});}
 const GUIDE={
+ fever:['さっき「フィーバー」になったの、気づいた？','コンボが300つながるとフィーバー！\n8秒間、コイン2倍・ダメージ1.1倍になるよ','被弾するとおしまいだから、よけ続けてね。\n600、900…でまたフィーバーになるよ！'],
+ gold:['ステージの「★ クリア」が金色なのは、\nお店のアイテムを使わずにクリアした印だよ','アイテムを使ってクリアすると、緑の「✓ クリア」になるの','ぜんぶ金色の★にできるか、ちょうせんしてみてね！'],
+ daily:['ここは「デイリーミッション」！\n毎日3つ、お題が出るよ','クリアしたら「受け取る」でコインがもらえるの','3つぜんぶクリアすると、ボーナスもあるよ。\n毎日のぞいてみてね！'],
+ home:['ねえねえ、このゲーム、\nホーム画面に追加して遊んでる？','iPhoneのSafariだと、しばらく開かないと\nセーブが消えちゃうことがあるの……','Safariの「共有ボタン（□に↑）」から\n「ホーム画面に追加」を押してね。\nAndroidは右上のメニューからだよ','⚠ でも、ホーム画面のアイコンから開くと\nセーブは別になっちゃうの','だから先に「設定」→「セーブコードをコピー」！\nアイコンから開いたら「設定」で\n貼り付けて「復元」してね'],
  title:['やっほー！ ヤドカリめいちゃんだよ。\nここでは、あそびかたを案内するね','いま、筋肉魔王ヒロキくんの軍団が\n世界じゅうで増えちゃってるの……','勇者めいちゃんと一緒に、\nヒロキくんたちを止めに行こう！','「出撃」でステージを選んで、\n「ガチャ」でアイテムを集めて、\n「装備」で強くなる。これだけ！','右下のわたしをタップすると、\nいろんなお話をするよ。','わからなくなったら、\n左上の「？ あそびかた」を押してね'],
  stage:['ここはステージ選択だよ','ステージをクリアすると、\n次のステージに進めるようになるよ','操作は、画面を指でなぞるだけ！\n弾は自動で出るよ','ピンチのときは「BOMB」！\nまわりの弾を消してくれるよ','BOMBボタンは左上にあるよ。\n右手で動かして、左手でボム！\n両手で持つと、とっさに押しやすいよ','片手で遊ぶなら、設定の「ボムの撃ち方」を\n「ダブルタップ」にしてね。\n画面を2回トントンでボムが撃てるよ！','「低速」を押すと、ゆっくり動けるよ。\n細かくよけたいときに使ってね','当たり判定は、めっちの真ん中の\n小さな点だけ。意外とよけられるよ！'],
  gacha:['ここはガチャ売り場！\n上と下で2種類あるよ','上の「ヒロキの落とし物ガチャ」は、\n武器やボムなど、強くなる装備が出るよ','下の「めっちガチャ」は、\nわたしの好きなおやつの防具が出るの。\nたまーに、別の姿のめっちも出るよ！','同じものがかぶったら、+1ずつ\nほんの少しだけ強くなるよ（最大+10）','コインはステージで敵を倒すと手に入るよ'],
