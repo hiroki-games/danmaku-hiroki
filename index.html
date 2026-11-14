@@ -225,7 +225,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.28</div>
+ <div id="tver">Ver.3.29</div>
 </div>
 
 <div id="hud">
@@ -1218,7 +1218,7 @@ function hitPlayer(){
  if(P.bar>0){P.bar--;P.inv=1.5;cancelBullets();sfx('bomb');flash=.3;part(P.x,P.y,{type:'ring',life:.5,max:.5,size:120,col:'#8fe0ff'});say(P,'バリア！',1.2);return;}
  P.lives--;boom(P.x,P.y,70,'#8fd0ff');boom(P.x,P.y,40,'#ffffff');sfx('die');shake(.5,14);flash=.4;
  try{navigator.vibrate&&navigator.vibrate(120);}catch(e){}
- combo=0;cancelBullets();P.bombs=Math.max(P.bombs,ST.bombs);updBombBtn();
+ combo=0;cancelBullets();updBombBtn();
  const hk=boss&&boss.ready?boss:(E.length?pick(E):null);if(hk)say(hk,pick(L_HECKLE),1.8);
  LP={n:Math.max(0,P.lives),life:1.6};
  if(P.lives<=0){P.dead=true;over=true;setTimeout(()=>showResult(false),1400);return;}
