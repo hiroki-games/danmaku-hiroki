@@ -235,7 +235,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.46</div>
+ <div id="tver">Ver.3.47</div>
 </div>
 
 <div id="hud">
@@ -411,7 +411,7 @@ function loadCode(c){try{const o=JSON.parse(decodeURIComponent(escape(atob(c.tri
 
 /* ---------- images ---------- */
 const CHIBI=['ifrit','cerberus','phoenix','skeleton','zombie','gargoyle','medusa','fairy','minotaur','tankknight','goblin', 'slime', 'orc', 'elf', 'king', 'lizard', 'troll', 'ogre', 'behemoth', 'cyclops', 'gym', 'golem', 'centaur', 'harpy', 'wyvern', 'darkelf', 'bahamut', 'kraken', 'leviathan', 'poseidon', 'dullahan', 'deathknight', 'vampire', 'hades', 'dragon', 'dragonemp', 'wizard', 'power', 'satan', 'lucifer', 'kinniku'];
-const IMGN=['hk_grin','hk_glare','hk_wink','hk_rage','hk_smile','hk_frown','hk_wide','hk_shock','hk_calm','mei_main','mei_happy','ruka_face','ruka_crawl','fy_face','zf_bahamut','hz_arm','hz_hand','hz_drag','hz_fist','hz_bell','hz_phone','ruka_dog','ruka_cat','mei_udon','mei_visu','mei_oyatsu','mei_muffler','mei_towel','mei_close','mei_cam','z_elf','z_satan','z_king','z_ogre','z_behemoth','z_tankknight','z_centaur','z_darkelf','z_bahamut','z_leviathan','z_poseidon','z_vampire','z_hades','z_dragon','z_dragonemp','z_power','z_lucifer','z_gym','z_kinniku',...CHIBI.map(n=>'c_'+n),'ph_w_fang','ph_w_rod','ph_w_hakucho','ph_b_bear','ph_b_judge','ph_b_tsunami','ph_c_kimu','ph_c_ash','ph_o_melojoy'];
+const IMGN=['hk_grin','hk_glare','hk_wink','hk_rage','hk_smile','hk_frown','hk_wide','hk_shock','hk_calm','mei_main','mei_happy','ruka_face','ruka_crawl','fy_face','zf_bahamut','hz_arm','hz_hand','hz_drag','hz_fist','hz_bell','hz_phone','ruka_dog','ruka_cat','mei_udon','mei_visu','mei_oyatsu','mei_muffler','mei_towel','mei_close','mei_cam','z_elf','z_satan','z_king','z_ogre','z_behemoth','z_tankknight','z_centaur','z_darkelf','z_bahamut','z_leviathan','z_poseidon','z_vampire','z_hades','z_dragon','z_dragonemp','z_power','z_lucifer','z_gym','z_kinniku',...CHIBI.map(n=>'c_'+n),'ph_w_fang','ph_w_rod','ph_w_hakucho','ph_b_bear','ph_b_judge','ph_b_tsunami','ph_c_kimu','ph_c_ash','ph_o_melojoy','ph_o_squishy','ph_c_key','ph_a_wing','ph_a_hokkaido','ph_a_dragon','ph_c_enmabook'];
 const IMG={};
 function loadImgs(){return Promise.all(IMGN.map(n=>new Promise(r=>{const i=new Image();i.onload=()=>{IMG[n]=i;r();};i.onerror=()=>r();i.src=src(n);})));}
 const SIL={},SILR={};
@@ -901,8 +901,8 @@ const ITEMS=[
  {id:'a_cloak',s:'a',r:2,ic:'🧥',n:'ミハラヤスヒロのパーカー',hb:.7,d:'ヒロキのお気に入り。洗濯のときは裏返してネットに入れるのが決まり。'},
  {id:'a_scale',s:'a',r:3,ic:'👟',n:'ミハラヤスヒロのスニーカー',life:2,d:'溶けたみたいなソールが特徴。雨の日は絶対にはかない。'},
  {id:'a_robe',s:'a',r:3,ic:'⚾',n:'千葉ロッテのユニフォーム',bar:2,d:'千葉県民の正装。応援中に話しかけると怒られる。'},
- {id:'a_wing',s:'a',r:4,ic:'🖤',n:'ミハラヤスヒロのレザージャケット',life:2,hb:.7,d:'特別な日にしか着ない。「シワになるから座らないで」と言われる。'},
- {id:'a_dragon',s:'a',r:4,ic:'🎗️',n:'黄金のリフティングベルト',life:2,bar:2,d:'重量挙げの大会の優勝ベルト（自称）。'},
+ {id:'a_wing',ph:'ph_a_wing',s:'a',r:4,ic:'🖤',n:'ミハラヤスヒロのレザージャケット',life:2,hb:.7,d:'特別な日にしか着ない。「シワになるから座らないで」と言われる。'},
+ {id:'a_dragon',ph:'ph_a_dragon',s:'a',r:4,ic:'🎗️',n:'黄金のリフティングベルト',life:2,bar:2,d:'重量挙げの大会の優勝ベルト（自称）。'},
  // ===== お守り
  {id:'c_wrap',s:'c',r:0,ic:'🍗',n:'サラダチキンの包み紙',coin:.05,d:'魔王軍の兵糧の包み紙。全部同じ味。'},
  {id:'c_minutes',s:'c',r:0,ic:'📄',n:'白紙の買い物メモ',d:'「書いといてって言ったよね？」の跡だけが残っている。効果はない。'},
@@ -920,7 +920,7 @@ const ITEMS=[
  {id:'c_phone',s:'c',r:3,ic:'🤳',n:'筋トレヒロキのスマホ',home:1,d:'カメラロールの9割がジムの鏡の自撮り。追尾弾が出る。'},
  {id:'c_lamp',s:'c',r:3,ic:'📦',n:'オアシスパール（カートン）',bomb:2,d:'10箱入り。ヒロキの1週間分（たぶん）。'},
  {id:'c_soft',s:'c',r:3,ic:'🍦',n:'マザー牧場のソフトクリーム',coin:.35,d:'濃厚な牛乳の味。食べたあと「今日はチートデイ」と言い訳する。'},
- {id:'c_key',s:'c',r:4,ic:'🔑',n:'白き戦車の鍵',home:1,slow:.1,d:'ヒロキが血まなこで探している。持っているとボスが少し焦り、弾が遅くなる。'},
+ {id:'c_key',ph:'ph_c_key',s:'c',r:4,ic:'🔑',n:'白き戦車の鍵',home:1,slow:.1,d:'ヒロキが血まなこで探している。持っているとボスが少し焦り、弾が遅くなる。'},
  {id:'c_kimu',ph:'ph_c_kimu',s:'c',r:5,ic:'🦷',n:'キムの前歯',coin:1,bomb:1,life:1,d:'めいちゃんのチャームポイント。なぜここにあるのかは誰も知らない。持っているだけで運気が上がる。'},
  {id:'c_ash',ph:'ph_c_ash',s:'c',r:5,ic:'🚬',n:'IQOSの吸い殻',home:1,bomb:2,coin:.5,d:'ヒロキが吸ったあとの1本。なぜか神々しく光っている。超激レア。'},
  // ===== 消耗品
@@ -960,7 +960,7 @@ const ITEMS=[
  {id:'a_narita',s:'a',r:2,ic:'🧳',n:'成田空港のスーツケース',life:1,bar:1,d:'「東京の空の玄関」。住所は千葉県成田市。都内から1時間かかる。'},
  {id:'a_nyx',s:'a',r:3,ic:'🏰',n:'登別のお城の水族館',bar:2,d:'お城の形の水族館。ペンギンが行進する。ヒロキはペンギンの「列の乱れ」が気になって楽しめない。'},
  {id:'a_chibainu',s:'a',r:3,ic:'🐕',n:'千葉県の形のクッション',life:2,d:'千葉県民は自分の県を「犬の形」と言い張る。埼玉県民はそれを見て黙る。'},
- {id:'a_hokkaido',s:'a',r:4,ic:'🗾',n:'北海道まるごと',life:2,hb:.75,d:'でっかいどう。隣の町まで車で2時間。「近い」の感覚が壊れる。'},
+ {id:'a_hokkaido',ph:'ph_a_hokkaido',s:'a',r:4,ic:'🗾',n:'北海道まるごと',life:2,hb:.75,d:'でっかいどう。隣の町まで車で2時間。「近い」の感覚が壊れる。'},
  {id:'c_shiroku',s:'c',r:0,ic:'🍪',n:'白くない恋人',coin:.05,d:'北海道の有名なお土産……のパロディ。中身はふつうのクッキー。'},
  {id:'c_kani',s:'c',r:0,ic:'🦀',n:'毛ガニの殻',d:'身はヒロキが全部食べた。殻だけキムに渡された。'},
  {id:'c_etc',s:'c',r:0,ic:'🎫',n:'アクアラインの通行券',coin:.05,d:'往復の通行料で、ランチが2回食べられる。'},
@@ -972,7 +972,7 @@ const ITEMS=[
  {id:'c_makuhari',s:'c',r:2,ic:'🎤',n:'幕張メッセの遠征グッズ',coin:.2,d:'「東京公演」と書いてあるが、会場は千葉。千葉県民は毎回小さく傷つく。'},
  {id:'c_mazui',s:'c',r:3,ic:'🥖',n:'まずい棒',coin:.3,mag:1,d:'銚子の電鉄が生き残るために売っている名物。味はふつうにおいしい。'},
  {id:'c_marimo',s:'c',r:3,ic:'🟢',n:'阿寒湖のまりも',bomb:2,d:'大事に育てようとして、3日で存在を忘れた。今もどこかの棚で生きている。'},
- {id:'c_enmabook',s:'c',r:4,ic:'📕',n:'閻魔大王の帳簿',home:1,slow:.1,d:'登別の閻魔大王の帳簿。ヒロキが言った「普通でしょ」の回数が全部書いてある。ページが足りない。'},
+ {id:'c_enmabook',ph:'ph_c_enmabook',s:'c',r:4,ic:'📕',n:'閻魔大王の帳簿',home:1,slow:.1,d:'登別の閻魔大王の帳簿。ヒロキが言った「普通でしょ」の回数が全部書いてある。ページが足りない。'},
 ];
 // ===== めっちガチャ：おやつ（キャラに装着）
 const MEI_ITEMS=[
@@ -997,7 +997,7 @@ const MEI_ITEMS=[
  {id:'o_croffle',s:'o',r:2,ic:'🧇',n:'クロッフル',hb:.88,inv:.3,d:'クロワッサンをワッフルにした流行りのスイーツ。'},
  {id:'o_tanghulu',s:'o',r:2,ic:'🍡',n:'タンフル',bar:1,inv:.3,d:'フルーツの飴がけ。パリッといい音がする。'},
  {id:'o_kkwabaegi',s:'o',r:2,ic:'🥨',n:'クァベギ',bar:1,bomb:1,d:'ねじれた韓国ドーナツ。砂糖たっぷり。'},
- {id:'o_squishy',s:'o',r:4,ic:'🍡',n:'もちもちスクイーズ',life:2,bar:1,inv:.5,hb:.9,d:'ぎゅっと握ると、ゆっくり元にもどる。ヒロキくんの「で、結論は？」を聞いたあとに3回にぎるのが日課。'},
+ {id:'o_squishy',ph:'ph_o_squishy',s:'o',r:4,ic:'🍡',n:'もちもちスクイーズ',life:2,bar:1,inv:.5,hb:.9,d:'ぎゅっと握ると、ゆっくり元にもどる。ヒロキくんの「で、結論は？」を聞いたあとに3回にぎるのが日課。'},
  {id:'o_melojoy',s:'o',r:5,ph:'ph_o_melojoy',ic:'🍈',n:'メロジョイ',life:3,bar:2,inv:.6,hb:.85,d:'なかなか手に入らない、幻のスクイーズ。ずっと欲しかった。ヒロキくんは「それ、ただのシリコンでしょ」と言ったきり、しばらく口をきいてもらえなかった。'},
  {id:'o_tungka',s:'o',r:3,ic:'🍬',n:'トゥンカロン',life:2,d:'クリームがはみ出るほど分厚いマカロン。'},
  {id:'o_bingsu',s:'o',r:3,ic:'🍧',n:'ソルビン（ピンス）',bar:2,d:'ふわふわのかき氷。二人で分けるのが定番。'},
