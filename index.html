@@ -227,7 +227,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.36</div>
+ <div id="tver">Ver.3.37</div>
 </div>
 
 <div id="hud">
@@ -2618,7 +2618,8 @@ $('#pRes').onclick=()=>pauseGame(false);
 $('#pQuit').onclick=()=>{paused=false;toTitle();};
 $('#rRetry').onclick=()=>goStage(curSt);$('#rNext').onclick=()=>goStage(curSt+1);
 $('#ppBack').onclick=()=>{sfx('ok');openStSel();};
-$('#ppGo').onclick=()=>{auInit();const tot=ppTotal();if(tot>SV.coins){toast('コインが足りません');return;}SV.coins-=tot;save();PENDBUY=Object.assign({},PPSEL);if(PPSEL.punch&&punchFree())PENDBUY.free=1;startGame();};$('#rTitleB').onclick=toTitle;
+function ppLaunch(){const tot=ppTotal();if(tot>SV.coins){toast('コインが足りません');return;}SV.coins-=tot;save();PENDBUY=Object.assign({},PPSEL);if(PPSEL.punch&&punchFree())PENDBUY.free=1;startGame();}
+$('#ppGo').onclick=()=>{auInit();const tot=ppTotal();if(tot>SV.coins){toast('コインが足りません');return;}if(tot>0){const nm=SHOP.filter(x=>PPSEL[x.id]).map(x=>x.ic+' '+x.n+(x.id==='punch'&&punchFree()?'（サービス）':''));codePop(`${tot}G を使って出撃しますか？`,[...nm,`のこり ${SV.coins-tot}G`],0,ppLaunch,'出撃する');}else ppLaunch();};$('#rTitleB').onclick=toTitle;
 $('#bPause').addEventListener('pointerdown',e=>{e.stopPropagation();pauseGame(true);});
 $('#bSlow').addEventListener('pointerdown',e=>{e.stopPropagation();slowToggle=!slowToggle;$('#bSlow').classList.toggle('act',slowToggle);});
 $('#bBomb').addEventListener('pointerdown',e=>{e.stopPropagation();doBomb();});
