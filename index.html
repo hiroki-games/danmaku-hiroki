@@ -235,7 +235,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.48</div>
+ <div id="tver">Ver.3.49</div>
 </div>
 
 <div id="hud">
@@ -411,7 +411,7 @@ function loadCode(c){try{const o=JSON.parse(decodeURIComponent(escape(atob(c.tri
 
 /* ---------- images ---------- */
 const CHIBI=['ifrit','cerberus','phoenix','skeleton','zombie','gargoyle','medusa','fairy','minotaur','tankknight','goblin', 'slime', 'orc', 'elf', 'king', 'lizard', 'troll', 'ogre', 'behemoth', 'cyclops', 'gym', 'golem', 'centaur', 'harpy', 'wyvern', 'darkelf', 'bahamut', 'kraken', 'leviathan', 'poseidon', 'dullahan', 'deathknight', 'vampire', 'hades', 'dragon', 'dragonemp', 'wizard', 'power', 'satan', 'lucifer', 'kinniku'];
-const IMGN=['hk_grin','hk_glare','hk_wink','hk_rage','hk_smile','hk_frown','hk_wide','hk_shock','hk_calm','mei_main','mei_happy','ruka_face','ruka_crawl','fy_face','zf_bahamut','hz_arm','hz_hand','hz_drag','hz_fist','hz_bell','hz_phone','ruka_dog','ruka_cat','mei_udon','mei_visu','mei_oyatsu','mei_muffler','mei_towel','mei_close','mei_cam','z_elf','z_satan','z_king','z_ogre','z_behemoth','z_tankknight','z_centaur','z_darkelf','z_bahamut','z_leviathan','z_poseidon','z_vampire','z_hades','z_dragon','z_dragonemp','z_power','z_lucifer','z_gym','z_kinniku',...CHIBI.map(n=>'c_'+n),'ph_w_fang','ph_w_rod','ph_w_hakucho','ph_b_bear','ph_b_judge','ph_b_tsunami','ph_c_kimu','ph_c_ash','ph_o_melojoy','ph_o_squishy','ph_c_key','ph_a_wing','ph_a_hokkaido','ph_a_dragon','ph_c_enmabook'];
+const IMGN=['hk_grin','hk_glare','hk_wink','hk_rage','hk_smile','hk_frown','hk_wide','hk_shock','hk_calm','mei_main','mei_happy','ruka_face','ruka_crawl','fy_face','zf_bahamut','hz_arm','hz_hand','hz_drag','hz_fist','hz_bell','hz_phone','ruka_dog','ruka_cat','mei_udon','mei_visu','mei_oyatsu','mei_muffler','mei_towel','mei_close','mei_cam','z_elf','z_satan','z_king','z_ogre','z_behemoth','z_tankknight','z_centaur','z_darkelf','z_bahamut','z_leviathan','z_poseidon','z_vampire','z_hades','z_dragon','z_dragonemp','z_power','z_lucifer','z_gym','z_kinniku',...CHIBI.map(n=>'c_'+n),'ph_w_fang','ph_w_rod','ph_w_hakucho','ph_b_bear','ph_b_judge','ph_b_tsunami','ph_c_kimu','ph_c_ash','ph_o_melojoy','ph_o_squishy','ph_c_key','ph_a_wing','ph_a_hokkaido','ph_a_dragon','ph_c_enmabook','ph_w_spear','ph_w_fan','ph_w_tantan','ph_w_kuma','ph_w_steel','ph_b_roar','ph_b_scythe','ph_b_chikyu','ph_a_scale','ph_a_robe','ph_a_nyx','ph_a_chibainu','ph_c_phone','ph_c_lamp','ph_c_soft','ph_c_mazui','ph_c_marimo','ph_o_tungka','ph_o_bingsu','ph_o_bibim','ph_o_cake','ph_o_ganjang','ph_o_shine','ph_o_nattokimchi'];
 const IMG={};
 function loadImgs(){return Promise.all(IMGN.map(n=>new Promise(r=>{const i=new Image();i.onload=()=>{IMG[n]=i;r();};i.onerror=()=>r();i.src=src(n);})));}
 const SIL={},SILR={};
@@ -874,9 +874,9 @@ const ITEMS=[
  {id:'w_flail',s:'w',r:2,ic:'🍘',n:'銚子のぬれ煎餅',shot:'triple',dm:.9,d:'しっとりしているのに当たると痛い。不思議。'},
  {id:'w_dbow',s:'w',r:2,ic:'🤲',n:'リストラップ',shot:'twin',home:1,d:'手首を守る。巻き方にうるさいので、他人には貸さない。'},
  {id:'w_bar',s:'w',r:2,ic:'➖',n:'バーベルシャフト',shot:'triple',dm:.92,d:'20kgの棒。ヒロキは「棒だけなら片手」と言っている。'},
- {id:'w_spear',s:'w',r:3,ic:'〰️',n:'EZバー',shot:'triple',d:'ぐにゃっと曲がったバー。二頭筋のためだけに生まれてきた。'},
- {id:'w_fan',s:'w',r:3,ic:'🪭',n:'房州うちわ',shot:'spread5',d:'千葉の伝統工芸。あおぐと風が出る。ヒロキはそれで汗を乾かしている。'},
- {id:'w_tantan',s:'w',r:3,ic:'🌶️',n:'勝浦タンタンメン',shot:'triple',home:1,dm:.85,d:'真っ赤なラー油が飛ぶ。食べた後のヒロキは、だいたい汗だく。'},
+ {id:'w_spear',ph:'ph_w_spear',s:'w',r:3,ic:'〰️',n:'EZバー',shot:'triple',d:'ぐにゃっと曲がったバー。二頭筋のためだけに生まれてきた。'},
+ {id:'w_fan',ph:'ph_w_fan',s:'w',r:3,ic:'🪭',n:'房州うちわ',shot:'spread5',d:'千葉の伝統工芸。あおぐと風が出る。ヒロキはそれで汗を乾かしている。'},
+ {id:'w_tantan',ph:'ph_w_tantan',s:'w',r:3,ic:'🌶️',n:'勝浦タンタンメン',shot:'triple',home:1,dm:.85,d:'真っ赤なラー油が飛ぶ。食べた後のヒロキは、だいたい汗だく。'},
  {id:'w_fang',ph:'ph_w_fang',s:'w',r:4,ic:'🏆',n:'黄金のダンベル（20kg）',shot:'triple',home:1,d:'ジムの大会でもらったらしい。毎晩、布で磨いている。'},
  {id:'w_rod',ph:'ph_w_rod',s:'w',r:4,ic:'📟',n:'IQOS ILUMA',shot:'spread5',home:1,d:'ヒロキの右手が定位置。充電が切れると、本人の機嫌も切れる。'},
  // ===== ボム
@@ -886,8 +886,8 @@ const ITEMS=[
  {id:'b_fireball',s:'b',r:1,ic:'🥜',n:'落花生ばくだん',bs:'circle',rad:170,bd:2.8,col:'#ffb04a',d:'千葉県産の落花生がぎっしり。はじけると殻が散らばる。'},
  {id:'b_thunder',s:'b',r:2,ic:'🥛',n:'シェイカー全力シェイク',bs:'beam',rad:90,bd:3.6,col:'#ffe24a',d:'プロテインを全力で振ると、前方に粉の光線が出る。'},
  {id:'b_ice',s:'b',r:2,ic:'🌊',n:'銚子の荒波',bs:'circle',rad:270,bd:2,col:'#7fe0ff',d:'犬吠埼の荒波を呼びよせる。しぶきが冷たい。'},
- {id:'b_roar',s:'b',r:3,ic:'💥',n:'デッドリフトの衝撃',bs:'beam',rad:140,bd:5.5,col:'#ff6a1a',d:'200kgを床に置いた瞬間の衝撃。ジムの床がへこんだ。'},
- {id:'b_scythe',s:'b',r:3,ic:'⛰️',n:'鋸山の地獄のぞき',bs:'cross',rad:80,bd:5,col:'#c24dff',d:'千葉の絶景スポットから十字に切り裂く。高いところは平気らしい。'},
+ {id:'b_roar',ph:'ph_b_roar',s:'b',r:3,ic:'💥',n:'デッドリフトの衝撃',bs:'beam',rad:140,bd:5.5,col:'#ff6a1a',d:'200kgを床に置いた瞬間の衝撃。ジムの床がへこんだ。'},
+ {id:'b_scythe',ph:'ph_b_scythe',s:'b',r:3,ic:'⛰️',n:'鋸山の地獄のぞき',bs:'cross',rad:80,bd:5,col:'#c24dff',d:'千葉の絶景スポットから十字に切り裂く。高いところは平気らしい。'},
  {id:'b_tsunami',ph:'ph_b_tsunami',s:'b',r:4,ic:'🏄',n:'九十九里の大波',bs:'wave',rad:0,bd:6.5,col:'#3ab0ff',d:'下から画面全体を押し流す。サーファーたちも巻き込まれた。'},
  {id:'b_judge',ph:'ph_b_judge',s:'b',r:4,ic:'💪',n:'ジム全館パンプアップ',bs:'full',rad:0,bd:7.5,col:'#fff3b0',d:'ジムにいる全員の筋肉が同時にパンプする。画面全体が光る。'},
  // ===== 防具
@@ -899,8 +899,8 @@ const ITEMS=[
  {id:'a_grip',s:'a',r:1,ic:'🧤',n:'パワーグリップ',hb:.85,d:'握力を補助する。ドアノブを回すときも付けている。'},
  {id:'a_mail',s:'a',r:2,ic:'🦵',n:'ニースリーブ',life:1,bar:1,d:'スクワットの日は必須。脚の日を休む言い訳には使えない。'},
  {id:'a_cloak',s:'a',r:2,ic:'🧥',n:'ミハラヤスヒロのパーカー',hb:.7,d:'ヒロキのお気に入り。洗濯のときは裏返してネットに入れるのが決まり。'},
- {id:'a_scale',s:'a',r:3,ic:'👟',n:'ミハラヤスヒロのスニーカー',life:2,d:'溶けたみたいなソールが特徴。雨の日は絶対にはかない。'},
- {id:'a_robe',s:'a',r:3,ic:'⚾',n:'千葉ロッテのユニフォーム',bar:2,d:'千葉県民の正装。応援中に話しかけると怒られる。'},
+ {id:'a_scale',ph:'ph_a_scale',s:'a',r:3,ic:'👟',n:'ミハラヤスヒロのスニーカー',life:2,d:'溶けたみたいなソールが特徴。雨の日は絶対にはかない。'},
+ {id:'a_robe',ph:'ph_a_robe',s:'a',r:3,ic:'⚾',n:'千葉ロッテのユニフォーム',bar:2,d:'千葉県民の正装。応援中に話しかけると怒られる。'},
  {id:'a_wing',ph:'ph_a_wing',s:'a',r:4,ic:'🖤',n:'ミハラヤスヒロのレザージャケット',life:2,hb:.7,d:'特別な日にしか着ない。「シワになるから座らないで」と言われる。'},
  {id:'a_dragon',ph:'ph_a_dragon',s:'a',r:4,ic:'🎗️',n:'黄金のリフティングベルト',life:2,bar:2,d:'重量挙げの大会の優勝ベルト（自称）。'},
  // ===== お守り
@@ -917,9 +917,9 @@ const ITEMS=[
  {id:'c_crown',s:'c',r:2,ic:'🍮',n:'房総びわゼリー',coin:.2,d:'まるごとびわが入った高級ゼリー。1個しかないので取り合いになる。'},
  {id:'c_creatine',s:'c',r:2,ic:'🧂',n:'クレアチン',bomb:1,mag:1,d:'毎日5g。飲み忘れると一日中そのことを言っている。'},
  {id:'c_roller',s:'c',r:2,ic:'🛞',n:'腹筋ローラー',brad:.25,coin:.05,d:'転がすだけで腹筋が割れる（本人談）。'},
- {id:'c_phone',s:'c',r:3,ic:'🤳',n:'筋トレヒロキのスマホ',home:1,d:'カメラロールの9割がジムの鏡の自撮り。追尾弾が出る。'},
- {id:'c_lamp',s:'c',r:3,ic:'📦',n:'オアシスパール（カートン）',bomb:2,d:'10箱入り。ヒロキの1週間分（たぶん）。'},
- {id:'c_soft',s:'c',r:3,ic:'🍦',n:'マザー牧場のソフトクリーム',coin:.35,d:'濃厚な牛乳の味。食べたあと「今日はチートデイ」と言い訳する。'},
+ {id:'c_phone',ph:'ph_c_phone',s:'c',r:3,ic:'🤳',n:'筋トレヒロキのスマホ',home:1,d:'カメラロールの9割がジムの鏡の自撮り。追尾弾が出る。'},
+ {id:'c_lamp',ph:'ph_c_lamp',s:'c',r:3,ic:'📦',n:'オアシスパール（カートン）',bomb:2,d:'10箱入り。ヒロキの1週間分（たぶん）。'},
+ {id:'c_soft',ph:'ph_c_soft',s:'c',r:3,ic:'🍦',n:'マザー牧場のソフトクリーム',coin:.35,d:'濃厚な牛乳の味。食べたあと「今日はチートデイ」と言い訳する。'},
  {id:'c_key',ph:'ph_c_key',s:'c',r:4,ic:'🔑',n:'白き戦車の鍵',home:1,slow:.1,d:'ヒロキが血まなこで探している。持っているとボスが少し焦り、弾が遅くなる。'},
  {id:'c_kimu',ph:'ph_c_kimu',s:'c',r:5,ic:'🦷',n:'キムの前歯',coin:1,bomb:1,life:1,d:'めいちゃんのチャームポイント。なぜここにあるのかは誰も知らない。持っているだけで運気が上がる。'},
  {id:'c_ash',ph:'ph_c_ash',s:'c',r:5,ic:'🚬',n:'IQOSの吸い殻',home:1,bomb:2,coin:.5,d:'ヒロキが吸ったあとの1本。なぜか神々しく光っている。超激レア。'},
@@ -939,8 +939,8 @@ const ITEMS=[
  {id:'w_jingis',s:'w',r:1,ic:'🐑',n:'ジンギスカン鍋',shot:'spread3',dm:.9,d:'服に匂いが3日残る。ヒロキは食べたあと、必ず全身に消臭スプレーをかける。'},
  {id:'w_oni',s:'w',r:2,ic:'👹',n:'登別の鬼の金棒',shot:'triple',dm:.95,d:'登別の街には、あちこちに鬼がいる。金棒は思ったよりプラスチック。'},
  {id:'w_doitsu',s:'w',r:2,ic:'🍺',n:'東京ドイツ村の入場券',shot:'spread5',dm:.8,d:'千葉県袖ケ浦市にある。東京でもドイツでもない。なのに毎年イルミネーションは混む。'},
- {id:'w_kuma',s:'w',r:3,ic:'🐻',n:'木彫りの熊',shot:'triple',home:1,dm:.9,d:'北海道の家に1つはある。鮭をくわえている。誰が買ってきたのかは、誰も覚えていない。'},
- {id:'w_steel',s:'w',r:3,ic:'🏭',n:'室蘭の鉄',shot:'spread5',dm:.95,d:'鉄の街・室蘭の鉄。ヒロキは「現場で使えそう」と言って持ち帰ろうとした。'},
+ {id:'w_kuma',ph:'ph_w_kuma',s:'w',r:3,ic:'🐻',n:'木彫りの熊',shot:'triple',home:1,dm:.9,d:'北海道の家に1つはある。鮭をくわえている。誰が買ってきたのかは、誰も覚えていない。'},
+ {id:'w_steel',ph:'ph_w_steel',s:'w',r:3,ic:'🏭',n:'室蘭の鉄',shot:'spread5',dm:.95,d:'鉄の街・室蘭の鉄。ヒロキは「現場で使えそう」と言って持ち帰ろうとした。'},
  {id:'w_hakucho',ph:'ph_w_hakucho',s:'w',r:4,ic:'🌉',n:'白鳥大橋',shot:'spread5',home:1,dm:1.05,d:'東日本最大級の吊り橋。夜はライトアップされる。ヒロキは渡るたびに「この鋼材すごい」と言う。'},
  {id:'b_jam',s:'b',r:0,ic:'🚗',n:'アクアラインの大渋滞',bs:'circle',rad:170,bd:1.2,col:'#ff9a3c',d:'海ほたるで夕日を見ていたら、帰りの渋滞が3時間になっていた。'},
  {id:'b_bell',s:'b',r:0,ic:'🔔',n:'熊よけの鈴',bs:'circle',rad:160,bd:1.3,col:'#ffe08a',d:'鳴らしながら歩く。でも熊は来るときは来る。'},
@@ -948,7 +948,7 @@ const ITEMS=[
  {id:'b_fog',s:'b',r:1,ic:'🌫️',n:'室蘭の霧',bs:'circle',rad:240,bd:1.8,col:'#e0e8ff',d:'夏でも霧。せっかく地球岬に行ったのに、地球どころか前も見えなかった。'},
  {id:'b_yakei',s:'b',r:2,ic:'🎆',n:'工場夜景の炎',bs:'beam',rad:100,bd:3.8,col:'#ff7a3a',d:'室蘭の工場夜景。煙突の炎は一晩じゅう燃えている。「ロマンチック」と言ったのはキムだけ。'},
  {id:'b_enma',s:'b',r:2,ic:'⚖️',n:'閻魔大王の審判',bs:'cross',rad:90,bd:4.6,col:'#ff3a3a',d:'登別の閻魔堂。時間になると顔が変わって怒り出す。子どもは泣く。ヒロキは「声量がいい」と褒めた。'},
- {id:'b_chikyu',s:'b',r:3,ic:'🌍',n:'地球岬の大パノラマ',bs:'circle',rad:330,bd:4.5,col:'#7fd0ff',d:'地球が丸く見える岬。……と言われているが、霧で何も見えない日のほうが多い。'},
+ {id:'b_chikyu',ph:'ph_b_chikyu',s:'b',r:3,ic:'🌍',n:'地球岬の大パノラマ',bs:'circle',rad:330,bd:4.5,col:'#7fd0ff',d:'地球が丸く見える岬。……と言われているが、霧で何も見えない日のほうが多い。'},
  {id:'b_bear',ph:'ph_b_bear',s:'b',r:4,ic:'🐻',n:'クマ牧場の大行進',bs:'wave',rad:0,bd:6.5,col:'#c08a50',d:'登別のクマ牧場。クマが手を振っておやつをねだる。人間が檻に入る展示もある。'},
  {id:'a_mimi',s:'a',r:0,ic:'🐭',n:'ネズミの耳つき帽子',inv:.4,d:'「東京」のお土産。千葉で買った。'},
  {id:'a_yukata',s:'a',r:0,ic:'👘',n:'登別温泉の浴衣',life:1,d:'帯の結び方を、ヒロキに3回直された。'},
@@ -958,8 +958,8 @@ const ITEMS=[
  {id:'a_snowglove',s:'a',r:1,ic:'🧤',n:'雪かき用の手袋',hb:.85,d:'北海道では冬の朝の日課。千葉育ちのヒロキは1日で腰を痛めた。'},
  {id:'a_ninja',s:'a',r:2,ic:'🥷',n:'時代村の忍者装束',hb:.7,d:'登別の時代村で忍者ショーを見たヒロキが、帰りに買った。一度も着ていない。'},
  {id:'a_narita',s:'a',r:2,ic:'🧳',n:'成田空港のスーツケース',life:1,bar:1,d:'「東京の空の玄関」。住所は千葉県成田市。都内から1時間かかる。'},
- {id:'a_nyx',s:'a',r:3,ic:'🏰',n:'登別のお城の水族館',bar:2,d:'お城の形の水族館。ペンギンが行進する。ヒロキはペンギンの「列の乱れ」が気になって楽しめない。'},
- {id:'a_chibainu',s:'a',r:3,ic:'🐕',n:'千葉県の形のクッション',life:2,d:'千葉県民は自分の県を「犬の形」と言い張る。埼玉県民はそれを見て黙る。'},
+ {id:'a_nyx',ph:'ph_a_nyx',s:'a',r:3,ic:'🏰',n:'登別のお城の水族館',bar:2,d:'お城の形の水族館。ペンギンが行進する。ヒロキはペンギンの「列の乱れ」が気になって楽しめない。'},
+ {id:'a_chibainu',ph:'ph_a_chibainu',s:'a',r:3,ic:'🐕',n:'千葉県の形のクッション',life:2,d:'千葉県民は自分の県を「犬の形」と言い張る。埼玉県民はそれを見て黙る。'},
  {id:'a_hokkaido',ph:'ph_a_hokkaido',s:'a',r:4,ic:'🗾',n:'北海道まるごと',life:2,hb:.75,d:'でっかいどう。隣の町まで車で2時間。「近い」の感覚が壊れる。'},
  {id:'c_shiroku',s:'c',r:0,ic:'🍪',n:'白くない恋人',coin:.05,d:'北海道の有名なお土産……のパロディ。中身はふつうのクッキー。'},
  {id:'c_kani',s:'c',r:0,ic:'🦀',n:'毛ガニの殻',d:'身はヒロキが全部食べた。殻だけキムに渡された。'},
@@ -970,8 +970,8 @@ const ITEMS=[
  {id:'c_toba',s:'c',r:1,ic:'🐟',n:'鮭とば',bomb:1,d:'噛みすぎて、あごが筋肉痛。ヒロキは「あごの筋トレ」と呼んでいる。'},
  {id:'c_lavender',s:'c',r:2,ic:'💜',n:'ラベンダーソフト',brad:.25,d:'富良野のラベンダー味。香りは完全にトイレの芳香剤。'},
  {id:'c_makuhari',s:'c',r:2,ic:'🎤',n:'幕張メッセの遠征グッズ',coin:.2,d:'「東京公演」と書いてあるが、会場は千葉。千葉県民は毎回小さく傷つく。'},
- {id:'c_mazui',s:'c',r:3,ic:'🥖',n:'まずい棒',coin:.3,mag:1,d:'銚子の電鉄が生き残るために売っている名物。味はふつうにおいしい。'},
- {id:'c_marimo',s:'c',r:3,ic:'🟢',n:'阿寒湖のまりも',bomb:2,d:'大事に育てようとして、3日で存在を忘れた。今もどこかの棚で生きている。'},
+ {id:'c_mazui',ph:'ph_c_mazui',s:'c',r:3,ic:'🥖',n:'まずい棒',coin:.3,mag:1,d:'銚子の電鉄が生き残るために売っている名物。味はふつうにおいしい。'},
+ {id:'c_marimo',ph:'ph_c_marimo',s:'c',r:3,ic:'🟢',n:'阿寒湖のまりも',bomb:2,d:'大事に育てようとして、3日で存在を忘れた。今もどこかの棚で生きている。'},
  {id:'c_enmabook',ph:'ph_c_enmabook',s:'c',r:4,ic:'📕',n:'閻魔大王の帳簿',home:1,slow:.1,d:'登別の閻魔大王の帳簿。ヒロキが言った「普通でしょ」の回数が全部書いてある。ページが足りない。'},
 ];
 // ===== めっちガチャ：おやつ（キャラに装着）
@@ -999,10 +999,10 @@ const MEI_ITEMS=[
  {id:'o_kkwabaegi',s:'o',r:2,ic:'🥨',n:'クァベギ',bar:1,bomb:1,d:'ねじれた韓国ドーナツ。砂糖たっぷり。'},
  {id:'o_squishy',ph:'ph_o_squishy',s:'o',r:4,ic:'🍡',n:'もちもちスクイーズ',life:2,bar:1,inv:.5,hb:.9,d:'ぎゅっと握ると、ゆっくり元にもどる。ヒロキくんの「で、結論は？」を聞いたあとに3回にぎるのが日課。'},
  {id:'o_melojoy',s:'o',r:5,ph:'ph_o_melojoy',ic:'🍈',n:'メロジョイ',life:3,bar:2,inv:.6,hb:.85,d:'なかなか手に入らない、幻のスクイーズ。ずっと欲しかった。ヒロキくんは「それ、ただのシリコンでしょ」と言ったきり、しばらく口をきいてもらえなかった。'},
- {id:'o_tungka',s:'o',r:3,ic:'🍬',n:'トゥンカロン',life:2,d:'クリームがはみ出るほど分厚いマカロン。'},
- {id:'o_bingsu',s:'o',r:3,ic:'🍧',n:'ソルビン（ピンス）',bar:2,d:'ふわふわのかき氷。二人で分けるのが定番。'},
- {id:'o_bibim',s:'o',r:3,ic:'🍲',n:'石焼ビビンバ',life:1,bomb:2,d:'おこげが一番おいしい。'},
- {id:'o_cake',s:'o',r:3,ic:'🎂',n:'センイルケーキ',life:1,bar:1,hb:.9,d:'韓国風のレタリングケーキ。「ヒロキくん筋肉おめでとう」と書いてある。'},
+ {id:'o_tungka',ph:'ph_o_tungka',s:'o',r:3,ic:'🍬',n:'トゥンカロン',life:2,d:'クリームがはみ出るほど分厚いマカロン。'},
+ {id:'o_bingsu',ph:'ph_o_bingsu',s:'o',r:3,ic:'🍧',n:'ソルビン（ピンス）',bar:2,d:'ふわふわのかき氷。二人で分けるのが定番。'},
+ {id:'o_bibim',ph:'ph_o_bibim',s:'o',r:3,ic:'🍲',n:'石焼ビビンバ',life:1,bomb:2,d:'おこげが一番おいしい。'},
+ {id:'o_cake',ph:'ph_o_cake',s:'o',r:3,ic:'🎂',n:'センイルケーキ',life:1,bar:1,hb:.9,d:'韓国風のレタリングケーキ。「ヒロキくん筋肉おめでとう」と書いてある。'},
  {id:'o_natto',s:'o',r:0,ic:'🫘',n:'納豆（ネギたっぷり）',inv:.3,d:'めっちは毎朝これ。混ぜる回数は気分で決める。ヒロキは「50回が正解」と言う。'},
  {id:'o_hikiwari',s:'o',r:0,ic:'🥢',n:'ひきわり納豆',hb:.95,d:'粒派とひきわり派で家族が割れている。めっちはその日の気分で寝返る。'},
  {id:'o_odeng',s:'o',r:0,ic:'🍢',n:'韓国おでん（オムク）',inv:.3,d:'串に波みたいに刺さっている。スープまで飲むのがめっち流。'},
@@ -1020,9 +1020,9 @@ const MEI_ITEMS=[
  {id:'o_maritozzo',s:'o',r:2,ic:'🥯',n:'マリトッツォ',life:1,hb:.92,d:'生クリームが顔につく。一度ブームが去ったけど、めっちの中ではまだ続いている。'},
  {id:'o_basque',s:'o',r:2,ic:'🍰',n:'バスクチーズケーキ',bar:1,inv:.3,d:'わざと焦がしてある。ヒロキは「失敗作じゃないの？」と聞いて怒られた。'},
  {id:'o_namadonut',s:'o',r:2,ic:'🍩',n:'生ドーナツ',life:1,bar:1,d:'朝から行列に並んで買った。ふわふわすぎて、持つと形が変わる。'},
- {id:'o_ganjang',s:'o',r:3,ic:'🦀',n:'カンジャンケジャン',life:2,hb:.9,d:'「ごはん泥棒」と呼ばれる韓国のカニのしょうゆ漬け。ごはんが3杯消える。'},
- {id:'o_shine',s:'o',r:3,ic:'🍇',n:'シャインマスカットのパフェ',bar:2,inv:.3,d:'一粒ずつ大事に食べる。最後の一粒をいつ食べるかで5分悩む。'},
- {id:'o_nattokimchi',s:'o',r:3,ic:'🌶️',n:'納豆キムチごはん',life:1,bar:1,inv:.5,d:'好きなものと好きなものを合わせた、めっちの最終兵器。'},
+ {id:'o_ganjang',ph:'ph_o_ganjang',s:'o',r:3,ic:'🦀',n:'カンジャンケジャン',life:2,hb:.9,d:'「ごはん泥棒」と呼ばれる韓国のカニのしょうゆ漬け。ごはんが3杯消える。'},
+ {id:'o_shine',ph:'ph_o_shine',s:'o',r:3,ic:'🍇',n:'シャインマスカットのパフェ',bar:2,inv:.3,d:'一粒ずつ大事に食べる。最後の一粒をいつ食べるかで5分悩む。'},
+ {id:'o_nattokimchi',ph:'ph_o_nattokimchi',s:'o',r:3,ic:'🌶️',n:'納豆キムチごはん',life:1,bar:1,inv:.5,d:'好きなものと好きなものを合わせた、めっちの最終兵器。'},
 ];
 const SKINS=[
  {id:'mei',r:0,img:'mei_main',n:'勇者めいちゃん',d:'森のみんなのために立ち上がった、やさしい勇者。'},
