@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.53</div>
+ <div id="tver">Ver.3.54</div>
 </div>
 
 <div id="hud">
@@ -2619,7 +2619,7 @@ function rkFmt(k,v){if(k==='prog'){const nd=STAGES.filter(q=>!q.demo);const st=n
 function renderRank(){RKT=RKT0.filter(x=>!x[2]||x[2]());if(!RKT.some(x=>x[0]===RKC))RKC='prog';const L=$('#rkList');$('#rkTabs').innerHTML=RKT.map(([k,n])=>`<div class="${k===RKC?'on':''}" data-k="${k}">${n}</div>`).join('');$('#rkTabs').querySelectorAll('div').forEach(d=>d.onclick=()=>{RKC=d.dataset.k;sfx('ok');renderRank();});
  $('#rkMe').innerHTML=`あなた：${(SV.pname||'').replace(/</g,'&lt;')}　<u id="rkNm">名前を変える</u>`;$('#rkNm').onclick=()=>askName(()=>openRank());
  if(!RKD){L.innerHTML='<div class="rkn">読み込み中…</div>';return;}if(RKD==='err'){L.innerHTML='<div class="rkn">ランキングを読み込めませんでした<br>通信を確認して、もう一度開いてね</div>';return;}
- const me=SV.fb&&SV.fb.uid;const rows=RKD.filter(x=>x.name).sort((a,b)=>(a.cheat-b.cheat)||((b[RKC]||0)-(a[RKC]||0))||((b.prog||0)-(a.prog||0)));let no=0;
+ const me=SV.fb&&SV.fb.uid;let src=RKD;if(me&&SV.pname){const mine=Object.assign({},myStats(),{uid:me});src=RKD.filter(x=>x.uid!==me).concat([mine]);}const rows=src.filter(x=>x.name).sort((a,b)=>(a.cheat-b.cheat)||((b[RKC]||0)-(a[RKC]||0))||((b.prog||0)-(a.prog||0)));let no=0;
  L.innerHTML=rows.length?rows.map(x=>{if(!x.cheat)no++;return`<div class="rkr${x.uid===me?' me':''}${x.cheat?' ch':''}"><span class="no">${x.cheat?'－':no}</span><span class="nm">${String(x.name).replace(/</g,'&lt;')}${x.cheat?'（裏コード）':''}</span><span class="v">${rkFmt(RKC,x[RKC]||0)}</span></div>`;}).join(''):'<div class="rkn">まだだれもいません</div>';}
 function openRank(){RKD=null;show('rank');renderRank();fbPush();fbList().then(d=>{RKD=d;}).catch(e=>{console.warn(e);RKD='err';}).then(()=>{if(mode==='rank'||document.querySelector('#rank.on'))renderRank();});}
 $('#tRank').onclick=()=>{auInit();sfx('ok');if(!SV.pname)askName(openRank);else openRank();};$('#rkBack').onclick=()=>{sfx('ok');toTitle();};
