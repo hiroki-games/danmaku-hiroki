@@ -229,7 +229,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.43</div>
+ <div id="tver">Ver.3.44</div>
 </div>
 
 <div id="hud">
@@ -1229,7 +1229,7 @@ function reg(id){if(DEMO)return;if(!SV.zukan[id]){SV.zukan[id]=1;save();const z=
 function drop(x,y,type,v){IT.push({x,y,vx:rand(-90,90),vy:rand(-260,-120),type,v:v||10,t:0});}
 function cancelBullets(){let i=0;for(const b of EB){if(i++%3===0&&IT.length<260)IT.push({x:b.x,y:b.y,vx:0,vy:-60,type:'coin',v:1,t:0,small:1});part(b.x,b.y,{life:.3,max:.3,size:5,col:'#fff3b0'});}EB=[];}
 let FEV=0,fevNext=300;
-function addCombo(){combo++;comboT=1.6;comboPop=.12;if(combo>maxCombo)maxCombo=combo;if(combo>=fevNext){fevNext+=300;FEV=8;flash=Math.max(flash,.2);sfx('clear');if(P)say(P,'フィーバー！',1.2);}}
+function addCombo(){combo++;comboT=2.5;comboPop=.12;if(combo>maxCombo)maxCombo=combo;if(combo>=fevNext){fevNext+=300;FEV=8;flash=Math.max(flash,.2);sfx('clear');if(P)say(P,'フィーバー！',1.2);}}
 
 /* ---------- player ---------- */
 function clampP(){P.x=Math.max(24,Math.min(W-24,P.x));P.y=Math.max(70,Math.min(PB-36,P.y));}
@@ -2316,7 +2316,7 @@ function update(dt){
    else if(it.type==='chicken'){if(P.lives<8){P.lives++;toast('サラダチキン：残機+1');}else score+=10000;sfx('pow');}}}
  IT=IT.filter(it=>!it.got&&it.y<PB+30);
  // combo
- if(comboT>0){comboT-=dt;if(comboT<=0){combo=0;fevNext=300;}FEV=Math.max(0,FEV-dt);}
+ if(comboT>0){{const tgt=E.some(e=>!e.dead&&e.y>40&&e.y<PB-120&&e.x>0&&e.x<W)||(boss&&boss.ready&&!boss.dying);if(tgt&&!CUT&&!PFX){comboT-=dt;if(comboT<=0){combo=0;fevNext=300;}FEV=Math.max(0,FEV-dt);}}}
  comboPop=Math.max(0,comboPop-dt);
 }
 function updFx(dt){
