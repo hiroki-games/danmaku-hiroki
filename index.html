@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.60</div>
+ <div id="tver">Ver.3.61</div>
 </div>
 
 <div id="hud">
@@ -1307,7 +1307,7 @@ function updBombBtn(){const D2=SV.bombPos==='D',L=SV.bombPos!=='R';$('#bBomb').s
 function hitPlayer(){
  if(P.inv>0||over)return;
  runHits++;
- if(P.bar>0){P.bar--;P.inv=1.5;cancelBullets();sfx('bomb');flash=.3;part(P.x,P.y,{type:'ring',life:.5,max:.5,size:120,col:'#8fe0ff'});say(P,'バリア！',1.2);return;}
+ if(P.bar>0){P.bar--;P.inv=1.5;combo=0;fevNext=300;FEV=0;cancelBullets();sfx('bomb');flash=.3;part(P.x,P.y,{type:'ring',life:.5,max:.5,size:120,col:'#8fe0ff'});say(P,'バリア！',1.2);return;}
  P.lives--;boom(P.x,P.y,70,'#8fd0ff');boom(P.x,P.y,40,'#ffffff');sfx('die');shake(.5,14);flash=.4;
  try{navigator.vibrate&&navigator.vibrate(120);}catch(e){}
  combo=0;fevNext=300;FEV=0;cancelBullets();updBombBtn();
@@ -1782,7 +1782,7 @@ function updBoss(b,dt){
 function hitBoss(b,d){
  if(FEV>0)d*=1.1;b.hp-=d;b.flash=.05;totalDmg+=d;addCombo();score+=d/1e5|0;sfx('hit');
  b.acc=(b.acc||0)+d;b.accT=b.accT>0?b.accT:.15;
- if(b.hp<=0){b.hp=0;b.dying=true;runBossK++;HZ=[];WARN=null;b.dieT=1.9;cancelBullets();sfx('big');shake(1.9,10);autoCollect=true;reg(b.key);for(let i=0;i<b.coins;i++)drop(b.x+rand(-80,80),b.y+rand(-60,40),'coin',8);{const ds=STAGES[curSt]||{};if((ds.rush&&b.key!=='gym')||(/8-3$/.test(ds.id||'')&&b.key==='satan'))drop(b.x,b.y,'bomb');}}
+ if(b.hp<=0){b.hp=0;b.dying=true;runBossK++;HZ=[];WARN=null;b.dieT=1.9;cancelBullets();sfx('big');shake(1.9,10);autoCollect=true;reg(b.key);for(let i=0;i<b.coins;i++)drop(b.x+rand(-80,80),b.y+rand(-60,40),'coin',5);{const ds=STAGES[curSt]||{};if((ds.rush&&b.key!=='gym')||(/8-3$/.test(ds.id||'')&&b.key==='satan'))drop(b.x,b.y,'bomb');}}
 }
 
 /* ---------- stage script ---------- */
