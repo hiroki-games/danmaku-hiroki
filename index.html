@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.61</div>
+ <div id="tver">Ver.3.62</div>
 </div>
 
 <div id="hud">
@@ -1307,7 +1307,7 @@ function updBombBtn(){const D2=SV.bombPos==='D',L=SV.bombPos!=='R';$('#bBomb').s
 function hitPlayer(){
  if(P.inv>0||over)return;
  runHits++;
- if(P.bar>0){P.bar--;P.inv=1.5;combo=0;fevNext=300;FEV=0;cancelBullets();sfx('bomb');flash=.3;part(P.x,P.y,{type:'ring',life:.5,max:.5,size:120,col:'#8fe0ff'});say(P,'バリア！',1.2);return;}
+ if(P.bar>0){P.bar--;P.inv=1.5;combo=0;fevNext=300;cancelBullets();sfx('bomb');flash=.3;part(P.x,P.y,{type:'ring',life:.5,max:.5,size:120,col:'#8fe0ff'});say(P,'バリア！',1.2);return;}
  P.lives--;boom(P.x,P.y,70,'#8fd0ff');boom(P.x,P.y,40,'#ffffff');sfx('die');shake(.5,14);flash=.4;
  try{navigator.vibrate&&navigator.vibrate(120);}catch(e){}
  combo=0;fevNext=300;FEV=0;cancelBullets();updBombBtn();
