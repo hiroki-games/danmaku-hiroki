@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.52</div>
+ <div id="tver">Ver.3.53</div>
 </div>
 
 <div id="hud">
@@ -2608,14 +2608,14 @@ async function fbTok(){const f=SV.fb;if(f&&f.tok&&f.exp>Date.now()+60000)return 
 function fsVal(v){if(typeof v==='string')return{stringValue:v};if(typeof v==='boolean')return{booleanValue:v};if(typeof v==='number')return Number.isInteger(v)?{integerValue:String(v)}:{doubleValue:v};if(v&&typeof v==='object')return{mapValue:{fields:Object.fromEntries(Object.entries(v).map(([k,x])=>[k,fsVal(x)]))}};return{nullValue:null};}
 function fsDe(v){if(!v)return null;if('stringValue'in v)return v.stringValue;if('integerValue'in v)return+v.integerValue;if('doubleValue'in v)return v.doubleValue;if('booleanValue'in v)return v.booleanValue;if('mapValue'in v)return Object.fromEntries(Object.entries(v.mapValue.fields||{}).map(([k,x])=>[k,fsDe(x)]));return null;}
 function isCheat(){try{return !!SV.allOpen||!!localStorage.getItem('danmakuHiroki_bak');}catch(e){return !!SV.allOpen;}}
-function myStats(){const ver=($('#tver').textContent.match(/[0-9.]+/)||[''])[0];return{name:SV.pname||'',ver,t:Date.now(),cheat:isCheat(),prog:SV.prog||0,clears:SV.clears||0,gold:Object.keys(SV.gold||{}).length,combo:SV.bestCombo||0,rush:SV.rushBest||0,urush:SV.uRushBest||0,ura:SV.uraClear?1:0,sc:SV.stBest||{}};}
+function myStats(){const ver=($('#tver').textContent.match(/[0-9.]+/)||[''])[0];return{name:SV.pname||'',ver,t:Date.now(),cheat:isCheat(),prog:SV.prog||0,clears:SV.clears||0,gold:Object.keys(SV.gold||{}).length,combo:SV.bestCombo||0,rush:SV.rushBest||0,urush:SV.uRushBest||0,ura:SV.uraClear?1:0,items:Object.keys(SV.inv||{}).filter(k=>typeof ITM!=='undefined'&&ITM[k]).length,sc:SV.stBest||{}};}
 let fbBusy=null,fbAgain=false;
 function fbPush(){if(!SV.pname)return;if(fbBusy){fbAgain=true;return;}fbBusy=(async()=>{try{const f=await fbTok();const d=myStats();const r=await fetch(FS+'players/'+f.uid,{method:'PATCH',headers:{'Content-Type':'application/json',Authorization:'Bearer '+f.tok},body:JSON.stringify({fields:fsVal(d).mapValue.fields})});if(!r.ok)throw new Error('push '+r.status);SV.fbOK=Date.now();save();}catch(e){console.warn('fbPush',e);}})().finally(()=>{fbBusy=null;if(fbAgain){fbAgain=false;setTimeout(fbPush,500);}});}
 async function fbList(){const r=await fetch(FS+'players?pageSize=300');if(!r.ok)throw new Error('list '+r.status);const j=await r.json();return(j.documents||[]).map(d=>Object.assign({uid:d.name.split('/').pop()},fsDe({mapValue:{fields:d.fields}})));}
 function askName(cb){const B=$('#nameBox');$('#nbI').value=SV.pname||'';$('#nbE').textContent='';$('#nbT').innerHTML=SV.pname?'新しいニックネームを入れてね':'ランキングに出る<br>ニックネームを決めてね！';B.classList.add('on');
  $('#nbOK').onclick=()=>{const v=($('#nbI').value||'').replace(/\s+/g,' ').trim();const n=[...v].length;if(n<1||n>12){$('#nbE').textContent='1〜12文字で入れてね';sfx('hit');return;}SV.pname=v;save();B.classList.remove('on');sfx('ok');toast('👤 '+v+' で登録しました');fbPush();cb&&cb();};}
-const RKT0=[['prog','進んだところ'],['clears','クリア回数'],['combo','最大コンボ'],['gold','アイテムなしクリア'],['rush','ボス連戦',()=>SV.rushClear||SV.allOpen],['urush','裏・ボス連戦',()=>SV.uRushClear||SV.allOpen]];let RKT=RKT0;let RKC='prog',RKD=null;
-function rkFmt(k,v){if(k==='prog'){const nd=STAGES.filter(q=>!q.demo);const st=nd[Math.max(0,Math.min(v,nd.length)-1)];if(!v)return'-';const mine=SV.allOpen?1e9:(SV.prog||0);if(v>mine+1||(st&&(st.um||st.rush||st.ura)&&!(SV.allOpen||(st.um?SV.ura:st.rush?SV.rushClear:mine>=v))))return'？？？';return st&&st.id?st.id+' まで':v;}if(k==='urush'||k==='rush')return v+'体';if(k==='gold')return v+'ステージ';if(k==='combo')return fmt(v);return v;}
+const RKT0=[['prog','進んだところ'],['clears','クリア回数'],['combo','最大コンボ'],['gold','アイテムなしクリア'],['items','アイテム収集数'],['rush','ボス連戦',()=>SV.rushClear||SV.allOpen],['urush','裏・ボス連戦',()=>SV.uRushClear||SV.allOpen]];let RKT=RKT0;let RKC='prog',RKD=null;
+function rkFmt(k,v){if(k==='prog'){const nd=STAGES.filter(q=>!q.demo);const st=nd[Math.max(0,Math.min(v,nd.length)-1)];if(!v)return'-';const mine=SV.allOpen?1e9:(SV.prog||0);if(st&&st.rush&&!(SV.allOpen||(st.urush?SV.uRushClear:SV.rushClear)))return'？？？';return st&&st.id?st.id+' まで':v;}if(k==='urush'||k==='rush')return v+'体';if(k==='gold')return v+'ステージ';if(k==='items')return v+'種';if(k==='combo')return fmt(v);return v;}
 function renderRank(){RKT=RKT0.filter(x=>!x[2]||x[2]());if(!RKT.some(x=>x[0]===RKC))RKC='prog';const L=$('#rkList');$('#rkTabs').innerHTML=RKT.map(([k,n])=>`<div class="${k===RKC?'on':''}" data-k="${k}">${n}</div>`).join('');$('#rkTabs').querySelectorAll('div').forEach(d=>d.onclick=()=>{RKC=d.dataset.k;sfx('ok');renderRank();});
  $('#rkMe').innerHTML=`あなた：${(SV.pname||'').replace(/</g,'&lt;')}　<u id="rkNm">名前を変える</u>`;$('#rkNm').onclick=()=>askName(()=>openRank());
  if(!RKD){L.innerHTML='<div class="rkn">読み込み中…</div>';return;}if(RKD==='err'){L.innerHTML='<div class="rkn">ランキングを読み込めませんでした<br>通信を確認して、もう一度開いてね</div>';return;}
