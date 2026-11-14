@@ -229,7 +229,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.42</div>
+ <div id="tver">Ver.3.43</div>
 </div>
 
 <div id="hud">
@@ -1338,7 +1338,7 @@ const mvx=(e.x-e.lx)/Math.max(dt,1e-3);e.lx=e.x;e.tilt+=(Math.max(-.3,Math.min(.
  if(e.y>H+90||(e.st===2&&e.y<-150)||e.x<-150||e.x>W+150)e.gone=true;
 }
 function hitEnemy(e,d){
- e.hp-=d;e.flash=.06;e.acc+=d;if(e.accT<=0)e.accT=.12;addCombo();score+=d/1e5|0;sfx('hit');
+ if(FEV>0)d*=1.1;e.hp-=d;e.flash=.06;e.acc+=d;if(e.accT<=0)e.accT=.12;addCombo();score+=d/1e5|0;sfx('hit');
  if(e.hp<=0&&!e.dead){e.dead=true;e.gone=true;kills++;score+=ET[e.kind].score;boom(e.x,e.y,e.size,null);sfx('boom');if(e.acc>0)dmgText(e.x,e.y-20,e.acc);
   for(let i=0;i<ET[e.kind].coins;i++)drop(e.x,e.y,'coin',4);
   const big=e.kind==='orc'||e.kind==='troll'||ET[e.kind].big;if(e.must||Math.random()<(big?.2:.008))drop(e.x,e.y,'bomb');
@@ -1754,7 +1754,7 @@ function updBoss(b,dt){
  b.lineT=(b.lineT??4)-dt;if(b.lineT<=0){b.lineT=rand(5,8);say(b,pick(L_ESTJ),2.2);}
 }
 function hitBoss(b,d){
- b.hp-=d;b.flash=.05;totalDmg+=d;addCombo();score+=d/1e5|0;sfx('hit');
+ if(FEV>0)d*=1.1;b.hp-=d;b.flash=.05;totalDmg+=d;addCombo();score+=d/1e5|0;sfx('hit');
  b.acc=(b.acc||0)+d;b.accT=b.accT>0?b.accT:.15;
  if(b.hp<=0){b.hp=0;b.dying=true;HZ=[];WARN=null;b.dieT=1.9;cancelBullets();sfx('big');shake(1.9,10);autoCollect=true;reg(b.key);for(let i=0;i<b.coins;i++)drop(b.x+rand(-80,80),b.y+rand(-60,40),'coin',8);{const ds=STAGES[curSt]||{};if((ds.rush&&b.key!=='gym')||(/8-3$/.test(ds.id||'')&&b.key==='satan'))drop(b.x,b.y,'bomb');}}
 }
@@ -2311,7 +2311,7 @@ function update(dt){
   if((autoCollect||d<(ST.mag?220:110)||P.y<300)&&!P.dead&&it.t>.25){const a=Math.atan2(P.y-it.y,P.x-it.x),s=900;it.x+=Math.cos(a)*s*dt;it.y+=Math.sin(a)*s*dt;}
   else{it.vy=Math.min(170,it.vy+420*dt);it.vx*=.96;it.x+=it.vx*dt;it.y+=it.vy*dt;const R2=ST.mag?340:230;if(d<R2&&!P.dead&&it.t>.25){const k=(1-d/R2)*320*dt;it.x+=(P.x-it.x)/d*k;it.y+=(P.y-it.y)/d*k;}}
   if(d<42&&!P.dead){it.got=true;
-   if(it.type==='coin'){runCoins+=it.v*P.coinMul*.8*(URA_ON?1.3:1)*(FEV>0?1.2:1);score+=it.v*10;sfx('coin');}
+   if(it.type==='coin'){runCoins+=it.v*P.coinMul*.8*(URA_ON?1.3:1)*(FEV>0?2:1);score+=it.v*10;sfx('coin');}
    else if(it.type==='bomb'){if(P.bombs<5){P.bombs++;updBombBtn();toast('ボム+1');say(P,'ボム+1！',1);part(P.x,P.y,{type:'ring',life:.45,max:.45,size:110,col:'#ffd34d'});}else score+=5000;sfx('pow');}
    else if(it.type==='chicken'){if(P.lives<8){P.lives++;toast('サラダチキン：残機+1');}else score+=10000;sfx('pow');}}}
  IT=IT.filter(it=>!it.got&&it.y<PB+30);
@@ -2441,7 +2441,7 @@ function drawHUD(t){
  if(SV.bombPos==='D'&&P&&mode==='game')wtext(ctx,'BOMB ×'+P.bombs+'（2回タップ）',22,boss&&boss.ready?120:80,22,'left',P.bombs>0?'#ffb07a':'#888');
  if(DEMO)wtext(ctx,'🐾 デモプレイ中（ストーリーでは使えません）',W/2,124,21,'center','#ff8af0');
  if(FEV>0&&mode==='game'){const pu=.5+.5*Math.sin(T*8),fa=Math.min(1,FEV/.6);ctx.save();ctx.globalAlpha=fa;const vg=ctx.createRadialGradient(W/2,PB/2,PB*.3,W/2,PB/2,PB*.75);vg.addColorStop(0,'rgba(255,200,40,0)');vg.addColorStop(1,`rgba(255,190,30,${.28+.18*pu})`);ctx.fillStyle=vg;ctx.fillRect(0,0,W,PB);
-  ctx.translate(W/2,boss&&boss.ready?178:150);ctx.scale(1+.06*pu,1+.06*pu);gtext(ctx,'FEVER!!',0,0,58,'center',{it:1,cols:['#fff','#ffe08a','#ff8a00']});ctx.restore();ctx.save();ctx.globalAlpha=fa;wtext(ctx,'コイン1.2倍',W/2,(boss&&boss.ready?178:150)+40,22,'center','#ffe08a');ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(W/2-120,(boss&&boss.ready?178:150)+56,240,8);ctx.fillStyle='#ffd34d';ctx.fillRect(W/2-120,(boss&&boss.ready?178:150)+56,240*FEV/8,8);ctx.restore();}
+  ctx.translate(W/2,boss&&boss.ready?178:150);ctx.scale(1+.06*pu,1+.06*pu);gtext(ctx,'FEVER!!',0,0,58,'center',{it:1,cols:['#fff','#ffe08a','#ff8a00']});ctx.restore();ctx.save();ctx.globalAlpha=fa;wtext(ctx,'コイン2倍・ダメージ1.1倍',W/2,(boss&&boss.ready?178:150)+40,22,'center','#ffe08a');ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(W/2-120,(boss&&boss.ready?178:150)+56,240,8);ctx.fillStyle='#ffd34d';ctx.fillRect(W/2-120,(boss&&boss.ready?178:150)+56,240*FEV/8,8);ctx.restore();}
  if(combo>=10){const sc=1+comboPop*2;ctx.save();ctx.translate(30,470);ctx.scale(sc,sc);gtext(ctx,fmt(combo),0,0,64,'left',{it:1});gtext(ctx,'COMBO!',8,50,30,'left',{it:1});if(combo>=100)gtext(ctx,'超連撃!!',8,92,32,'left',{it:1,cols:['#ffe8ff','#e070ff','#8a20d0']});ctx.restore();}
  if(boss&&boss.ready&&totalDmg>0){wtext(ctx,'総ダメージ',W-18,210,24,'right','#ffd34d');gtext(ctx,fmt(totalDmg),W-14,252,40,'right',{it:1});recent.forEach((v,i)=>wtext(ctx,fmt(v),W-18,294+i*30,21,'right','#e8d8ff',800));}
  if(BN){const a=Math.min(1,BN.life*2,(2.8-BN.life)*3);ctx.save();ctx.globalAlpha=a;ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(0,480,W,170);ctx.fillStyle='#e6b84a';ctx.fillRect(0,480,W,3);ctx.fillRect(0,647,W,3);gtext(ctx,BN.t1,W/2,545,50,'center');wtext(ctx,BN.t2,W/2,610,30,'center','#fff');ctx.restore();}
