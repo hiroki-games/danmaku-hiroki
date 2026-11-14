@@ -165,7 +165,9 @@ html,body{touch-action:manipulation}
 .ppi .ic{font-size:58px;width:76px;text-align:center}.ppi .tx{flex:1}.ppi .nm{font-size:30px;font-weight:900}.ppi .ef{font-size:21px;font-weight:700;color:rgba(255,255,255,.75);margin-top:4px}
 .ppi .pr{font-size:28px;font-weight:900;color:#ffd34d;text-align:right;min-width:130px}.ppi .ck{position:absolute;top:10px;left:12px;font-size:26px;display:none}
 .ppi.on{border-color:#ffd34d;background:linear-gradient(#6a4a10,#2a1a04);box-shadow:0 0 18px rgba(255,211,77,.55)}.ppi.on .ck{display:block}
-.ppi.no{opacity:.4;cursor:default}
+.ppi.no{opacity:.4;cursor:default}.ppi.dark{filter:grayscale(1) brightness(.35);cursor:default}.ppi.dark .ef{color:#fff}
+.ppi .fr{position:absolute;top:-14px;right:14px;padding:4px 14px;border-radius:14px;background:linear-gradient(#ff5a8a,#c8245a);font-size:20px;font-weight:900;color:#fff;box-shadow:0 0 12px rgba(255,90,140,.7);animation:updP 1.2s ease-in-out infinite}
+.ppi .pr s{color:#aaa;font-size:22px;display:block}
 .ssb{display:flex;align-items:center;justify-content:space-between;padding:20px 26px;margin:10px 0;border-radius:16px;border:3px solid #e6b84a;background:linear-gradient(#5b2b82,#26093a);font-size:28px;font-weight:900}
 .ssb.lock{opacity:.35;border-color:#555}
 #mdList{width:660px;display:flex;flex-direction:column;gap:22px;margin-top:10px}
@@ -225,7 +227,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.35</div>
+ <div id="tver">Ver.3.36</div>
 </div>
 
 <div id="hud">
@@ -1567,7 +1569,7 @@ function* behP3(b){b.rage=true;yield* wait(.5);yield* bigMove(b,'ベヒーモス
  }}
 const FACEC={"z_king":[375,237],"z_ogre":[324,152],"z_behemoth":[321,152],"z_tankknight":[374,76],"z_centaur":[300,116],"z_darkelf":[417,200],"z_bahamut":[355,187],"z_leviathan":[328,196],"z_poseidon":[337,208],"z_vampire":[352,142],"z_hades":[358,185],"z_dragon":[295,179],"z_dragonemp":[353,174],"z_power":[352,157],"z_satan":[371,240],"z_lucifer":[374,273],"z_gym":[352,169],"z_kinniku":[364,149],"z_elf":[313,143]};
 function* cutin(img,name,sub){const me=CUT={key:img,img:IMG[img],chibi:img.startsWith('c_'),name,sub,life:2.6,max:2.6};sfx('phase');while(CUT===me&&me.life>0)yield;if(CUT===me)CUT=null;}
-function* runBoss(b){{const ps=STAGES[curSt]||{};if(!ps.rush&&!preBomb){preBomb=1;drop(rand(220,500),200,'bomb');if(!(RUNBUY.punch&&!RUNBUY.punchUsed))toast('ボムが流れてきた！');}}const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}{const es=STAGES[curSt]||{},EH={1:.8,2:.85,3:.9};if(!es.um&&!es.rush&&EH[es.ch]){b.maxhp*=({'1-3':.6,'2-3':.6,'3-3':.85})[es.id]||EH[es.ch];b.hp=b.maxhp;}}{const us=STAGES[curSt]||{};if(us.um&&!us.rush){b.maxhp*=1.3;b.hp=b.maxhp;}}if((STAGES[curSt]||{}).um){if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}const doPunch=RUNBUY.punch&&!RUNBUY.punchUsed;if(doPunch)RUNBUY.punchUsed=1;boss=b;if(doPunch){while(!b.ready&&!b.dead)yield;if(!b.dead){PFX={t:0,dur:PH+1.6,b,hit:0};$('#toast').classList.remove('on');}}while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
+function* runBoss(b){{const ps=STAGES[curSt]||{};if(!ps.rush&&!preBomb){preBomb=1;drop(rand(220,500),200,'bomb');if(!(RUNBUY.punch&&!RUNBUY.punchUsed))toast('ボムが流れてきた！');}}const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}{const es=STAGES[curSt]||{},EH={1:.8,2:.85,3:.9};if(!es.um&&!es.rush&&EH[es.ch]){b.maxhp*=({'1-3':.6,'2-3':.6,'3-3':.85})[es.id]||EH[es.ch];b.hp=b.maxhp;}}{const us=STAGES[curSt]||{};if(us.um&&!us.rush){b.maxhp*=1.3;b.hp=b.maxhp;}}if((STAGES[curSt]||{}).um){if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}const doPunch=RUNBUY.punch&&!RUNBUY.punchUsed;if(doPunch){RUNBUY.punchUsed=1;if(RUNBUY.free&&!SV.punchTrial){SV.punchTrial=1;save();}}boss=b;if(doPunch){while(!b.ready&&!b.dead)yield;if(!b.dead){PFX={t:0,dur:PH+1.6,b,hit:0};$('#toast').classList.remove('on');}}while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
 function mz(b){return[b.x+b.mx,b.y+b.my];}
 function* spiral(b,dur,iv,arms,rot,sp,spr,both){let a=rand(0,TAU),t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;a+=rot*dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);for(let k=0;k<arms;k++){eb(x,y,a+k/arms*TAU,sp,spr);if(both)eb(x,y,-a+k/arms*TAU,sp*.85,SP.oPink);}sfx('eshot');}}}
 function* stream(b,dur,iv,sp,spr){let t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);eb(x,y,aim(x,y),sp,spr);sfx('eshot');}}}
@@ -2469,11 +2471,12 @@ const SHOP=[{id:'punch',ic:'👊',n:'先制パンチ',d:'ボス戦開始時に�
 let PENDBUY=null,RUNBUY={},PPSEL={};
 function shopOpen(){return !!SV.allOpen||(SV.prog||0)>STAGES.findIndex(q=>q.id==='1-3');}
 function goStage(i){curSt=i;const st=STAGES[i];if(st&&shopOpen()&&!st.rush&&!st.demo)openPrep();else startGame();}
-function ppTotal(){return SHOP.reduce((a,x)=>a+(PPSEL[x.id]?x.p:0),0);}
-function openPrep(){PPSEL={};const st=STAGES[curSt];$('#ppStage').textContent=st.id+'　'+st.name;renderPrep();show('prep');}
+function punchFree(){return !SV.punchTrial;}
+function ppTotal(){return SHOP.reduce((a,x)=>a+(PPSEL[x.id]&&!(x.id==='punch'&&punchFree())?x.p:0),0);}
+function openPrep(){PPSEL={};const st=STAGES[curSt];$('#ppStage').textContent=st.id+'　'+st.name;renderPrep();show('prep');if(punchFree()&&!SV.punchTrialNote){SV.punchTrialNote=1;save();setTimeout(()=>codePop('🎁 1回だけサービス！',['「👊 先制パンチ」を1回だけ無料で使えます','ボスのいるステージで、チェックを入れて出撃してね','ボス戦の最初に、ボスの体力を20%けずります']),250);}}
 function renderPrep(){const st=STAGES[curSt],noBoss=/-1$/.test(st.id),L=$('#ppList');L.innerHTML='';const tot=ppTotal();$('#ppCoin').textContent=SV.coins;
- for(const x of SHOP){const dis=(x.id==='punch'&&noBoss);const can=!dis&&(PPSEL[x.id]||SV.coins-tot>=x.p);const d=document.createElement('div');d.className='ppi'+(PPSEL[x.id]?' on':'')+(can?'':' no');
-  d.innerHTML=`<div class="ck">✅</div><div class="ic">${x.ic}</div><div class="tx"><div class="nm">${x.n}</div><div class="ef">${dis?'このステージにはボスがいないので使えません':x.d}</div></div><div class="pr">${x.p}G</div>`;
+ for(const x of SHOP){const dis=(x.id==='punch'&&noBoss),fr=x.id==='punch'&&punchFree();const can=!dis&&(PPSEL[x.id]||fr||SV.coins-tot>=x.p);const d=document.createElement('div');d.className='ppi'+(PPSEL[x.id]?' on':'')+(dis?' dark':can?'':' no');
+  d.innerHTML=`${fr&&!dis?'<div class="fr">1回だけサービス</div>':''}<div class="ck">✅</div><div class="ic">${dis?'🔒':x.ic}</div><div class="tx"><div class="nm">${x.n}</div><div class="ef">${dis?'ボスがいないエリアでは使えません':x.d}</div></div><div class="pr">${fr&&!dis?`<s>${x.p}G</s>0G`:x.p+'G'}</div>`;
   d.onclick=()=>{if(!can){sfx('hit');if(!dis)toast('コインが足りません');return;}sfx('ok');PPSEL[x.id]=!PPSEL[x.id];renderPrep();};L.appendChild(d);}
  $('#ppGo').textContent=tot?`出撃（−${tot}G）`:'出撃';}
 function stLock(i){const st=STAGES[i];if(!st)return true;if(SV.allOpen)return false;const prog=SV.prog||0,i83=STAGES.findIndex(q=>q.end);if(st.urush)return !SV.uraClear||reLocked(i);if(st.um){if(!SV.ura)return true;const iu=STAGES.findIndex(q=>q.um);return i>Math.max(prog,iu)||reLocked(i);}return (i>prog&&!(st.rush&&prog>i83))||reLocked(i);}
@@ -2615,7 +2618,7 @@ $('#pRes').onclick=()=>pauseGame(false);
 $('#pQuit').onclick=()=>{paused=false;toTitle();};
 $('#rRetry').onclick=()=>goStage(curSt);$('#rNext').onclick=()=>goStage(curSt+1);
 $('#ppBack').onclick=()=>{sfx('ok');openStSel();};
-$('#ppGo').onclick=()=>{auInit();const tot=ppTotal();if(tot>SV.coins){toast('コインが足りません');return;}SV.coins-=tot;save();PENDBUY=Object.assign({},PPSEL);startGame();};$('#rTitleB').onclick=toTitle;
+$('#ppGo').onclick=()=>{auInit();const tot=ppTotal();if(tot>SV.coins){toast('コインが足りません');return;}SV.coins-=tot;save();PENDBUY=Object.assign({},PPSEL);if(PPSEL.punch&&punchFree())PENDBUY.free=1;startGame();};$('#rTitleB').onclick=toTitle;
 $('#bPause').addEventListener('pointerdown',e=>{e.stopPropagation();pauseGame(true);});
 $('#bSlow').addEventListener('pointerdown',e=>{e.stopPropagation();slowToggle=!slowToggle;$('#bSlow').classList.toggle('act',slowToggle);});
 $('#bBomb').addEventListener('pointerdown',e=>{e.stopPropagation();doBomb();});
