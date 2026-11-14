@@ -159,6 +159,13 @@ html,body{touch-action:manipulation}
 #edIcon{font-size:120px}#edName{font-size:36px;font-weight:900;margin:8px 0}#edEff{font-size:26px;font-weight:900;color:#7dff9a;margin-bottom:14px;line-height:1.5}#edDesc{font-size:24px;line-height:1.7;color:#ddd;text-align:left}
 #ssList{width:660px;overflow-y:auto;max-height:1120px;touch-action:pan-y;padding-bottom:40px}
 .ssch{margin:18px 0 10px;font-size:30px;font-weight:900;color:#e6b84a;border-bottom:2px solid rgba(230,184,74,.4);padding-bottom:6px}.ssch.ura{color:#ff8ae0;border-bottom-color:rgba(190,80,255,.6);text-shadow:0 0 12px #a020ff}.ssura{margin:34px 0 4px;text-align:center;font-size:40px;font-weight:900;color:#ff4a6a;letter-spacing:.2em;text-shadow:0 0 18px #c020ff,0 0 4px #000}.ssb.um{border-color:#a050ff;background:linear-gradient(#3c1252,#150520);box-shadow:0 0 14px rgba(170,70,255,.45)}
+#ppStage{width:640px;margin:8px auto 4px;font-size:34px;font-weight:900;color:#ffd34d;text-align:center}#ppNote{width:640px;margin:0 auto 16px;font-size:21px;font-weight:700;color:rgba(255,255,255,.7);text-align:center}
+#ppList{width:640px;margin:0 auto 10px;display:flex;flex-direction:column;gap:14px}
+.ppi{display:flex;align-items:center;gap:18px;padding:16px 20px;border-radius:18px;border:3px solid #6a5a3a;background:linear-gradient(#3a2a14,#1a1008);cursor:pointer;position:relative}
+.ppi .ic{font-size:58px;width:76px;text-align:center}.ppi .tx{flex:1}.ppi .nm{font-size:30px;font-weight:900}.ppi .ef{font-size:21px;font-weight:700;color:rgba(255,255,255,.75);margin-top:4px}
+.ppi .pr{font-size:28px;font-weight:900;color:#ffd34d;text-align:right;min-width:130px}.ppi .ck{position:absolute;top:10px;left:12px;font-size:26px;display:none}
+.ppi.on{border-color:#ffd34d;background:linear-gradient(#6a4a10,#2a1a04);box-shadow:0 0 18px rgba(255,211,77,.55)}.ppi.on .ck{display:block}
+.ppi.no{opacity:.4;cursor:default}
 .ssb{display:flex;align-items:center;justify-content:space-between;padding:20px 26px;margin:10px 0;border-radius:16px;border:3px solid #e6b84a;background:linear-gradient(#5b2b82,#26093a);font-size:28px;font-weight:900}
 .ssb.lock{opacity:.35;border-color:#555}
 #mdList{width:660px;display:flex;flex-direction:column;gap:22px;margin-top:10px}
@@ -218,7 +225,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.26</div>
+ <div id="tver">Ver.3.27</div>
 </div>
 
 <div id="hud">
@@ -292,6 +299,13 @@ html,body{touch-action:manipulation}
 <div id="modesel" class="screen" style="background:linear-gradient(#1c0f30,#07030c)">
  <div class="hdr"><h2 class="gold">出撃</h2><div class="back" id="mdBack">もどる</div></div>
  <div id="mdList"></div>
+</div>
+<div id="prep" class="screen" style="background:linear-gradient(#2a1a08,#07030c)">
+ <div class="hdr"><h2 class="gold">出撃準備</h2><div style="font-size:28px;font-weight:900">● <span id="ppCoin">0</span> G</div><div class="back" id="ppBack">もどる</div></div>
+ <div id="ppStage"></div>
+ <div id="ppNote">お店で買ったアイテムは、このステージで1回だけ使えます（各1個まで）</div>
+ <div id="ppList"></div>
+ <button class="gbtn red" id="ppGo" style="font-size:38px;padding:22px 0">出撃</button>
 </div>
 <div id="stsel" class="screen" style="background:linear-gradient(#10260f,#07030c)">
  <div class="hdr"><h2 class="gold" id="ssTtl">ステージ選択</h2><div class="back" id="ssBack">もどる</div></div>
@@ -1120,7 +1134,7 @@ const nn=k=>Math.max(1,Math.round(k*EZ().n));
 let preBomb=0;
 function resetGame(){HZ=[];CUT=null;preBomb=0;
  ST=calcStats();
- P={x:360,y:960,lives:ST.lives,bombs:ST.bombs,bar:ST.bar,hr:4*ST.hb,inv:2,fireT:0,slow:false,t:0,dead:false,coinMul:ST.coin};
+ P={x:360,y:960,lives:ST.lives+(RUNBUY.chicken?1:0),bombs:ST.bombs+(RUNBUY.bomb?1:0),bar:ST.bar+(RUNBUY.barrier?1:0),hr:4*ST.hb,inv:2,fireT:0,slow:false,t:0,dead:false,coinMul:ST.coin};
  const u=null;useMsg='';if(u&&(SV.inv[u.id]||0)>0){SV.inv[u.id]--;if(u.ulife)P.lives++;if(u.ubomb)P.bombs++;if(u.ubar)P.bar++;if(u.ucoin)P.coinMul+=u.ucoin;useMsg=u.n+'を使った！';if(SV.inv[u.id]<=0)SV.eq.u=null;save();}
  E=[];EB=[];PS=[];IT=[];PT=[];DT=[];BUB=[];boss=null;gT=0;
  score=0;combo=0;comboT=0;maxCombo=0;comboPop=0;runCoins=0;kills=0;totalDmg=0;recent=[];newReg=[];
@@ -1551,8 +1565,9 @@ function* behP3(b){b.rage=true;yield* wait(.5);yield* bigMove(b,'ベヒーモス
   for(let i=0;i<4;i++){const[x,y]=mz(b);for(const sx of[-100,0,100])eb(x+sx,y,aim(x+sx,y),300,SP.spear);fan(x,y,aim(x,y),nn(9),1.2,220,SP.mud);yield* wait(.35);}
   yield* rockRain(2.2,7);
  }}
-function* cutin(img,name,sub){const me=CUT={img:IMG[img],chibi:img.startsWith('c_'),name,sub,life:2.6,max:2.6};sfx('phase');while(CUT===me&&me.life>0)yield;if(CUT===me)CUT=null;}
-function* runBoss(b){{const ps=STAGES[curSt]||{};if(!ps.rush&&!preBomb){preBomb=1;drop(rand(220,500),200,'bomb');toast('ボムが流れてきた！');}}const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}{const es=STAGES[curSt]||{},EH={1:.8,2:.85,3:.9};if(!es.um&&!es.rush&&EH[es.ch]){b.maxhp*=es.id==='3-3'?.85:EH[es.ch];b.hp=b.maxhp;}}{const us=STAGES[curSt]||{};if(us.um&&!us.rush){b.maxhp*=1.3;b.hp=b.maxhp;}}if((STAGES[curSt]||{}).um){if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}boss=b;while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
+const FACEC={"z_king":[375,237],"z_ogre":[324,152],"z_behemoth":[321,152],"z_tankknight":[374,76],"z_centaur":[300,116],"z_darkelf":[417,200],"z_bahamut":[355,187],"z_leviathan":[266,229],"z_poseidon":[337,208],"z_vampire":[352,142],"z_hades":[358,185],"z_dragon":[295,179],"z_dragonemp":[353,174],"z_power":[352,157],"z_satan":[371,240],"z_lucifer":[374,273],"z_gym":[352,169],"z_kinniku":[364,149],"z_elf":[313,143]};
+function* cutin(img,name,sub){const me=CUT={key:img,img:IMG[img],chibi:img.startsWith('c_'),name,sub,life:2.6,max:2.6};sfx('phase');while(CUT===me&&me.life>0)yield;if(CUT===me)CUT=null;}
+function* runBoss(b){{const ps=STAGES[curSt]||{};if(!ps.rush&&!preBomb){preBomb=1;drop(rand(220,500),200,'bomb');toast('ボムが流れてきた！');}}const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}{const es=STAGES[curSt]||{},EH={1:.8,2:.85,3:.9};if(!es.um&&!es.rush&&EH[es.ch]){b.maxhp*=es.id==='3-3'?.85:EH[es.ch];b.hp=b.maxhp;}}{const us=STAGES[curSt]||{};if(us.um&&!us.rush){b.maxhp*=1.3;b.hp=b.maxhp;}}if((STAGES[curSt]||{}).um){if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}if(RUNBUY.punch&&!RUNBUY.punchUsed){RUNBUY.punchUsed=1;b.hp=b.maxhp*.8;toast('👊 先制パンチ！ ボスの体力−20%');shake(.4,10);}boss=b;while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
 function mz(b){return[b.x+b.mx,b.y+b.my];}
 function* spiral(b,dur,iv,arms,rot,sp,spr,both){let a=rand(0,TAU),t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;a+=rot*dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);for(let k=0;k<arms;k++){eb(x,y,a+k/arms*TAU,sp,spr);if(both)eb(x,y,-a+k/arms*TAU,sp*.85,SP.oPink);}sfx('eshot');}}}
 function* stream(b,dur,iv,sp,spr){let t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);eb(x,y,aim(x,y),sp,spr);sfx('eshot');}}}
@@ -2361,7 +2376,9 @@ function drawCut(){const k=CUT.max-CUT.life,L=CUT.life;const off=k<.35?(1-k/.35)
  ctx.save();ctx.fillStyle=`rgba(0,0,0,${Math.min(.7,k*3,L*3)})`;ctx.fillRect(0,0,W,PB);
  ctx.translate(off,0);const y0=330,hh=500;ctx.save();ctx.beginPath();ctx.moveTo(0,y0+40);ctx.lineTo(W,y0);ctx.lineTo(W,y0+hh-40);ctx.lineTo(0,y0+hh);ctx.closePath();ctx.clip();
  const im=CUT.img;if(im){const ch=CUT.chibi;if(ch){const g=ctx.createLinearGradient(0,y0,W,y0+hh);g.addColorStop(0,'#3a0a50');g.addColorStop(1,'#120420');ctx.fillStyle=g;ctx.fillRect(0,y0,W,hh);for(let i=0;i<14;i++){ctx.fillStyle=i%2?'rgba(255,210,80,.12)':'rgba(255,255,255,.04)';ctx.beginPath();ctx.moveTo(W/2,y0+hh/2);const a=i/14*TAU+k*.4;ctx.lineTo(W/2+Math.cos(a)*900,y0+hh/2+Math.sin(a)*900);ctx.lineTo(W/2+Math.cos(a+.22)*900,y0+hh/2+Math.sin(a+.22)*900);ctx.fill();}}
- const sc=(ch?Math.min(W*.9/im.width,(hh-20)/im.height):Math.max(W/im.width,hh/im.height))*(1+k*.04),dw=im.width*sc,dh=im.height*sc;ctx.drawImage(im,(W-dw)/2,ch?y0+hh-dh:y0-(dh-hh)*.22,dw,dh);}
+ const fc=!ch&&FACEC[CUT.key];if(fc){const g=ctx.createLinearGradient(0,y0,0,y0+hh);g.addColorStop(0,'#2a0c3a');g.addColorStop(1,'#0c0412');ctx.fillStyle=g;ctx.fillRect(0,y0,W,hh);}
+ const sc=(ch?Math.min(W*.9/im.width,(hh-20)/im.height):Math.max(W/im.width,hh/im.height)*(fc?(CUT.key==='z_tankknight'?2.1:1.15):1))*(1+k*.04),dw=im.width*sc,dh=im.height*sc;
+ if(fc){const x=Math.max(W-dw,Math.min(0,W/2-fc[0]*sc)),y=Math.max(y0+hh-dh,Math.min(y0+70,y0+hh*.42-fc[1]*sc));ctx.drawImage(im,x,y,dw,dh);}else ctx.drawImage(im,(W-dw)/2,ch?y0+hh-dh:y0-(dh-hh)*.22,dw,dh);}
  ctx.restore();ctx.strokeStyle='#ffd34d';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(0,y0+40);ctx.lineTo(W,y0);ctx.moveTo(0,y0+hh);ctx.lineTo(W,y0+hh-40);ctx.stroke();
  ctx.fillStyle='#c8242b';rr(ctx,30,y0-30,150,50,10);ctx.fill();gtext(ctx,'BOSS',105,y0-4,32,'center',{it:1,cols:['#fff','#ffe08a','#ffb020']});
  gtext(ctx,CUT.name,W/2,y0+hh+50,54,'center',{it:1});wtext(ctx,CUT.sub,W/2,y0+hh+108,28,'center','#fff');ctx.restore();}
@@ -2406,7 +2423,7 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/
 /* ---------- screens ---------- */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));if(id)$('#'+id).classList.add('on');}
 function toTitle(){uraSwap(false);if(SV.ura||SV.allOpen)setTimeout(loadUra,1500);if(DEMO){SV=JSON.parse(DEMO.snap);DEMO=null;}mode='title';CUT=null;HZ=[];BG=BGS[1];endDialog();$('#hud').classList.remove('on');show('title');$('#tcoinV').textContent=fmt(SV.coins);bgm('title');setTimeout(()=>{if(mode!=='title')return;if(SV.reNote){SV.reNote=0;save();codePop('📢 アップデートのお知らせ',['ボスの攻撃や弾幕が、新しくパワーアップしました！','そのため、各章のボス（X-3）をもう一度倒すと、次の章に進めるようになっています','⚔ 1章のボスから、順番に倒し直してね','✅ アイテム・コイン・図鑑・キャラはそのままです']);return;}guide('title');},400);}
-function startGame(){BMA=null;if(SV.eq&&SV.eq.b)loadBX(SV.eq.b);const ust=STAGES[curSt];if(ust&&ust.um&&!loadUra.done){toast('裏の世界を読み込み中…');loadUra().then(()=>startGame());return;}uraSwap(ust&&ust.um);auInit();sfx('ok');BG=BGS[STAGES[curSt].ch]||BGS[1];resetGame();mode='game';show(null);$('#hud').classList.add('on');updBombBtn();if(useMsg)setTimeout(()=>toast(useMsg),300);}
+function startGame(){BMA=null;if(SV.eq&&SV.eq.b)loadBX(SV.eq.b);const ust=STAGES[curSt];if(ust&&ust.um&&!loadUra.done){toast('裏の世界を読み込み中…');loadUra().then(()=>startGame());return;}uraSwap(ust&&ust.um);RUNBUY=PENDBUY||{};PENDBUY=null;auInit();sfx('ok');BG=BGS[STAGES[curSt].ch]||BGS[1];resetGame();mode='game';show(null);$('#hud').classList.add('on');updBombBtn();if(useMsg)setTimeout(()=>toast(useMsg),300);}
 function pauseGame(on){if(mode!=='game'||over)return;paused=on;if(on){$('#pFace').src=src(hFace(boss&&boss.name));show('pause');if(AU.name)AU.saved=AU.name;bgm(null);}else{show(null);bgm(AU.saved||null);AU.saved=null;}}
 function showResult(win){
  if(mode!=='game')return;
@@ -2426,10 +2443,22 @@ function advice(){const S=[],st=STAGES[curSt]||{},left=P?P.bombs:0,w=ITM[SV.eq.w
  if(!SV.eq.x1||!SV.eq.x2||!SV.eq.o)S.push('<b>アクセや防具の枠</b>があいてるよ。つけると残機やボムが増えるものもあるよ');
  if(SV.coins>=200&&!st.um&&!st.rush)S.push(`コインが<b>${SV.coins}G</b>あるよ。ガチャで装備を強くしてみない？`);
  if(st.ch>=3&&!st.um&&(w.r||0)<Math.min(3,st.ch-2))S.push('武器がちょっと心細いかも。<b>同じ装備がかぶると強化</b>されるよ');
+ if(shopOpen()&&!st.rush)S.push('<b>出撃準備のお店</b>で、先制パンチやサラダチキンが買えるよ。ここぞってときに使ってね');
  const G=['弾が多いところは、<b>低速ボタン</b>を押しながら動くと、細かくよけられるよ','当たり判定は、<b>めいちゃんの真ん中の小さい点</b>だけなの。見た目より小さいから、すきまを通れるよ','<b>赤い矢印や円</b>が出たら、大技の合図。早めにその場所からはなれてね','敵の真正面は弾が集まりやすいよ。<b>少しずれた位置</b>から撃つと、楽なときもあるよ','ボス戦の前には、<b>ボムが1個流れてくる</b>よ。忘れずにひろってね'];
  const t=[];if(left>0)t.push(`ボム、まだ<b>${left}個</b>残ってたよ。あぶないと思ったら、迷わず使っていいからね`);
  if(S.length)t.push(S[n%S.length]);t.push(G[(n+curSt)%G.length]);
  return 'ねえねえ、ちょっとアドバイス！<br>'+t.slice(0,2).join('<br>');}
+const SHOP=[{id:'punch',ic:'👊',n:'先制パンチ',d:'ボス戦開始時に、ボスの体力−20%',p:2500},{id:'chicken',ic:'🍗',n:'サラダチキン',d:'残機+1',p:1500},{id:'bomb',ic:'💣',n:'予備のボム',d:'ボム+1',p:1200},{id:'barrier',ic:'🛡️',n:'バリアのお守り',d:'バリア+1（1回だけ被弾を防ぐ）',p:1000}];
+let PENDBUY=null,RUNBUY={},PPSEL={};
+function shopOpen(){return !!SV.allOpen||(SV.prog||0)>STAGES.findIndex(q=>q.id==='4-3');}
+function goStage(i){curSt=i;const st=STAGES[i];if(st&&shopOpen()&&!st.rush&&!st.demo)openPrep();else startGame();}
+function ppTotal(){return SHOP.reduce((a,x)=>a+(PPSEL[x.id]?x.p:0),0);}
+function openPrep(){PPSEL={};const st=STAGES[curSt];$('#ppStage').textContent=st.id+'　'+st.name;renderPrep();show('prep');}
+function renderPrep(){const st=STAGES[curSt],noBoss=/-1$/.test(st.id),L=$('#ppList');L.innerHTML='';const tot=ppTotal();$('#ppCoin').textContent=SV.coins;
+ for(const x of SHOP){const dis=(x.id==='punch'&&noBoss);const can=!dis&&(PPSEL[x.id]||SV.coins-tot>=x.p);const d=document.createElement('div');d.className='ppi'+(PPSEL[x.id]?' on':'')+(can?'':' no');
+  d.innerHTML=`<div class="ck">✅</div><div class="ic">${x.ic}</div><div class="tx"><div class="nm">${x.n}</div><div class="ef">${dis?'このステージにはボスがいないので使えません':x.d}</div></div><div class="pr">${x.p}G</div>`;
+  d.onclick=()=>{if(!can){sfx('hit');if(!dis)toast('コインが足りません');return;}sfx('ok');PPSEL[x.id]=!PPSEL[x.id];renderPrep();};L.appendChild(d);}
+ $('#ppGo').textContent=tot?`出撃（−${tot}G）`:'出撃';}
 function stLock(i){const st=STAGES[i];if(!st)return true;if(SV.allOpen)return false;const prog=SV.prog||0,i83=STAGES.findIndex(q=>q.end);if(st.urush)return !SV.uraClear||reLocked(i);if(st.um){if(!SV.ura)return true;const iu=STAGES.findIndex(q=>q.um);return i>Math.max(prog,iu)||reLocked(i);}return (i>prog&&!(st.rush&&prog>i83))||reLocked(i);}
 function reLocked(i){const st=STAGES[i];if(!st||!SV.reLock||SV.allOpen)return false;if(st.ura||st.rush||st.um)return (SV.reCh||0)<8;return st.ch>(SV.reCh||0)+1;}
 let SSCAT='n';
@@ -2440,12 +2469,12 @@ function openMode(){const L=$('#mdList');L.innerHTML='';if(SV.ura||SV.allOpen)lo
   {c:'ur',ic:'🩸',t:'裏・ボス連戦',s:'赤い目のヒロキ全員と連続バトル',open:!stLock(iUR),go:()=>{curSt=iUR;startGame();}}];
  M.forEach(m=>{const d=document.createElement('div');d.className='mdc '+(m.open?m.c:'lock');d.innerHTML=m.open?`<div class="t">${m.t}</div><div class="s">${m.s}</div><div class="ic">${m.ic}</div>`:`<div class="t">？？？</div><div class="s">まだ解放されていません</div><div class="ic">🔒</div>`;
   d.onclick=()=>{auInit();if(m.open){sfx('ok');m.go();}else{sfx('hit');d.classList.remove('shake');void d.offsetWidth;d.classList.add('shake');toast('🔒 まだ解放されていません');}};L.appendChild(d);});
- show('modesel');if(SV.ura&&!SV.uraNote){SV.uraNote=1;save();setTimeout(()=>codePop('🌑 裏の世界が解放されました',['「出撃」に「裏の世界」が出てきました','敵はぜんぶ、赤い目の裏ヒロキ。弾幕もパワーアップしています','ボスは早めに本気モードになるので気をつけてね','コインは1.3倍もらえます']),300);}}
+ show('modesel');if(shopOpen()&&!SV.shopNote){SV.shopNote=1;save();setTimeout(()=>codePop('🛒 お店が開きました',['ステージを選ぶと「出撃準備」でお店が使えるよ','👊 先制パンチ（2500G）：ボスの体力−20%','🍗 サラダチキン（1500G）：残機+1','💣 予備のボム（1200G）：ボム+1','🛡️ バリアのお守り（1000G）：バリア+1','どれも、そのステージで1回だけ・各1個までだよ']),300);}else if(SV.ura&&!SV.uraNote){SV.uraNote=1;save();setTimeout(()=>codePop('🌑 裏の世界が解放されました',['「出撃」に「裏の世界」が出てきました','敵はぜんぶ、赤い目の裏ヒロキ。弾幕もパワーアップしています','ボスは早めに本気モードになるので気をつけてね','コインは1.3倍もらえます']),300);}}
 function openStSel(cat){if(cat)SSCAT=cat;const U=SSCAT==='u';const L=$('#ssList');L.innerHTML='';let lastCh='';const prog=SV.prog||0;$('#ssTtl').textContent=U?'裏の世界':'ステージ選択';$('#stsel').style.background=U?'linear-gradient(#2a0c3a,#07030c)':'linear-gradient(#10260f,#07030c)';
  STAGES.forEach((st,i)=>{if(st.demo||st.rush)return;if(!!st.um!==U)return;const ck=(st.um?'u':'')+st.ch;if(ck!==lastCh){lastCh=ck;L.insertAdjacentHTML('beforeend',st.um?`<div class="ssch ura">裏・第${st.ch}章　${CHN[st.ch]}</div>`:`<div class="ssch">${st.ch>8?'EXTRA':'第'+st.ch+'章'}　${CHN[st.ch]}</div>`);}
   const i83=STAGES.findIndex(q=>q.end);if(st.ura&&!SV.allOpen&&prog<=i83)return;
   const lock=stLock(i);const d=document.createElement('div');d.className='ssb'+(lock?' lock':'')+(st.ura?' ura':'')+(st.um?' um':'');d.innerHTML=`<span>${st.id}　${st.name}</span><span class="ck">${i<prog?'✓ クリア':(lock?'🔒':'▶')}</span>`;
-  if(!lock)d.onclick=()=>{curSt=i;startGame();};L.appendChild(d);});
+  if(!lock)d.onclick=()=>{auInit();goStage(i);};L.appendChild(d);});
  for(let c=9;c<=8;c++)L.insertAdjacentHTML('beforeend',`<div class="ssch" style="opacity:.35">第${c}章　${CHN[c]}　🔒 近日公開</div>`);
  show('stsel');guide('stage');}
 const GUIDE={
@@ -2567,7 +2596,9 @@ $('#tSet').onclick=()=>{auInit();sfx('ok');openSet();};
 $('#gBack').onclick=$('#zBack').onclick=$('#sBack').onclick=()=>{sfx('ok');toTitle();};
 $('#pRes').onclick=()=>pauseGame(false);
 $('#pQuit').onclick=()=>{paused=false;toTitle();};
-$('#rRetry').onclick=startGame;$('#rNext').onclick=()=>{curSt++;startGame();};$('#rTitleB').onclick=toTitle;
+$('#rRetry').onclick=()=>goStage(curSt);$('#rNext').onclick=()=>goStage(curSt+1);
+$('#ppBack').onclick=()=>{sfx('ok');openStSel();};
+$('#ppGo').onclick=()=>{auInit();const tot=ppTotal();if(tot>SV.coins){toast('コインが足りません');return;}SV.coins-=tot;save();PENDBUY=Object.assign({},PPSEL);startGame();};$('#rTitleB').onclick=toTitle;
 $('#bPause').addEventListener('pointerdown',e=>{e.stopPropagation();pauseGame(true);});
 $('#bSlow').addEventListener('pointerdown',e=>{e.stopPropagation();slowToggle=!slowToggle;$('#bSlow').classList.toggle('act',slowToggle);});
 $('#bBomb').addEventListener('pointerdown',e=>{e.stopPropagation();doBomb();});
