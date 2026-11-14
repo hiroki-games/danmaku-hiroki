@@ -225,7 +225,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.31</div>
+ <div id="tver">Ver.3.32</div>
 </div>
 
 <div id="hud">
@@ -2467,7 +2467,7 @@ function advice(){const S=[],st=STAGES[curSt]||{},left=P?P.bombs:0,w=ITM[SV.eq.w
  return 'ねえねえ、ちょっとアドバイス！<br>'+t.slice(0,2).join('<br>');}
 const SHOP=[{id:'punch',ic:'👊',n:'先制パンチ',d:'ボス戦開始時に、ボスの体力−20%',p:2500},{id:'chicken',ic:'🍗',n:'サラダチキン',d:'残機+1',p:1500},{id:'bomb',ic:'💣',n:'予備のボム',d:'ボム+1',p:1200},{id:'barrier',ic:'🛡️',n:'バリアのお守り',d:'バリア+1（1回だけ被弾を防ぐ）',p:1000}];
 let PENDBUY=null,RUNBUY={},PPSEL={};
-function shopOpen(){return true;}
+function shopOpen(){return !!SV.allOpen||(SV.prog||0)>STAGES.findIndex(q=>q.id==='1-3');}
 function goStage(i){curSt=i;const st=STAGES[i];if(st&&shopOpen()&&!st.rush&&!st.demo)openPrep();else startGame();}
 function ppTotal(){return SHOP.reduce((a,x)=>a+(PPSEL[x.id]?x.p:0),0);}
 function openPrep(){PPSEL={};const st=STAGES[curSt];$('#ppStage').textContent=st.id+'　'+st.name;renderPrep();show('prep');}
