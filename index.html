@@ -215,7 +215,7 @@ html,body{touch-action:manipulation}
  <button class="gbtn" id="tSet">設定</button>
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
- <div id="tver">Ver.3.22</div>
+ <div id="tver">Ver.3.23</div>
 </div>
 
 <div id="hud">
@@ -1256,7 +1256,7 @@ function hitEnemy(e,d){
  e.hp-=d;e.flash=.06;e.acc+=d;if(e.accT<=0)e.accT=.12;addCombo();score+=d/1e5|0;sfx('hit');
  if(e.hp<=0&&!e.dead){e.dead=true;e.gone=true;kills++;score+=ET[e.kind].score;boom(e.x,e.y,e.size,null);sfx('boom');if(e.acc>0)dmgText(e.x,e.y-20,e.acc);
   for(let i=0;i<ET[e.kind].coins;i++)drop(e.x,e.y,'coin',4);
-  const big=e.kind==='orc'||e.kind==='troll'||ET[e.kind].big;if(Math.random()<(big?.1:.008)*(URA_ON?.5:1))drop(e.x,e.y,'bomb');
+  const big=e.kind==='orc'||e.kind==='troll'||ET[e.kind].big;if(Math.random()<(big?.1:.008))drop(e.x,e.y,'bomb');
   if(big&&Math.random()<.2)drop(e.x,e.y,'chicken');
   if(e.kind==='fairy'){for(let i=0;i<60;i++)drop(e.x+rand(-60,60),e.y+rand(-60,60),'coin',5);autoCollect=true;setTimeout(()=>{if(mode==='game'&&!boss)autoCollect=false;},2500);flash=.5;sfx('clear');setTimeout(()=>toast('✨ 幻のヒロキを倒した！ コイン大量ゲット！'),2300);}
   reg(e.kind);}
@@ -1670,7 +1670,7 @@ function updBoss(b,dt){
 function hitBoss(b,d){
  b.hp-=d;b.flash=.05;totalDmg+=d;addCombo();score+=d/1e5|0;sfx('hit');
  b.acc=(b.acc||0)+d;b.accT=b.accT>0?b.accT:.15;
- if(b.hp<=0){b.hp=0;b.dying=true;HZ=[];WARN=null;b.dieT=1.9;cancelBullets();sfx('big');shake(1.9,10);autoCollect=true;reg(b.key);for(let i=0;i<b.coins;i++)drop(b.x+rand(-80,80),b.y+rand(-60,40),'coin',8);drop(b.x,b.y,'bomb');}
+ if(b.hp<=0){b.hp=0;b.dying=true;HZ=[];WARN=null;b.dieT=1.9;cancelBullets();sfx('big');shake(1.9,10);autoCollect=true;reg(b.key);for(let i=0;i<b.coins;i++)drop(b.x+rand(-80,80),b.y+rand(-60,40),'coin',8);{const ds=STAGES[curSt]||{};if((ds.rush&&b.key!=='gym')||(/8-3$/.test(ds.id||'')&&b.key==='satan'))drop(b.x,b.y,'bomb');}}
 }
 
 /* ---------- stage script ---------- */
@@ -2425,7 +2425,7 @@ function openMode(){const L=$('#mdList');L.innerHTML='';if(SV.ura||SV.allOpen)lo
   {c:'ur',ic:'🩸',t:'裏・ボス連戦',s:'赤い目のヒロキ全員と連続バトル',open:!stLock(iUR),go:()=>{curSt=iUR;startGame();}}];
  M.forEach(m=>{const d=document.createElement('div');d.className='mdc '+(m.open?m.c:'lock');d.innerHTML=m.open?`<div class="t">${m.t}</div><div class="s">${m.s}</div><div class="ic">${m.ic}</div>`:`<div class="t">？？？</div><div class="s">まだ解放されていません</div><div class="ic">🔒</div>`;
   d.onclick=()=>{auInit();if(m.open){sfx('ok');m.go();}else{sfx('hit');d.classList.remove('shake');void d.offsetWidth;d.classList.add('shake');toast('🔒 まだ解放されていません');}};L.appendChild(d);});
- show('modesel');if(SV.ura&&!SV.uraNote){SV.uraNote=1;save();setTimeout(()=>codePop('🌑 裏の世界が解放されました',['「出撃」に「裏の世界」が出てきました','敵はぜんぶ、赤い目の裏ヒロキ。弾幕もパワーアップしています','ボスは早めに本気モードになるので気をつけてね','コインは1.3倍もらえます（ボムは出にくくなります）']),300);}}
+ show('modesel');if(SV.ura&&!SV.uraNote){SV.uraNote=1;save();setTimeout(()=>codePop('🌑 裏の世界が解放されました',['「出撃」に「裏の世界」が出てきました','敵はぜんぶ、赤い目の裏ヒロキ。弾幕もパワーアップしています','ボスは早めに本気モードになるので気をつけてね','コインは1.3倍もらえます']),300);}}
 function openStSel(cat){if(cat)SSCAT=cat;const U=SSCAT==='u';const L=$('#ssList');L.innerHTML='';let lastCh='';const prog=SV.prog||0;$('#ssTtl').textContent=U?'裏の世界':'ステージ選択';$('#stsel').style.background=U?'linear-gradient(#2a0c3a,#07030c)':'linear-gradient(#10260f,#07030c)';
  STAGES.forEach((st,i)=>{if(st.demo||st.rush)return;if(!!st.um!==U)return;const ck=(st.um?'u':'')+st.ch;if(ck!==lastCh){lastCh=ck;L.insertAdjacentHTML('beforeend',st.um?`<div class="ssch ura">裏・第${st.ch}章　${CHN[st.ch]}</div>`:`<div class="ssch">${st.ch>8?'EXTRA':'第'+st.ch+'章'}　${CHN[st.ch]}</div>`);}
   const i83=STAGES.findIndex(q=>q.end);if(st.ura&&!SV.allOpen&&prog<=i83)return;
