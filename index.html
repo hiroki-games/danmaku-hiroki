@@ -205,6 +205,10 @@ html,body{touch-action:manipulation}
 #tYbub{position:absolute;right:160px;bottom:50px;width:400px;padding:18px 22px;border-radius:20px;background:rgba(255,255,255,.96);color:#2a0a20;font-size:23px;font-weight:800;line-height:1.55;opacity:0;transition:opacity .25s;pointer-events:none;border:3px solid #ff8af0}#tYbub.on{opacity:1}#tYbub::after{content:'';position:absolute;right:-16px;bottom:30px;border:10px solid transparent;border-left:14px solid #fff}
 #rAdv{display:none;align-items:center;gap:14px;width:640px;margin:6px auto 14px;text-align:left}#rAdv img{width:120px;height:auto;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}#rAdvT{flex:1;background:rgba(40,10,50,.85);border:3px solid #ff8af0;border-radius:22px;padding:14px 18px;font-size:23px;font-weight:800;line-height:1.5;color:#fff}#rAdvT b{color:#ffb8f0}
 #tUpd{position:absolute;bottom:36px;left:28px;padding:6px 18px;border-radius:24px;background:rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.35);font-size:19px;font-weight:900;color:rgba(255,255,255,.8);white-space:nowrap;cursor:pointer}#tUpd.new{border-color:#ffd34d;color:#ffd34d;background:rgba(80,50,0,.75);animation:updP 1.2s ease-in-out infinite}@keyframes updP{50%{box-shadow:0 0 18px #ffd34d}}
+#tRank{position:absolute;top:144px;left:24px;padding:8px 18px;border-radius:30px;background:rgba(0,0,0,.6);border:2px solid #ffd34d;font-size:22px;font-weight:900;color:#ffe08a;cursor:pointer}
+#nameBox{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.82)}#nameBox.on{display:flex}#nameBox .in{width:min(92vw,560px);padding:26px 24px;border-radius:24px;background:linear-gradient(#3a1a50,#14061e);border:3px solid #ff8af0;text-align:center;color:#fff}#nameBox img{width:120px}#nameBox .t{font-size:22px;font-weight:900;margin:8px 0 14px;line-height:1.5}#nameBox input{width:90%;font-size:24px;padding:12px;border-radius:14px;border:2px solid #ffd34d;background:#0c0414;color:#fff;text-align:center}#nameBox .e{min-height:22px;color:#ff8a8a;font-size:16px;margin:6px 0}#nameBox .gbtn{width:80%;margin:4px auto}#nameBox .n{font-size:14px;color:rgba(255,255,255,.6);margin-top:10px}
+#rkMe{width:640px;margin:4px auto 10px;font-size:22px;font-weight:800;color:#ffe08a;text-align:center}#rkMe u{cursor:pointer;color:#7fd8ff}#rkTabs{width:660px;margin:0 auto 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}#rkTabs div{padding:8px 16px;border-radius:20px;border:2px solid #6a5a3a;font-size:20px;font-weight:900;cursor:pointer}#rkTabs .on{background:#ffd34d;color:#3a2000;border-color:#ffd34d}
+#rkList{width:640px;margin:0 auto}.rkr{display:flex;align-items:center;gap:14px;padding:12px 18px;margin-bottom:8px;border-radius:14px;background:rgba(255,255,255,.06);font-size:24px;font-weight:800}.rkr .no{width:56px;text-align:center;font-size:26px;color:#ffd34d}.rkr .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rkr .v{color:#ffe08a}.rkr.me{background:rgba(255,211,77,.18);border:2px solid #ffd34d}.rkr.ch{opacity:.45}.rkn{text-align:center;color:rgba(255,255,255,.6);font-size:20px;margin:20px 0}
 #tDaily{position:absolute;top:84px;left:24px;padding:8px 18px;border-radius:30px;background:rgba(0,0,0,.6);border:2px solid #7fd8ff;font-size:22px;font-weight:900;color:#bfeaff;cursor:pointer}#tDaily.new{border-color:#ffd34d;color:#fff3c0;animation:updP 1.2s ease-in-out infinite}#tDaily .dot{display:none;position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#ff3a5a;box-shadow:0 0 10px #ff3a5a}#tDaily.new .dot{display:block}
 #dyTop{width:640px;margin:6px auto 14px;display:flex;align-items:center;gap:14px}#dyTop img{width:130px;flex:none}#dyBub{flex:1;background:rgba(10,40,60,.85);border:3px solid #7fd8ff;border-radius:22px;padding:14px 18px;font-size:24px;font-weight:800;line-height:1.5}
 #dyList{width:640px;margin:0 auto;display:flex;flex-direction:column;gap:14px}.dym{padding:16px 20px;border-radius:18px;border:3px solid #3a6a8a;background:linear-gradient(#123248,#081624)}.dym .h{display:flex;justify-content:space-between;align-items:center;gap:10px}.dym .lv{font-size:19px;font-weight:900;padding:2px 12px;border-radius:12px;margin-right:8px}.dym .nm{font-size:27px;font-weight:900;flex:1}.dym .rw{font-size:26px;font-weight:900;color:#ffd34d;white-space:nowrap}
@@ -224,6 +228,7 @@ html,body{touch-action:manipulation}
 <div id="title" class="screen">
  <div id="tHelp">？ あそびかた</div>
  <div id="tDaily">📅 デイリー<span class="dot"></span></div>
+ <div id="tRank">🏆 ランキング</div>
  <div id="tcoin">● <span id="tcoinV">0</span> G</div>
  <div id="logo"><div class="s">弾幕</div><div class="b gold">ヒロキ</div><div class="e">DANMAKU HIROKI</div></div>
  <div id="tsub">〜勇者めいちゃん、筋肉魔王軍を止めに行く〜</div>
@@ -235,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.50</div>
+ <div id="tver">Ver.3.51</div>
 </div>
 
 <div id="hud">
@@ -324,6 +329,13 @@ html,body{touch-action:manipulation}
  <div id="ssList"></div>
 </div>
 
+<div id="rank" class="screen" style="background:linear-gradient(#2a1a08,#07030c)">
+ <div class="hdr"><h2 class="gold">ランキング</h2><div class="back" id="rkBack">もどる</div></div>
+ <div id="rkMe"></div>
+ <div id="rkTabs"></div>
+ <div id="rkList"></div>
+</div>
+<div id="nameBox"><div class="in"><img src="assets/mei_yado.webp" alt=""><div class="t" id="nbT">ランキングに出る<br>ニックネームを決めてね！</div><input id="nbI" maxlength="12" placeholder="1〜12文字" autocomplete="off"><div class="e" id="nbE"></div><button class="gbtn red" id="nbOK">けってい</button><div class="n">本名ではなく、ニックネームにしてね。あとからランキング画面で変えられるよ</div></div></div>
 <div id="daily" class="screen" style="background:linear-gradient(#0e2433,#07030c)">
  <div class="hdr"><h2 class="gold">デイリーミッション</h2><div class="back" id="dyBack">もどる</div></div>
  <div id="dyTop"><img src="assets/mei_yado.webp" alt=""><div id="dyBub"></div></div>
@@ -1210,7 +1222,7 @@ const EZ=()=>{const f=chF(),b=SV.easy?{n:.6,spd:.85,iv:1.4}:{n:1,spd:1,iv:1};ret
 const nn=k=>Math.max(1,Math.round(k*EZ().n));
 
 let preBomb=0;
-function resetGame(){HZ=[];CUT=null;preBomb=0;FEV=0;fevNext=300;runHits=0;runBombs=0;runFev=0;runBossK=0;
+function resetGame(){showResult.rec=0;HZ=[];CUT=null;preBomb=0;FEV=0;fevNext=300;runHits=0;runBombs=0;runFev=0;runBossK=0;
  ST=calcStats();
  P={x:360,y:960,lives:ST.lives+(RUNBUY.chicken?1:0),bombs:ST.bombs+(RUNBUY.bomb?1:0),bar:ST.bar+(RUNBUY.barrier?1:0),hr:4*ST.hb,inv:2,fireT:0,slow:false,t:0,dead:false,coinMul:ST.coin};
  const u=null;useMsg='';if(u&&(SV.inv[u.id]||0)>0){SV.inv[u.id]--;if(u.ulife)P.lives++;if(u.ubomb)P.bombs++;if(u.ubar)P.bar++;if(u.ucoin)P.coinMul+=u.ucoin;useMsg=u.n+'を使った！';if(SV.inv[u.id]<=0)SV.eq.u=null;save();}
@@ -2530,7 +2542,7 @@ function showResult(win){
  if(win&&!showResult.w&&!DEMO&&IT.some(i=>i.type==='coin')){showResult.w=1;autoCollect=true;const t0=Date.now();const iv=setInterval(()=>{if(mode!=='game'||!IT.some(i=>i.type==='coin')||Date.now()-t0>1800){clearInterval(iv);setTimeout(()=>{showResult.w=0;showResult(win);},250);}},60);return;}
  if(showResult.w)return;over=true;CUT=null;if(DEMO){bgm(null);sfx(win?'clear':'over');demoEnd(win);return;}bgm(null);sfx(win?'clear':'over');
  runCoins=Math.round(runCoins);SV.coins+=runCoins;if(score>SV.best)SV.best=score;if(maxCombo>SV.bestCombo)SV.bestCombo=maxCombo;if(win){SV.clears++;SV.prog=Math.max(SV.prog||0,curSt+1);const cs=STAGES[curSt];if(SV.reLock&&/-3$/.test(cs.id)){SV.reCh=Math.max(SV.reCh||0,cs.ch);if(SV.reCh>=8)SV.reLock=0;}}if(!win){if(SV.loseSt===curSt)SV.loseN=(SV.loseN||0)+1;else{SV.loseSt=curSt;SV.loseN=1;}if(SV.loseN>=5)SV.easyOpen=1;}else if(SV.loseSt===curSt)SV.loseN=0;save();
- if(!DEMO)dailyRun(win);
+ if(!DEMO&&!showResult.rec){showResult.rec=1;dailyRun(win);if(win){if(!SV.stBest||typeof SV.stBest!=='object')SV.stBest={};const id=STAGES[curSt].id;if(id&&score>(SV.stBest[id]||0))SV.stBest[id]=score;}save();setTimeout(fbPush,2500);}
  if(win&&!DEMO){const ub=RUNBUY||{};if(!(ub.punch||ub.chicken||ub.bomb||ub.barrier)){if(!SV.gold)SV.gold={};SV.gold[STAGES[curSt].id]=1;save();}giftCheck();}
  {const av=(!win&&SV.loseN>=2)?advice():null;$('#rAdv').style.display=av?'flex':'none';if(av)$('#rAdvT').innerHTML=av;}
  $('#rTitle').textContent=win?(STAGES[curSt].urush?'裏 ALL CLEAR':STAGES[curSt].umEnd?'裏 TRUE END':STAGES[curSt].ura?'TRUE END':STAGES[curSt].end?'THE END':(STAGES[curSt].rush?'ALL CLEAR':'STAGE CLEAR')):'GAME OVER';$('#rTitle').style.filter=win?'':'hue-rotate(-40deg) saturate(2)';
@@ -2585,8 +2597,32 @@ function openDaily(){const D_=dailyEnsure();const L=$('#dyList');L.innerHTML='';
 $('#tDaily').onclick=()=>{auInit();sfx('ok');openDaily();};$('#dyBack').onclick=()=>{sfx('ok');toTitle();};
 function isStandalone(){try{return navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;}catch(e){return false;}}
 function dailyPop(){const t=dToday();if(SV.dPop===t||mode!=='title')return;SV.dPop=t;save();const D_=dailyEnsure();codePop('📅 今日のデイリーミッション',[...D_.m.map(m=>`${DLV[m.lv][0]}：${m.n}　<b style="color:#ffd34d">${DRW[m.lv]}G</b>`),`3つぜんぶで ボーナス <b style="color:#ffd34d">${DBONUS}G</b>`],0,openDaily,'見に行く');}
-function titleTips(){const q=[];if(SV.fevSeen&&!(SV.seen||{}).fever)q.push(['fever',0]);if(!isStandalone()&&(!SV.homeT||Date.now()-SV.homeT>3*86400000))q.push(['home',1]);
+function titleTips(){if(!SV.pname){askName(()=>setTimeout(titleTips,400));return;}const q=[];if(SV.fevSeen&&!(SV.seen||{}).fever)q.push(['fever',0]);if(!isStandalone()&&(!SV.homeT||Date.now()-SV.homeT>3*86400000))q.push(['home',1]);
  const nx=()=>{const k=q.shift();if(!k){if(mode==='title')setTimeout(dailyPop,300);return;}if(mode!=='title')return;if(k[0]==='home'){SV.homeT=Date.now();save();}guide(k[0],k[1],nx);};nx();}
+const FB={key:'AIzaSyAOkjrG37jZ4GiPt7g1M7MNoF3PmmcVuzo',pid:'danmaku-hiroki'};
+const FS='https://firestore.googleapis.com/v1/projects/'+FB.pid+'/databases/(default)/documents/';
+async function fbTok(){const f=SV.fb;if(f&&f.tok&&f.exp>Date.now()+60000)return f;
+ let r;if(f&&f.rt){r=await fetch('https://securetoken.googleapis.com/v1/token?key='+FB.key,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'grant_type=refresh_token&refresh_token='+encodeURIComponent(f.rt)});if(r.ok){const j=await r.json();SV.fb={uid:j.user_id,rt:j.refresh_token,tok:j.id_token,exp:Date.now()+(+j.expires_in)*1000};save();return SV.fb;}}
+ r=await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+FB.key,{method:'POST',headers:{'Content-Type':'application/json'},body:'{"returnSecureToken":true}'});if(!r.ok)throw new Error('auth '+r.status);
+ const j=await r.json();SV.fb={uid:j.localId,rt:j.refreshToken,tok:j.idToken,exp:Date.now()+(+j.expiresIn)*1000};save();return SV.fb;}
+function fsVal(v){if(typeof v==='string')return{stringValue:v};if(typeof v==='boolean')return{booleanValue:v};if(typeof v==='number')return Number.isInteger(v)?{integerValue:String(v)}:{doubleValue:v};if(v&&typeof v==='object')return{mapValue:{fields:Object.fromEntries(Object.entries(v).map(([k,x])=>[k,fsVal(x)]))}};return{nullValue:null};}
+function fsDe(v){if(!v)return null;if('stringValue'in v)return v.stringValue;if('integerValue'in v)return+v.integerValue;if('doubleValue'in v)return v.doubleValue;if('booleanValue'in v)return v.booleanValue;if('mapValue'in v)return Object.fromEntries(Object.entries(v.mapValue.fields||{}).map(([k,x])=>[k,fsDe(x)]));return null;}
+function isCheat(){try{return !!SV.allOpen||!!localStorage.getItem('danmakuHiroki_bak');}catch(e){return !!SV.allOpen;}}
+function myStats(){const ver=($('#tver').textContent.match(/[0-9.]+/)||[''])[0];return{name:SV.pname||'',ver,t:Date.now(),cheat:isCheat(),prog:SV.prog||0,clears:SV.clears||0,gold:Object.keys(SV.gold||{}).length,combo:SV.bestCombo||0,rush:SV.rushBest||0,urush:SV.uRushBest||0,ura:SV.uraClear?1:0,sc:SV.stBest||{}};}
+let fbBusy=null,fbAgain=false;
+function fbPush(){if(!SV.pname)return;if(fbBusy){fbAgain=true;return;}fbBusy=(async()=>{try{const f=await fbTok();const d=myStats();const r=await fetch(FS+'players/'+f.uid,{method:'PATCH',headers:{'Content-Type':'application/json',Authorization:'Bearer '+f.tok},body:JSON.stringify({fields:fsVal(d).mapValue.fields})});if(!r.ok)throw new Error('push '+r.status);SV.fbOK=Date.now();save();}catch(e){console.warn('fbPush',e);}})().finally(()=>{fbBusy=null;if(fbAgain){fbAgain=false;setTimeout(fbPush,500);}});}
+async function fbList(){const r=await fetch(FS+'players?pageSize=300');if(!r.ok)throw new Error('list '+r.status);const j=await r.json();return(j.documents||[]).map(d=>Object.assign({uid:d.name.split('/').pop()},fsDe({mapValue:{fields:d.fields}})));}
+function askName(cb){const B=$('#nameBox');$('#nbI').value=SV.pname||'';$('#nbE').textContent='';$('#nbT').innerHTML=SV.pname?'新しいニックネームを入れてね':'ランキングに出る<br>ニックネームを決めてね！';B.classList.add('on');
+ $('#nbOK').onclick=()=>{const v=($('#nbI').value||'').replace(/\s+/g,' ').trim();const n=[...v].length;if(n<1||n>12){$('#nbE').textContent='1〜12文字で入れてね';sfx('hit');return;}SV.pname=v;save();B.classList.remove('on');sfx('ok');toast('👤 '+v+' で登録しました');fbPush();cb&&cb();};}
+const RKT=[['prog','進んだところ'],['clears','クリア回数'],['combo','最大コンボ'],['gold','★の数'],['urush','裏連戦']];let RKC='prog',RKD=null;
+function rkFmt(k,v){if(k==='prog'){const nd=STAGES.filter(q=>!q.demo);const st=nd[Math.max(0,Math.min(v,nd.length)-1)];return v?(st&&st.id?st.id+' まで':v):'-';}if(k==='urush'||k==='rush')return v+'体';if(k==='combo')return fmt(v);return v;}
+function renderRank(){const L=$('#rkList');$('#rkTabs').innerHTML=RKT.map(([k,n])=>`<div class="${k===RKC?'on':''}" data-k="${k}">${n}</div>`).join('');$('#rkTabs').querySelectorAll('div').forEach(d=>d.onclick=()=>{RKC=d.dataset.k;sfx('ok');renderRank();});
+ $('#rkMe').innerHTML=`あなた：${(SV.pname||'').replace(/</g,'&lt;')}　<u id="rkNm">名前を変える</u>`;$('#rkNm').onclick=()=>askName(()=>openRank());
+ if(!RKD){L.innerHTML='<div class="rkn">読み込み中…</div>';return;}if(RKD==='err'){L.innerHTML='<div class="rkn">ランキングを読み込めませんでした<br>通信を確認して、もう一度開いてね</div>';return;}
+ const me=SV.fb&&SV.fb.uid;const rows=RKD.filter(x=>x.name).sort((a,b)=>(a.cheat-b.cheat)||((b[RKC]||0)-(a[RKC]||0))||((b.prog||0)-(a.prog||0)));let no=0;
+ L.innerHTML=rows.length?rows.map(x=>{if(!x.cheat)no++;return`<div class="rkr${x.uid===me?' me':''}${x.cheat?' ch':''}"><span class="no">${x.cheat?'－':no}</span><span class="nm">${String(x.name).replace(/</g,'&lt;')}${x.cheat?'（裏コード）':''}</span><span class="v">${rkFmt(RKC,x[RKC]||0)}</span></div>`;}).join(''):'<div class="rkn">まだだれもいません</div>';}
+function openRank(){RKD=null;show('rank');renderRank();fbPush();fbList().then(d=>{RKD=d;}).catch(e=>{console.warn(e);RKD='err';}).then(()=>{if(mode==='rank'||document.querySelector('#rank.on'))renderRank();});}
+$('#tRank').onclick=()=>{auInit();sfx('ok');if(!SV.pname)askName(openRank);else openRank();};$('#rkBack').onclick=()=>{sfx('ok');toTitle();};
 function stLock(i){const st=STAGES[i];if(!st)return true;if(SV.allOpen)return false;const prog=SV.prog||0,i83=STAGES.findIndex(q=>q.end);if(st.urush)return !SV.uraClear||reLocked(i);if(st.um){if(!SV.ura)return true;const iu=STAGES.findIndex(q=>q.um);return i>Math.max(prog,iu)||reLocked(i);}return (i>prog&&!(st.rush&&prog>i83))||reLocked(i);}
 function reLocked(i){const st=STAGES[i];if(!st||!SV.reLock||SV.allOpen)return false;if(st.ura||st.rush||st.um)return (SV.reCh||0)<8;return st.ch>(SV.reCh||0)+1;}
 let SSCAT='n';
@@ -2717,7 +2753,7 @@ function rukaFX(cb,o){o=o||{};
 $('#tHelp').onclick=()=>{auInit();sfx('ok');guide('all',true);};
 const CURVER=($('#tver').textContent.match(/Ver\.[0-9.]+/)||[''])[0];let NEWVER=null;
 function chkUpd(){return fetch('index.html?chk='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(t=>{const m=t.match(/<div id="tver">(Ver\.[0-9.]+)<\/div>/);NEWVER=m&&m[1]!==CURVER?m[1]:null;const b=$('#tUpd');if(NEWVER){b.textContent='🔄 '+NEWVER+' に更新';b.classList.add('new');}else{b.textContent='🔄 更新を確認';b.classList.remove('new');}return NEWVER;}).catch(()=>null);}
-function autoUpd(){if(mode!=='title'||DEMO)return;chkUpd().then(v=>{if(!v||mode!=='title')return;if(document.querySelector('#codePop.on')||$('#fxc').style.display==='block')return;let last=0;try{last=+sessionStorage.getItem('dhAU')||0;}catch(e){}if(Date.now()-last<60000)return;try{sessionStorage.setItem('dhAU',Date.now());}catch(e){}save();toast('🔄 '+v+' に自動で更新します');setTimeout(()=>{if(mode==='title')location.replace(location.pathname+'?v='+Date.now());},900);});}
+function autoUpd(){if(mode!=='title'||DEMO||!$('#title').classList.contains('on')||$('#nameBox').classList.contains('on'))return;chkUpd().then(v=>{if(!v||mode!=='title')return;if(document.querySelector('#codePop.on')||$('#fxc').style.display==='block')return;let last=0;try{last=+sessionStorage.getItem('dhAU')||0;}catch(e){}if(Date.now()-last<60000)return;try{sessionStorage.setItem('dhAU',Date.now());}catch(e){}save();toast('🔄 '+v+' に自動で更新します');setTimeout(()=>{if(mode==='title')location.replace(location.pathname+'?v='+Date.now());},900);});}
 setTimeout(autoUpd,1200);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(autoUpd,600);});
 $('#tUpd').onclick=()=>{sfx('ok');const b=$('#tUpd');b.textContent='確認中…';chkUpd().then(v=>{if(v){save();toast(v+' に更新します');setTimeout(()=>location.replace(location.pathname+'?v='+Date.now()),500);}else{b.textContent='🔄 更新を確認';toast('最新版です（'+CURVER+'）');}});};
