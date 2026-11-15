@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.1.1</div>
+ <div id="tver">Ver.1.2</div>
 </div>
 
 <div id="hud">
@@ -2562,9 +2562,9 @@ function render(dt,t){
   if(boss)drawBoss(boss,t);
   for(const e of E){drawEnemy(ctx,e,t);if(e.mb&&!e.dead&&e.mhp){const w=110,x=e.x-w/2,y=e.y+e.h*.4;ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(x-2,y-2,w+4,12);ctx.fillStyle=e.hp<e.mhp*.5?'#ff5a3a':'#ffd34d';ctx.fillRect(x,y,w*Math.max(0,e.hp/e.mhp),8);}}
   drawHz(t);
-  if(ST&&ST.shot==='gyoza'&&P&&!P.dead&&!over){ctx.save();ctx.globalCompositeOperation='lighter';const bw=26+6*Math.sin(t*30),y0=P.y-36;const lg=ctx.createLinearGradient(P.x-bw,0,P.x+bw,0);lg.addColorStop(0,'rgba(255,150,40,0)');lg.addColorStop(.35,'rgba(255,170,60,.55)');lg.addColorStop(.5,'rgba(255,250,220,.9)');lg.addColorStop(.65,'rgba(255,170,60,.55)');lg.addColorStop(1,'rgba(255,150,40,0)');ctx.fillStyle=lg;ctx.fillRect(P.x-bw,0,bw*2,y0);ctx.drawImage(SP.glow,P.x-50,y0-50,100,100);ctx.restore();}
+  if(ST&&ST.shot==='gyoza'&&P&&!P.dead&&!over){ctx.save();ctx.globalCompositeOperation='lighter';const bw=20+4*Math.sin(t*30),y0=P.y-36;const lg=ctx.createLinearGradient(P.x-bw,0,P.x+bw,0);lg.addColorStop(0,'rgba(255,150,40,0)');lg.addColorStop(.35,'rgba(255,170,60,.22)');lg.addColorStop(.5,'rgba(255,240,200,.38)');lg.addColorStop(.65,'rgba(255,170,60,.22)');lg.addColorStop(1,'rgba(255,150,40,0)');ctx.fillStyle=lg;ctx.fillRect(P.x-bw,0,bw*2,y0);ctx.globalAlpha=.5;ctx.drawImage(SP.glow,P.x-30,y0-30,60,60);ctx.restore();}
   ctx.save();ctx.globalCompositeOperation='lighter';for(const s of PS){if(s.gz)continue;if(s.home){ctx.save();ctx.translate(s.x,s.y);ctx.rotate(Math.atan2(s.vy,s.vx)+Math.PI/2);ctx.drawImage(s.spr.img,-s.w/2,-s.h/2,s.w,s.h);ctx.restore();}else ctx.drawImage(s.spr.img,s.x-s.w/2,s.y-s.h/2,s.w,s.h);}ctx.restore();
-  for(const s of PS){if(!s.gz)continue;ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.rot+Math.sin(t*20+s.y*.05)*.15);ctx.drawImage(s.spr.img,-s.w/2,-s.h/2,s.w,s.h);ctx.restore();}
+  for(const s of PS){if(!s.gz)continue;ctx.save();ctx.globalAlpha=.6;ctx.translate(s.x,s.y);ctx.rotate(s.rot+Math.sin(t*20+s.y*.05)*.15);ctx.drawImage(s.spr.img,-s.w/2,-s.h/2,s.w,s.h);ctx.restore();}
   for(const it of IT){if(it.type==='coin'){const s=it.small?18:28;ctx.drawImage(SP.coin,it.x-s/2,it.y-s/2,s*Math.abs(Math.cos(it.t*6))+2,s);}
    else if(it.type==='bomb'){ctx.save();ctx.translate(it.x,it.y);{const gl=ctx.createRadialGradient(0,0,8,0,0,40);gl.addColorStop(0,'rgba(255,220,90,.75)');gl.addColorStop(1,'rgba(255,200,60,0)');ctx.globalAlpha=.6+.4*Math.sin(it.t*8);ctx.fillStyle=gl;ctx.beginPath();ctx.arc(0,0,40,0,TAU);ctx.fill();ctx.globalAlpha=1;}const g=ctx.createRadialGradient(-5,-5,2,0,0,18);g.addColorStop(0,'#ffb07a');g.addColorStop(1,'#a01800');ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,17,0,TAU);ctx.fill();ctx.strokeStyle='#ffd34d';ctx.lineWidth=2.5;ctx.stroke();gtext(ctx,'B',0,1,20,'center');ctx.restore();}
    else if(it.type==='heart'){ctx.save();ctx.translate(it.x,it.y);ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.6+.4*Math.sin(it.t*8);ctx.drawImage(SP.glow,-40,-40,80,80);ctx.restore();ctx.save();ctx.translate(it.x,it.y);ctx.scale(1+.08*Math.sin(it.t*10),1+.08*Math.sin(it.t*10));ctx.font='40px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('💗',0,2);ctx.restore();}
