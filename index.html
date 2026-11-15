@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.1.0</div>
+ <div id="tver">Ver.1.1</div>
 </div>
 
 <div id="hud">
@@ -1334,7 +1334,7 @@ function updPlayer(dt){
 /* ---------- enemies ---------- */
 function spawn(kind,o){
  const T=ET[kind];const MUST=!!(o.hpm&&/-1$/.test((STAGES[curSt]||{}).id||''));const ZH={6:.75,7:.65,8:.6},ZE={1:.8,2:.85,3:.9,4:.75,5:.75},zs=STAGES[curSt]||{};const e={kind,x:o.x,y:o.y??-50,hp:T.hp*(o.hpm||1)*(ZH[zs.ch]||1)*((!zs.um&&ZE[zs.ch])||1),r:T.r,size:T.h*.5,h:T.h,img:IMG['c_'+kind],sil:SIL[kind],t:0,seed:rand(0,10),lx:o.x,tilt:0,mode:o.mode||'down',vx:o.vx||0,vy:o.vy??150,fire:o.fire,fireT:o.fireDelay??rand(.6,1.4),flash:0,acc:0,accT:0,x0:o.x,amp:o.amp||0,w:o.w||2,ph:o.ph||0,ty:o.ty||220,stay:o.stay||3,st:0};
- if(MUST){e.stay=1e9;e.must=1;e.mb=1;e.hp*=1.25*({1:1,2:.9,3:.75,4:1.25,5:1.3,6:1.05,7:2.1,8:2.2}[zs.ch]||1)*(zs.um?1.4:1);e.mhp=e.hp;e.fire=mbFire(o.fire,zs.ch||1);if(!E.some(q=>q.must)){BN={t1:'中ボス出現！',t2:'倒さないと先に進めないよ',life:2.4};sfx('warn');}}E.push(e);if(!o.quiet&&Math.random()<(kind==='orc'||kind==='troll'||ET[kind].big?.6:.12))say(e,pick(kind==='orc'?L_ORC:(ET[kind].lines||L_ESTJ)),2.2);if(kind==='gym')say(e,pick(ET.gym.lines),3);return e;
+ if(MUST){e.stay=1e9;e.must=1;e.mb=1;e.hp*=1.25*({1:1,2:.9,3:.75,4:1.25,5:1.3,6:1.05,7:2.1,8:2.2}[zs.ch]||1)*(zs.um?1.4:1);e.mhp=e.hp;e.fire=mbFire(o.fire,zs.ch||1);if(!E.some(q=>q.must)){BN={t1:'強敵出現！',t2:'倒さないと先に進めないよ',life:2.4};sfx('warn');}}E.push(e);if(!o.quiet&&Math.random()<(kind==='orc'||kind==='troll'||ET[kind].big?.6:.12))say(e,pick(kind==='orc'?L_ORC:(ET[kind].lines||L_ESTJ)),2.2);if(kind==='gym')say(e,pick(ET.gym.lines),3);return e;
 }
 const MBS={1:'oRed',2:'bubble',3:'rock',4:'featherY',5:'wave',6:'oVoid',7:'oFire',8:'oFireBig'},MBI={1:1.35,2:1.2,3:1.1};
 function mbFire(f0,ch){return e=>{e.mbk=(e.mbk||0)+1;const low=e.hp<e.mhp*.5,k=e.mbk%3,spr=SP[MBS[ch]]||SP.oRed;let r;
@@ -2666,8 +2666,9 @@ async function fbTok(){const f=SV.fb;if(f&&f.tok&&f.exp>Date.now()+60000)return 
  const j=await r.json();SV.fb={uid:j.localId,rt:j.refreshToken,tok:j.idToken,exp:Date.now()+(+j.expiresIn)*1000};save();return SV.fb;}
 function fsVal(v){if(typeof v==='string')return{stringValue:v};if(typeof v==='boolean')return{booleanValue:v};if(typeof v==='number')return Number.isInteger(v)?{integerValue:String(v)}:{doubleValue:v};if(v&&typeof v==='object')return{mapValue:{fields:Object.fromEntries(Object.entries(v).map(([k,x])=>[k,fsVal(x)]))}};return{nullValue:null};}
 function fsDe(v){if(!v)return null;if('stringValue'in v)return v.stringValue;if('integerValue'in v)return+v.integerValue;if('doubleValue'in v)return v.doubleValue;if('booleanValue'in v)return v.booleanValue;if('mapValue'in v)return Object.fromEntries(Object.entries(v.mapValue.fields||{}).map(([k,x])=>[k,fsDe(x)]));return null;}
-function isCheat(){try{return !!SV.allOpen||!!localStorage.getItem('danmakuHiroki_bak');}catch(e){return !!SV.allOpen;}}
-function myStats(){const ver=($('#tver').textContent.match(/[0-9.]+/)||[''])[0];return{name:SV.pname||'',ver,t:Date.now(),cheat:isCheat(),prog:SV.prog||0,clears:SV.clears||0,gold:Object.keys(SV.gold||{}).length,combo:SV.bestCombo||0,rush:SV.rushBest||0,urush:SV.uRushBest||0,ura:SV.uraClear?1:0,items:Object.keys(SV.inv||{}).filter(k=>typeof ITM!=='undefined'&&ITM[k]).length,sc:SV.stBest||{}};}
+const DEVK='danmakuHiroki_dev';function devReal(){try{const b=localStorage.getItem(DEVK);return b?JSON.parse(b):null;}catch(e){return null;}}
+function isCheat(){try{const R=devReal();if(R)return !!R.allOpen||!!localStorage.getItem('danmakuHiroki_bak');return !!SV.allOpen||!!localStorage.getItem('danmakuHiroki_bak');}catch(e){return !!SV.allOpen;}}
+function myStats(){const ver=($('#tver').textContent.match(/[0-9.]+/)||[''])[0];const S=devReal()||SV;return{name:SV.pname||'',ver,t:Date.now(),cheat:isCheat(),prog:S.prog||0,clears:S.clears||0,gold:Object.keys(S.gold||{}).length,combo:S.bestCombo||0,rush:S.rushBest||0,urush:S.uRushBest||0,ura:S.uraClear?1:0,items:Object.keys(S.inv||{}).filter(k=>typeof ITM!=='undefined'&&ITM[k]).length,sc:S.stBest||{}};}
 let fbBusy=null,fbAgain=false;
 function fbPush(){if(!SV.pname)return;if(fbBusy){fbAgain=true;return;}fbBusy=(async()=>{try{const f=await fbTok();const d=myStats();const r=await fetch(FS+'players/'+f.uid,{method:'PATCH',headers:{'Content-Type':'application/json',Authorization:'Bearer '+f.tok},body:JSON.stringify({fields:fsVal(d).mapValue.fields})});if(!r.ok)throw new Error('push '+r.status);SV.fbOK=Date.now();save();}catch(e){console.warn('fbPush',e);}})().finally(()=>{fbBusy=null;if(fbAgain){fbAgain=false;setTimeout(fbPush,500);}});}
 async function fbList(){const r=await fetch(FS+'players?pageSize=300');if(!r.ok)throw new Error('list '+r.status);const j=await r.json();return(j.documents||[]).map(d=>Object.assign({uid:d.name.split('/').pop()},fsDe({mapValue:{fields:d.fields}})));}
@@ -2875,7 +2876,12 @@ function useCode(c){const ttl=`裏コード <span style="color:#fff">${c}</span>
  else if(c==='1996'){SV.allOpen=1;let ni=0,ns=0,nz=0;for(const it of [...ITEMS,...MEI_ITEMS]){if(it.s==='u')continue;if(!SV.inv[it.id]){SV.inv[it.id]=1;ni++;}}for(const k of SKINS){if(!SV.skins[k.id]){SV.skins[k.id]=1;ns++;}}for(const z of ZK){if(!SV.zukan[z.id]){SV.zukan[z.id]=1;nz++;}}save();
   const ics=[...ITEMS,...MEI_ITEMS].map(x=>x.ic).filter(x=>x&&x.length<=4);
   rukaFX(()=>codePop(ttl,['✅ 全ステージを解放しました',`✅ アイテム ${ni}種を新しく入手（すべて+0）`,`✅ キャラ ${ns}人が新しく仲間に`,`✅ 図鑑を ${nz}件登録（全${ZK.length}件コンプリート）`,'🐾 ルカと妖精ヒロキも仲間になったよ']),{face:IMG.zf_bahamut,emo:ics,rar:'全解放',cols:['#ffffff','#fff3b0','#ffb020'],fr:170,name:'コンプリート！',sub:'全ステージ・全アイテム・全図鑑が解放されたよ'});}
- else if(c==='7777'){SV.dev=1;save();$('#devPanel').style.display='';codePop('🛠 開発者メニュー',['設定画面に「開発者メニュー」が出ました','（ランキングの「裏コード使用」にはなりません）'],1);}
+ else if(c==='7777'){const R=devReal();
+  if(!R){const real=JSON.parse(JSON.stringify(SV));real.dev=0;try{localStorage.setItem(DEVK,JSON.stringify(real));}catch(e){}
+   SV.dev=1;SV.allOpen=1;let ni=0;for(const it of [...ITEMS,...MEI_ITEMS]){if(it.s==='u')continue;if(!SV.inv[it.id]){SV.inv[it.id]=1;ni++;}}for(const k of SKINS)if(!SV.skins[k.id])SV.skins[k.id]=1;for(const z of ZK)if(!SV.zukan[z.id])SV.zukan[z.id]=1;save();loadUra();openSet();
+   codePop('🛠 開発者モード ON',['✅ 全ステージ（裏・ボス連戦も）を解放しました','✅ 全アイテム・全キャラ・全図鑑を解放しました','✅ 設定画面に「開発者メニュー」が出ました','📊 ランキングには、開発者モードの前の成績がそのまま載ります','🔁 もう一度「7777」を入れると元のデータに戻ります（開発者モード中に遊んだ分は消えます）'],1);}
+  else{SV=R;SV.dev=0;fixSV();try{localStorage.removeItem(DEVK);}catch(e){}save();uraSwap(false);openSet();setTimeout(fbPush,500);
+   codePop('🛠 開発者モード OFF',['開発者モードの前のデータに戻しました',`コイン ${fmt(SV.coins||0)} G ／ クリア ${SV.prog||0}ステージ`],1);}}
  else codePop('……何も起きなかった',['このコードには、何の効果もないみたい','ヤドカリめいちゃんが、ヒントを知ってるかも？'],1);};
 
 let CPCB=null;
