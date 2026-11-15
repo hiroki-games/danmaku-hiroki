@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.70</div>
+ <div id="tver">Ver.3.71</div>
 </div>
 
 <div id="hud">
@@ -1665,6 +1665,20 @@ function* behP3(b){b.rage=true;yield* wait(.5);yield* bigMove(b,'ベヒーモス
   yield* rockRain(2.2,7);
  }}
 const FACEC={"z_king":[375,237],"z_ogre":[324,152],"z_behemoth":[321,152],"z_tankknight":[374,76],"z_centaur":[300,116],"z_darkelf":[417,200],"z_bahamut":[355,187],"z_leviathan":[328,196],"z_poseidon":[337,208],"z_vampire":[352,142],"z_hades":[358,185],"z_dragon":[295,179],"z_dragonemp":[353,174],"z_power":[352,157],"z_satan":[371,240],"z_lucifer":[374,273],"z_gym":[352,169],"z_kinniku":[364,149],"z_elf":[313,143]};
+let TRF=null;
+function* formChange(){const x=360,y=330;TRF={t:0,max:3.4,x,y};flash=1;shake(1.8,18);sfx('big');let h=0,b2=0;
+ while(TRF.t<TRF.max){const dt=yield;TRF.t+=dt;const t=TRF.t;
+  if(Math.random()<.9)for(let i=0;i<3;i++){const a=rand(0,TAU),r=rand(40,120);part(x+Math.cos(a)*r,y+Math.sin(a)*r,{type:'spark',vx:Math.cos(a)*rand(200,520),vy:Math.sin(a)*rand(200,520),life:.8,max:.8,size:rand(5,10),col:pick(['#c24dff','#ffd34d','#ffffff','#ff5a8a'])});}
+  if(t>.9&&!b2){b2=1;flash=.9;shake(1.2,22);sfx('big');for(let k=0;k<4;k++)part(x,y,{type:'ring',life:.9+k*.2,max:.9+k*.2,size:420+k*160,col:k%2?'#c24dff':'#ffd34d'});}
+  if(t>1.4&&!h){h=1;sfx('pow');for(const dx of[-70,70]){IT.push({x:x+dx,y:y+40,vx:dx*1.2,vy:-180,type:'heart',v:0,t:0,home:1});}toast('💗 ハートが2つ落ちてきた！');}
+ }
+ TRF=null;}
+function drawTRF(){if(!TRF)return;const{x,y,t,max}=TRF,a=Math.min(1,t/.3)*Math.min(1,(max-t)/.5);ctx.save();
+ ctx.globalAlpha=a*.55;ctx.fillStyle='#2a0040';ctx.fillRect(0,0,W,H);
+ ctx.globalCompositeOperation='lighter';ctx.translate(x,y);ctx.rotate(t*.9);
+ for(let i=0;i<14;i++){ctx.rotate(TAU/14);const g=ctx.createLinearGradient(0,0,0,-900);g.addColorStop(0,i%2?'rgba(255,211,77,.55)':'rgba(194,77,255,.55)');g.addColorStop(1,'rgba(0,0,0,0)');ctx.globalAlpha=a*(.6+.4*Math.sin(t*6+i));ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(-14,0);ctx.lineTo(-70,-900);ctx.lineTo(70,-900);ctx.lineTo(14,0);ctx.fill();}
+ ctx.restore();ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=a;const s=260+Math.sin(t*8)*30;ctx.drawImage(SP.glow,x-s/2,y-s/2,s,s);ctx.restore();
+ if(t>.9){ctx.save();const k=Math.min(1,(t-.9)/.25);ctx.globalAlpha=a;ctx.translate(W/2,620);ctx.scale(1.6-.6*k,1.6-.6*k);gtext(ctx,'第二形態',0,0,76,'center',{it:1,cols:['#ffffff','#e0a0ff','#8a2ad0']});ctx.restore();ctx.save();ctx.globalAlpha=a*k;wtext(ctx,'魔王の真の姿が目覚める……',W/2,680,28,'center','#fff');ctx.restore();}}
 function* waitCalm(mx){mx=mx||6;let t=0;while(t<mx&&(EB.length||E.some(e=>!e.dead)))t+=yield;if(EB.length)cancelBullets();}
 function* cutin(img,name,sub){yield* waitCalm();const me=CUT={key:img,img:IMG[img],chibi:img.startsWith('c_'),name,sub,life:2.6,max:2.6};sfx('phase');while(CUT===me&&me.life>0)yield;if(CUT===me)CUT=null;}
 function* runBoss(b){{const ps=STAGES[curSt]||{};if(!ps.rush&&!preBomb){preBomb=1;drop(rand(220,500),200,'bomb');if(!(RUNBUY.punch&&!RUNBUY.punchUsed))toast('ボムが流れてきた！');}}const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}{const es=STAGES[curSt]||{},EH={1:.8,2:.85,3:.9};if(!es.um&&!es.rush&&EH[es.ch]){b.maxhp*=({'1-3':.6,'2-3':.6,'3-3':.85})[es.id]||EH[es.ch];b.hp=b.maxhp;}}{const us=STAGES[curSt]||{};if(us.um&&!us.rush){b.maxhp*=1.3;b.hp=b.maxhp;}}if((STAGES[curSt]||{}).um){if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}const doPunch=RUNBUY.punch&&!RUNBUY.punchUsed;if(doPunch){RUNBUY.punchUsed=1;if(RUNBUY.free&&!SV.punchTrial){SV.punchTrial=1;save();}}boss=b;if(doPunch){while(!b.ready&&!b.dead)yield;if(!b.dead){PFX={t:0,dur:PH+1.6,b,hit:0};$('#toast').classList.remove('on');}}while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
@@ -1709,8 +1723,8 @@ function hzWarn(){return SV.easy?1.5:(chF()<.85?1.3:1.05);}
 const HZSC={1:.82,2:.85,3:.88,4:.91,5:.98,6:1,7:1,8:1};
 function hzF(){const st=STAGES[curSt]||{};const sb=!st.rush&&SBST[(st.id||'').replace('裏','')]||1;return chF()/sb;}
 function hzS(){const st=STAGES[curSt]||{};if(st.um)return 1;let c=st.rush&&RCH?RCH:st.ch;let v=HZSC[c]||1;if(boss&&boss.key==='kinniku')v=.92;return v;}
-function addHz(o,delay){const S=hzS();if(delay>0&&o.mode!=='drop'&&Math.random()>S*S+.05)return;const im=o.img?IMG[o.img]:null;const th0=o.th||130,dh=th0*(o.sc||1.25);const len=o.mode==='beam'?40:(im?dh*im.width/im.height:o.emo?dh:th0);
- o.th=th0*(.7+.3*S);if(o.spd)o.spd*=(.75+.25*S);HZ.push(Object.assign({t:-(delay||0),warn:hzWarn()*(1+(1-S)*.8),done:false,im,dh,len},o));}
+function addHz(o,delay){const S=hzS(),S83=(STAGES[curSt]||{}).id==='8-3';if(S83){o.th=(o.th||130)*.9;if(o.r)o.r*=.9;}if(delay>0&&o.mode!=='drop'&&Math.random()>S*S+.05)return;const im=o.img?IMG[o.img]:null;const th0=o.th||130,dh=th0*(o.sc||1.25);const len=o.mode==='beam'?40:(im?dh*im.width/im.height:o.emo?dh:th0);
+ o.th=th0*(.7+.3*S);if(o.spd)o.spd*=(.75+.25*S);HZ.push(Object.assign({t:-(delay||0),warn:hzWarn()*(1+(1-S)*.8)*(S83?1.15:1),done:false,im,dh,len},o));}
 function hzDrops(emo,n){const S=hzS(),r=70;const pts=[[pxCol(),pyBand()]];let g=0;while(pts.length<n&&g++<200){const x=rand(80,W-80),y=rand(420,PB-90);if(pts.every(q=>Math.hypot(q[0]-x,q[1]-y)>170))pts.push([x,y]);}
  pts.forEach((q,i)=>addHz({mode:'drop',x:q[0],y:q[1],pos:0,th:r*2,r,emo},i*(.35-.12*S)));}
 function pyBand(){return Math.max(430,Math.min(PB-110,P.y));}
@@ -2184,7 +2198,7 @@ function* st83(){
  bgm(null);yield* waitCalm();WN={life:3};sfx('warn');yield* wait(3);
  yield* cutin('z_satan','魔王サタン・ヒロキ','筋肉魔王軍の頂点');yield* dialog(pick(T_SAT));
  bgm('boss');yield* runBoss(makeSatan());bgm(null);yield* wait(1.2);
- flash=1;shake(1.5,16);sfx('big');yield* wait(1);
+ yield* formChange();
  yield* cutin('z_lucifer','堕天使ルシファー・ヒロキ','魔王の真の姿');yield* dialog(T_LUC[0]);
  bgm('boss');yield* runBoss(makeLucifer());bgm(null);yield* wait(1.5);
  yield* dialog(T_END[0]);SV.ending=1;save();showResult(true);
@@ -2343,12 +2357,13 @@ function update(dt){
  E=E.filter(e=>!e.gone);
  // items
  for(const it of IT){it.t+=dt;const d=Math.hypot(P.x-it.x,P.y-it.y);
-  if((autoCollect||d<(ST.mag?220:110)||P.y<300)&&!P.dead&&it.t>.25){const a=Math.atan2(P.y-it.y,P.x-it.x),s=900;it.x+=Math.cos(a)*s*dt;it.y+=Math.sin(a)*s*dt;}
+  if((autoCollect||it.home||d<(ST.mag?220:110)||P.y<300)&&!P.dead&&it.t>.25){const a=Math.atan2(P.y-it.y,P.x-it.x),s=900;it.x+=Math.cos(a)*s*dt;it.y+=Math.sin(a)*s*dt;}
   else{it.vy=Math.min(170,it.vy+420*dt);it.vx*=.96;it.x+=it.vx*dt;it.y+=it.vy*dt;const R2=ST.mag?340:230;if(d<R2&&!P.dead&&it.t>.25){const k=(1-d/R2)*320*dt;it.x+=(P.x-it.x)/d*k;it.y+=(P.y-it.y)/d*k;}}
   if(d<42&&!P.dead){it.got=true;
    if(it.type==='coin'){runCoins+=it.v*P.coinMul*.8*(URA_ON?1.3:1)*(FEV>0?1.5:1);score+=it.v*10;sfx('coin');}
    else if(it.type==='bomb'){if(P.bombs<6){P.bombs++;updBombBtn();toast('ボム+1');say(P,'ボム+1！',1);part(P.x,P.y,{type:'ring',life:.45,max:.45,size:110,col:'#ffd34d'});}else score+=5000;sfx('pow');}
-   else if(it.type==='chicken'){if(P.lives<8){P.lives++;toast('サラダチキン：残機+1');}else score+=10000;sfx('pow');}}}
+   else if(it.type==='chicken'){if(P.lives<8){P.lives++;toast('サラダチキン：残機+1');}else score+=10000;sfx('pow');}
+   else if(it.type==='heart'){if(P.lives<8){P.lives++;toast('💗 残機+1');part(P.x,P.y,{type:'ring',life:.5,max:.5,size:120,col:'#ff7ab0'});}else score+=10000;sfx('pow');}}}
  IT=IT.filter(it=>!it.got&&it.y<PB+30);
  // combo
  if(comboT>0){{const tgt=E.some(e=>!e.dead&&e.y>40&&e.y<PB-120&&e.x>0&&e.x<W)||(boss&&boss.ready&&!boss.dying);if(tgt&&!CUT&&!PFX){comboT-=dt;if(comboT<=0){combo=0;fevNext=300;}FEV=Math.max(0,FEV-dt);}}}
@@ -2519,6 +2534,7 @@ function render(dt,t){
   for(const s of PS){if(!s.gz)continue;ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.rot+Math.sin(t*20+s.y*.05)*.15);ctx.drawImage(s.spr.img,-s.w/2,-s.h/2,s.w,s.h);ctx.restore();}
   for(const it of IT){if(it.type==='coin'){const s=it.small?18:28;ctx.drawImage(SP.coin,it.x-s/2,it.y-s/2,s*Math.abs(Math.cos(it.t*6))+2,s);}
    else if(it.type==='bomb'){ctx.save();ctx.translate(it.x,it.y);{const gl=ctx.createRadialGradient(0,0,8,0,0,40);gl.addColorStop(0,'rgba(255,220,90,.75)');gl.addColorStop(1,'rgba(255,200,60,0)');ctx.globalAlpha=.6+.4*Math.sin(it.t*8);ctx.fillStyle=gl;ctx.beginPath();ctx.arc(0,0,40,0,TAU);ctx.fill();ctx.globalAlpha=1;}const g=ctx.createRadialGradient(-5,-5,2,0,0,18);g.addColorStop(0,'#ffb07a');g.addColorStop(1,'#a01800');ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,17,0,TAU);ctx.fill();ctx.strokeStyle='#ffd34d';ctx.lineWidth=2.5;ctx.stroke();gtext(ctx,'B',0,1,20,'center');ctx.restore();}
+   else if(it.type==='heart'){ctx.save();ctx.translate(it.x,it.y);ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.6+.4*Math.sin(it.t*8);ctx.drawImage(SP.glow,-40,-40,80,80);ctx.restore();ctx.save();ctx.translate(it.x,it.y);ctx.scale(1+.08*Math.sin(it.t*10),1+.08*Math.sin(it.t*10));ctx.font='40px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('💗',0,2);ctx.restore();}
    else{ctx.save();ctx.translate(it.x,it.y);ctx.fillStyle='#f6d2c0';rr(ctx,-22,-16,44,32,8);ctx.fill();ctx.strokeStyle='#3fae5a';ctx.lineWidth=3;ctx.stroke();ctx.fillStyle='#3fae5a';ctx.font=`900 15px ${FJ}`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('鶏',0,1);ctx.restore();}}
   drawMei(t);
   for(const b of EB){const s=b.spr,iw=s.img.width,ih=s.img.height;if(s.rot){ctx.save();ctx.translate(b.x,b.y);ctx.rotate(Math.atan2(b.vy,b.vx));ctx.drawImage(s.img,-iw/2,-ih/2);ctx.restore();}else ctx.drawImage(s.img,b.x-iw/2,b.y-ih/2);}
@@ -2526,6 +2542,7 @@ function render(dt,t){
    if(p.type==='spark'){ctx.globalCompositeOperation='lighter';ctx.globalAlpha=a;ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,p.size*(.5+a*.5),0,TAU);ctx.fill();}
    else if(p.type==='ring'){ctx.globalCompositeOperation='lighter';ctx.globalAlpha=a;ctx.strokeStyle=p.col;ctx.lineWidth=6*a;ctx.beginPath();ctx.arc(p.x,p.y,p.size*(1-a)+10,0,TAU);ctx.stroke();}
    else if(p.type==='flash'){ctx.globalCompositeOperation='lighter';ctx.globalAlpha=a;ctx.drawImage(SP.glow,p.x-p.size/2,p.y-p.size/2,p.size,p.size);}}ctx.restore();
+  drawTRF();
   if(BM)drawBM();
   for(const d of DT){ctx.save();ctx.globalAlpha=Math.min(1,d.life*3);gtext(ctx,fmt(d.v),d.x,d.y,d.big?34:24,'center',{it:1});ctx.restore();}
   for(const b of BUB)drawBubble(b);
