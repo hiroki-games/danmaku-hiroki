@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.64</div>
+ <div id="tver">Ver.3.65</div>
 </div>
 
 <div id="hud">
@@ -2326,7 +2326,7 @@ function update(dt){
  PS=PS.filter(s=>!s.dead&&s.y>-60&&s.y<PB&&s.x>-40&&s.x<W+40);
  // enemy bullets
  const hr=P.hr;
- for(const b of EB){b.t+=dt;if(b.acc){const sp=Math.hypot(b.vx,b.vy),ns=sp+b.acc*dt;b.vx*=ns/sp;b.vy*=ns/sp;}b.x+=b.vx*dt;b.y+=b.vy*dt;
+ for(const b of EB){b.t+=dt;if(b.acc){const sp=Math.hypot(b.vx,b.vy),ns=Math.max(sp,Math.min(sp+b.acc*dt,300));b.vx*=ns/sp;b.vy*=ns/sp;}b.x+=b.vx*dt;b.y+=b.vy*dt;
   if(!P.dead&&P.inv<=0){const dx=b.x-P.x,dy=b.y-P.y,rr=b.r+hr;if(dx*dx+dy*dy<rr*rr){b.dead=true;hitPlayer();if(!EB.length)break;}}}
  EB=EB.filter(b=>!b.dead&&b.x>-60&&b.x<W+60&&b.y>-80&&b.y<PB+40);
  // enemy body collision
