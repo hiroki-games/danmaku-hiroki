@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.72</div>
+ <div id="tver">Ver.3.73</div>
 </div>
 
 <div id="hud">
@@ -354,7 +354,7 @@ html,body{touch-action:manipulation}
  <div class="panel" id="devPanel" style="text-align:center;padding:20px 30px;display:none;border-color:#ff8af0">
   <div style="font-size:26px;font-weight:900;margin-bottom:6px">🛠 開発者メニュー</div>
   <div style="font-size:20px;color:#aaa;margin-bottom:14px">テスト用。ここで遊んだ分はコイン・記録・ランキングに残りません</div>
-  <button class="gbtn small" id="devLuc" style="width:100%;margin:0;font-size:24px">8-3 第二形態（体力半分から）</button>
+  <button class="gbtn small" id="devLuc" style="width:100%;margin:0;font-size:24px">8-3 第二形態（レーザーから）</button>
  </div>
  <div class="panel" style="text-align:center;padding:20px 30px">
   <div style="font-size:26px;font-weight:900;margin-bottom:12px">裏コード</div>
@@ -844,7 +844,7 @@ const T_SAT=[[[H_, "hk_glare", "魔王サタン・ヒロキ", "よく来たね�
 const T_LUC=[[[H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……ここまでやるとは思わなかった"], [M_, "mei_main", "めいちゃん", "ヒロキくん、羽が生えてる……"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "これが本当の姿。……ぼーっとしてないで、返事は？"], [M_, "mei_main", "めいちゃん", "うん。最後まで、ちゃんと向き合うね"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……"]]];
 const T_GYM=[[[H_, "hk_glare", "筋トレヒロキ", "……今、自撮りしてたんだけど"], [M_, "mei_main", "めいちゃん", "えっ、ヒロキくん……？ 魔王じゃなかったの？"], [H_, "hk_glare", "筋トレヒロキ", "魔王は仮の姿。本体はこっち"], [M_, "mei_main", "めいちゃん", "ジムの鏡の前にいるヒロキくん、いちばん楽しそうに見えるね"], [H_, "hk_glare", "筋トレヒロキ", "撮影中なんだけど。邪魔しないで"]]];
 const T_GYM_DOWN=[[[H_, "hk_glare", "筋トレヒロキ", "……今の、パンプしてない時の写真だから"], [M_, "mei_main", "めいちゃん", "写真、消したほうがいい？"], [H_, "hk_glare", "筋トレヒロキ", "……自分で消す。触らないで"]]];
-const T_END=[[[H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……負けた"], [M_, "mei_main", "めいちゃん", "おつかれさま"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……全人類、週5でジムは、取り消す"], [M_, "mei_main", "めいちゃん", "ほんと？ よかった"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "週3にする"], [M_, "mei_main", "めいちゃん", "……それも、みんなに聞いてから決めようね"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……聞かなくても答えは同じ"], [M_, "mei_main", "めいちゃん", "同じでも、聞くことが大事なんだと思うな"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……"]]];
+const T_END=[[[H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……負けた"], [M_, "mei_main", "めいちゃん", "おつかれさま"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……全人類、週5でジムは、取り消す"], [M_, "mei_main", "めいちゃん", "ほんと？ よかった"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "週3にする"], [M_, "mei_main", "めいちゃん", "……それも、みんなに聞いてから決めようね"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……聞かなくても答えは同じ"], [M_, "mei_main", "めいちゃん", "同じでも、聞くことが大事なんだと思うな"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……"], [H_, "hk_glare", "堕天使ルシファー・ヒロキ", "……これで終わりだと思った？ 片付けまでが、仕事だから"]]];
 const T_KIN=[[[H_, "hk_glare", "裏魔王 筋肉ヒロキ", "魔王を倒したんだ。……で、今日の筋トレは？"], [M_, "mei_main", "めいちゃん", "えっ、ヒロキくん!? さっき倒したはずじゃ……"], [H_, "hk_glare", "裏魔王 筋肉ヒロキ", "あれは魔王。俺は筋肉。別の人"], [M_, "mei_main", "めいちゃん", "……ヒロキくんって、いくつの顔を持ってるの？"], [H_, "hk_glare", "裏魔王 筋肉ヒロキ", "ここまで来て、プロテイン飲んでないでしょ。話にならない"]], [[H_, "hk_glare", "裏魔王 筋肉ヒロキ", "……やっと来た。夕日、もう沈みそうなんだけど"], [M_, "mei_main", "めいちゃん", "ここ、木更津……？"], [H_, "hk_glare", "裏魔王 筋肉ヒロキ", "見ればわかるでしょ。看板あるし"], [M_, "mei_main", "めいちゃん", "夕日、きれいだね"], [H_, "hk_glare", "裏魔王 筋肉ヒロキ", "……"], [H_, "hk_glare", "裏魔王 筋肉ヒロキ", "景色はいいから。時間ないの"]]];
 const T_KIN_END=[[[H_, "hk_glare", "裏魔王 筋肉ヒロキ", "……負けた。筋肉で"], [M_, "mei_main", "めいちゃん", "最後まで、全力だったね"], [H_, "hk_glare", "裏魔王 筋肉ヒロキ", "……"], [H_, "hk_glare", "裏魔王 筋肉ヒロキ", "帰りにブロッコリー買ってきて。2個"], [M_, "mei_main", "めいちゃん", "……それは、自分で買ってね"], [H_, "hk_glare", "裏魔王 筋肉ヒロキ", "……"]]];
 const T_TANK=[[H_, "hk_glare", "白銀の戦車騎士ヒロキ", "止まって。今、ドロはねたよね？"], [M_, "mei_main", "めいちゃん", "えっ、ごめんね……"], [H_, "hk_glare", "白銀の戦車騎士ヒロキ", "洗車したばっかりなんだけど。週2で洗ってるの知ってるよね？"], [M_, "mei_main", "めいちゃん", "うん……ヒロキくんにとって、白い車は大事なものなんだね"], [H_, "hk_glare", "白銀の戦車騎士ヒロキ", "大事とかじゃない。きれいにしておくのが普通。以上"]];
@@ -1222,7 +1222,8 @@ let FAIRY=null,LP=null,BM=null,ST=null,useMsg='',CUT=null,BN=null,WN=null,WARN=n
 let slowToggle=false;const keys={};
 const CHF={1:.62,2:.84,3:.92,4:1.01,5:1.1,6:1.17,7:1.24,8:1.3,9:1.15};let RCH=0;
 let SBST={'7-1':1.4,'7-2':1.22};const UCHF={1:1.25,2:1.27,3:1.29,4:1.31,5:1.34,6:1.4,7:1.45,8:1.5};
-function chF(){const st=typeof STAGES!=='undefined'&&STAGES[curSt];if(st&&st.urush)return 1.6;if(st&&st.rush&&RCH)return CHF[RCH]||1;const sb=st&&SBST[(st.id||'').replace('裏','')]||1;if(st&&st.um)return (UCHF[st.ch]||1.3)*sb;return (st&&CHF[st.ch]||1)*sb;}
+function chF(){return chF0()*(typeof boss!=='undefined'&&boss&&boss.weak?.85:1);}
+function chF0(){const st=typeof STAGES!=='undefined'&&STAGES[curSt];if(st&&st.urush)return 1.6;if(st&&st.rush&&RCH)return CHF[RCH]||1;const sb=st&&SBST[(st.id||'').replace('裏','')]||1;if(st&&st.um)return (UCHF[st.ch]||1.3)*sb;return (st&&CHF[st.ch]||1)*sb;}
 const EZ=()=>{const f=chF(),b=SV.easy?{n:.6,spd:.85,iv:1.4}:{n:1,spd:1,iv:1};return{n:b.n*f,spd:b.spd*(.9+.1*f),iv:b.iv/f};};
 const nn=k=>Math.max(1,Math.round(k*EZ().n));
 
@@ -1579,7 +1580,7 @@ function* empP3(b){b.rage=true;yield* wait(.5);yield* bigMove(b,'インフェル
  }}
 function makePower(){return{key:'power',h:300,name:'パワーヒロキ〈筋肉覚醒〉',lv:30000,mx:0,my:-40,hx:0,hy:0,hr:125,x:360,y:-320,ty:335,sway:150,hp:4.4e9,maxhp:4.4e9,disp:0,phase:0,ais:[powP1,powP2],th:[.5],phaseLines:['パンプしてきた。今いいとこだから邪魔しないで'],coins:70,t:0};}
 function makeSatan(){return{key:'satan',h:310,name:'魔王サタン・ヒロキ',lv:66666,mx:0,my:-60,hx:0,hy:0,hr:135,x:360,y:-340,ty:345,sway:120,hp:6.2e9,maxhp:6.2e9,disp:0,phase:0,ais:[satP1,satP2,satP3],th:[.66,.33],phaseLines:['魔王の前で、その態度？','……もういい。全人類、週6でジム'],coins:100,t:0};}
-function makeLucifer(){return{key:'lucifer',h:330,name:'堕天使ルシファー・ヒロキ',lv:99999,mx:0,my:-60,hx:0,hy:0,hr:140,x:360,y:-340,ty:345,sway:110,hp:5.4e9,maxhp:5.4e9,disp:0,phase:0,ais:[lucP1,(STAGES[curSt]||{}).id==='8-3'?lucLZ:lucP2],th:[.5],phaseLines:['異論は、認めない'],coins:200,t:0};}
+function makeLucifer(){return{key:'lucifer',h:330,name:'堕天使ルシファー・ヒロキ',lv:99999,mx:0,my:-60,hx:0,hy:0,hr:140,x:360,y:-340,ty:345,sway:110,hp:5.4e9,maxhp:5.4e9,disp:0,phase:0,ais:[lucP1,lucP2],th:[.5],phaseLines:['異論は、認めない'],coins:200,t:0,...((STAGES[curSt]||{}).id==='8-3'?{ais:[lucP1,lucLZ,lucWeak],th:[.55,.3],phaseLines:['……思ったより、ちゃんとやってるね。じゃあ次、これ','……ちょっと疲れた。昨日、寝るの遅かったから']}:{})};}
 function makeKinniku(){return{key:'kinniku',h:330,name:'裏魔王 筋肉ヒロキ',lv:'999999',mx:0,my:-20,hx:0,hy:0,hr:140,x:360,y:-340,ty:340,sway:130,hp:1e10,maxhp:1e10,disp:0,phase:0,ais:[kinP1,kinP2,kinP3],th:[.66,.33],phaseLines:['……今、パンプ入った','その程度で、ここまで来たの？'],coins:400,t:0};}
 function* kinP1(b){yield* wait(.5);while(true){
  for(let k=0;k<3;k++){const[x,y]=mz(b);shake(.3,10);sfx('boom');ring(x,y,nn(28),150+k*25,k%2?SP.rock:SP.oRed,k*.15);fan(x,y,aim(x,y),nn(7),.9,300,SP.oFireBig);yield* wait(.55);}
@@ -1630,7 +1631,7 @@ function* lucLZ(b){b.lz=1;b.rage=true;cancelBullets();HZ=[];WARN=null;b.charge=f
  const NC=6,cw=W/NC,NR=7,top=70,rh=(PB-36-top)/NR;let k=0,lastC=-1,lastR=-1;
  const col=()=>{let c;do c=Math.floor(rand(0,NC));while(c===lastC||Math.abs(c*cw+cw/2-P.x)<cw*.6);lastC=c;return c;};
  const row=()=>{let r;do r=2+Math.floor(rand(0,NR-2));while(r===lastR||Math.abs(top+r*rh+rh/2-P.y)<rh*.6);lastR=r;return r;};
- while(true){const q=Math.max(0,Math.min(1,1-b.hp/(b.maxhp*.5))),warn=1.15-.45*q,f=1.1+.22*q;
+ while(true){const q=Math.max(0,Math.min(1,(.55-b.hp/b.maxhp)/.25)),warn=1.0-.35*q,f=1.15+.25*q;
   const pt=k<2?k:(k%5===4?4:Math.floor(rand(0,4)));k++;
   const vert=(sc,w,dl)=>{for(let i=0;i<NC;i++)if(i!==sc)lzBeam('v',i*cw+cw/2,cw*f,w,dl);};
   const hori=(sr,w)=>{for(let i=0;i<NR;i++)if(i!==sr)lzBeam('h',top+i*rh+rh/2,rh*f,w);};
@@ -1643,6 +1644,8 @@ function* lucLZ(b){b.lz=1;b.rage=true;cancelBullets();HZ=[];WARN=null;b.charge=f
  }}
 function drawLZT(){if(!LZT)return;const t=LZT.t,a=Math.min(1,t/.25)*Math.min(1,(LZT.max-t)/.4);ctx.save();ctx.globalAlpha=a*.7;ctx.fillStyle='#14001f';ctx.fillRect(0,0,W,H);ctx.globalAlpha=a;ctx.globalCompositeOperation='lighter';for(let i=0;i<9;i++){const x=((i*97+t*600)%(W+200))-100;ctx.fillStyle='rgba(255,90,230,.18)';ctx.fillRect(x,0,10,H);ctx.fillRect(0,((i*131+t*500)%(H+200))-100,W,8);}ctx.globalCompositeOperation='source-over';
  const k=Math.min(1,t/.35);ctx.translate(W/2,600);ctx.scale(1.5-.5*k,1.5-.5*k);gtext(ctx,'堕天の審判',0,0,72,'center',{it:1,cols:['#ffffff','#ff9af0','#b01890']});ctx.restore();ctx.save();ctx.globalAlpha=a*Math.min(1,Math.max(0,(t-.5)/.3));wtext(ctx,'弾は止まった。レーザーを見て、安全な場所へ！',W/2,666,26,'center','#fff');wtext(ctx,'※ ボムの無敵ではレーザーを防げません',W/2,708,22,'center','#ffb0e8');ctx.restore();}
+function* lucWeak(b){b.lz=0;b.weak=1;HZ=HZ.filter(z=>!z.lz);LZT=null;yield* wait(1.2);
+ while(true){yield* spiral(b,3.2,.065,nn(6),2.8,215,SP.oHoly,true);yield* featherRain(1.6,16);for(let i=0;i<4;i++){const[x,y]=mz(b);for(const sx of[-120,0,120])eb(x+sx,y,aim(x+sx,y),340,SP.feather);fan(x,y,aim(x,y),nn(9),1.2,240,SP.oVoid);yield* wait(.32);}}}
 function* lucP2(b){b.rage=true;yield* wait(.5);yield* bigMove(b,'堕天の審判・異論は認めない',4.5);
  for(let k=0;k<7;k++){const[x,y]=mz(b);ring(x,y,nn(46),110+k*26,k%2?SP.oHolyBig:SP.oVoid,k*.07);yield* wait(.16);}
  while(true){yield* spiral(b,3.2,.065,nn(6),2.8,215,SP.oHoly,true);yield* featherRain(1.6,16);for(let i=0;i<4;i++){const[x,y]=mz(b);for(const sx of[-120,0,120])eb(x+sx,y,aim(x+sx,y),340,SP.feather);fan(x,y,aim(x,y),nn(9),1.2,240,SP.oVoid);yield* wait(.32);}}}
@@ -1706,7 +1709,7 @@ function drawTRF(){if(!TRF)return;const{x,y,t,max}=TRF,a=Math.min(1,t/.3)*Math.m
  if(t>.9){ctx.save();const k=Math.min(1,(t-.9)/.25);ctx.globalAlpha=a;ctx.translate(W/2,620);ctx.scale(1.6-.6*k,1.6-.6*k);gtext(ctx,'第二形態',0,0,76,'center',{it:1,cols:['#ffffff','#e0a0ff','#8a2ad0']});ctx.restore();ctx.save();ctx.globalAlpha=a*k;wtext(ctx,'魔王の真の姿が目覚める……',W/2,680,28,'center','#fff');ctx.restore();}}
 function* waitCalm(mx){mx=mx||6;let t=0;while(t<mx&&(EB.length||E.some(e=>!e.dead)))t+=yield;if(EB.length)cancelBullets();}
 function* cutin(img,name,sub){yield* waitCalm();const me=CUT={key:img,img:IMG[img],chibi:img.startsWith('c_'),name,sub,life:2.6,max:2.6};sfx('phase');while(CUT===me&&me.life>0)yield;if(CUT===me)CUT=null;}
-function* runBoss(b){{const ps=STAGES[curSt]||{};if(!ps.rush&&!preBomb){preBomb=1;drop(rand(220,500),200,'bomb');if(!(RUNBUY.punch&&!RUNBUY.punchUsed))toast('ボムが流れてきた！');}}const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}{const es=STAGES[curSt]||{},EH={1:.8,2:.85,3:.9};if(!es.um&&!es.rush&&EH[es.ch]){b.maxhp*=({'1-3':.6,'2-3':.6,'3-3':.85})[es.id]||EH[es.ch];b.hp=b.maxhp;}}{const us=STAGES[curSt]||{};if(us.um&&!us.rush){b.maxhp*=1.3;b.hp=b.maxhp;}}if((STAGES[curSt]||{}).um){if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}if(b.devHalf)b.hp=b.maxhp*.499;const doPunch=RUNBUY.punch&&!RUNBUY.punchUsed;if(doPunch){RUNBUY.punchUsed=1;if(RUNBUY.free&&!SV.punchTrial){SV.punchTrial=1;save();}}boss=b;if(doPunch){while(!b.ready&&!b.dead)yield;if(!b.dead){PFX={t:0,dur:PH+1.6,b,hit:0};$('#toast').classList.remove('on');}}while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
+function* runBoss(b){{const ps=STAGES[curSt]||{};if(!ps.rush&&!preBomb){preBomb=1;drop(rand(220,500),200,'bomb');if(!(RUNBUY.punch&&!RUNBUY.punchUsed))toast('ボムが流れてきた！');}}const bc=(STAGES[curSt]||{}).ch;if(bc===7||bc===8){b.maxhp*=1.2;b.hp=b.maxhp;}{const es=STAGES[curSt]||{},EH={1:.8,2:.85,3:.9};if(!es.um&&!es.rush&&EH[es.ch]){b.maxhp*=({'1-3':.6,'2-3':.6,'3-3':.85})[es.id]||EH[es.ch];b.hp=b.maxhp;}}{const us=STAGES[curSt]||{};if(us.um&&!us.rush){b.maxhp*=1.3;b.hp=b.maxhp;}}if((STAGES[curSt]||{}).um){if(b.th)b.th=b.th.length===2?[.88,.7]:b.th.length===1?[.7]:b.th;}if(b.devHalf)b.hp=b.maxhp*.549;const doPunch=RUNBUY.punch&&!RUNBUY.punchUsed;if(doPunch){RUNBUY.punchUsed=1;if(RUNBUY.free&&!SV.punchTrial){SV.punchTrial=1;save();}}boss=b;if(doPunch){while(!b.ready&&!b.dead)yield;if(!b.dead){PFX={t:0,dur:PH+1.6,b,hit:0};$('#toast').classList.remove('on');}}while(!b.dead)yield;const esc=!!b.escaped;boss=null;return esc;}
 function mz(b){return[b.x+b.mx,b.y+b.my];}
 function* spiral(b,dur,iv,arms,rot,sp,spr,both){let a=rand(0,TAU),t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;a+=rot*dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);for(let k=0;k<arms;k++){eb(x,y,a+k/arms*TAU,sp,spr);if(both)eb(x,y,-a+k/arms*TAU,sp*.85,SP.oPink);}sfx('eshot');}}}
 function* stream(b,dur,iv,sp,spr){let t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);eb(x,y,aim(x,y),sp,spr);sfx('eshot');}}}
@@ -2219,7 +2222,7 @@ function* st82(){
  yield* dialog(pick(T_POW_DOWN));showResult(true);
 }
 function* st83(){
- if(DEMO&&DEMO.dev==='luc50'){bgm('boss');yield* wait(.5);const lb=makeLucifer();lb.devHalf=1;yield* runBoss(lb);bgm(null);yield* wait(1.2);showResult(true);return;}
+ if(DEMO&&DEMO.dev==='luc50'){bgm('boss');yield* wait(.5);const lb=makeLucifer();lb.devHalf=1;yield* runBoss(lb);bgm(null);yield* wait(1.5);yield* dialog(T_END[0]);showResult(true);return;}
  bgm('stage');BN={t1:'終章　筋肉魔王城',t2:'STAGE 8-3　魔王の間',life:2.8};yield* wait(2.6);
  yield* waves8b();yield* waves8a();yield* waitClear(7);
  bgm(null);yield* waitCalm();WN={life:3};sfx('warn');yield* wait(3);
@@ -2251,7 +2254,7 @@ function* stDemo(){
 function devStart(k){save();DEMO={snap:JSON.stringify(SV),dev:k};RUNBUY={};curSt=STAGES.findIndex(q=>q.id==='8-3');startGame();FAIRY=null;}
 $('#devLuc').onclick=()=>devStart('luc50');
 function demoStart(){save();DEMO={snap:JSON.stringify(SV)};SV.skin='ruka';curSt=STAGES.findIndex(q=>q.demo);startGame();FAIRY=null;}
-function demoEnd(win){const snap=DEMO.snap;if(DEMO.dev){$('#hud').classList.remove('on');setTimeout(()=>{SV=JSON.parse(snap);DEMO=null;toTitle();codePop(win?'🛠 テストクリア！':'🛠 テストおわり',['開発者メニューのテストでした','コイン・記録は残っていません'],1);},win?1000:700);return;}$('#hud').classList.remove('on');setTimeout(()=>{SV=JSON.parse(snap);DEMO=null;toTitle();updGacha();show('gacha');
+function demoEnd(win){const snap=DEMO.snap;if(DEMO.dev){$('#hud').classList.remove('on');setTimeout(()=>{SV=JSON.parse(snap);DEMO=null;toTitle();if(win){show('result');gogoFX();}else codePop('🛠 テストおわり',['開発者メニューのテストでした','コイン・記録は残っていません'],1);},win?1000:700);return;}$('#hud').classList.remove('on');setTimeout(()=>{SV=JSON.parse(snap);DEMO=null;toTitle();updGacha();show('gacha');
  codePop(win?'お試しプレイ おわり！':'お試しプレイ おわり',['🥟 餃子レーザーと、サンちゃん＆ふっちゃん、どうだった？','🐾 ルカは「めっちガチャ」で 0.025% の確率で手に入るよ','※ お試し中のコインや図鑑は記録されません']);},win?1000:700);}
 const RUSH=[[1,'makeElf'],[1,'makeKing'],[2,'makeOgre'],[2,'makeBehemoth'],[3,'makeTank'],[3,'makeCentaur'],[4,'makeDarkelf'],[4,'makeBahamut'],[5,'makeLevi'],[5,'makePoseidon'],[6,'makeVampire'],[6,'makeHades'],[7,'makeDragon'],[7,'makeDragonEmp'],[8,'makePower'],[8,'makeSatan'],[8,'makeLucifer'],[8,'makeKinniku']];
 let rushN=0;
