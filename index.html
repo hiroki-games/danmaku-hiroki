@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.65</div>
+ <div id="tver">Ver.3.66</div>
 </div>
 
 <div id="hud">
@@ -503,7 +503,7 @@ function loadUra(){if(URAP)return URAP;const L=[...CHIBI.flatMap(n=>['c_'+n+'_r'
  URAP=Promise.all(L.map(n=>new Promise(r=>{const i=new Image();i.onload=()=>{IMG[n]=i;r();};i.onerror=()=>r();i.src=src(n);}))).then(()=>{for(const n of CHIBI){const R=IMG['c_'+n+'_r'],A=IMG['c_'+n+'_a'];if(R&&A){R._aura=A;R._auraR=mk(A.width,A.height,g=>{g.drawImage(A,0,0);g.globalCompositeOperation='source-atop';g.fillStyle='rgba(255,30,80,.6)';g.fillRect(0,0,A.width,A.height);});}}loadUra.done=1;});return URAP;}
 function uraSwap(on){on=!!on;if(on===URA_ON)return;URA_ON=on;const sw=k=>{if(on){if(IMG[k+'_r']){UORIG[k]=IMG[k];IMG[k]=IMG[k+'_r'];}}else if(UORIG[k]){IMG[k]=UORIG[k];delete UORIG[k];}};for(const n of CHIBI)sw('c_'+n);for(const n of UZF)sw('z_'+n);}
 function orb(col,r){return{img:mk(r*4,r*4,(g,w)=>{const gr=g.createRadialGradient(w/2,w/2,0,w/2,w/2,w/2);gr.addColorStop(0,'#ffffff');gr.addColorStop(.26,'#ffffff');gr.addColorStop(.4,col);gr.addColorStop(.62,col+'77');gr.addColorStop(1,col+'00');g.fillStyle=gr;g.fillRect(0,0,w,w);}),hr:r*.75,rot:false};}
-function rice(col,l,wd){return{img:mk(l*1.8,wd*4,(g,w,h)=>{g.translate(w/2,h/2);g.shadowColor=col;g.shadowBlur=wd*1.4;g.fillStyle=col;g.beginPath();g.ellipse(0,0,l/2,wd/2,0,0,TAU);g.fill();g.shadowBlur=0;g.fillStyle='#fff';g.beginPath();g.ellipse(0,0,l/2*.72,wd/2*.45,0,0,TAU);g.fill();}),hr:wd*.42,rot:true};}
+function rice(col,l,wd){return{img:mk(l*1.8,wd*4,(g,w,h)=>{g.translate(w/2,h/2);g.fillStyle='rgba(20,0,12,.92)';g.beginPath();g.ellipse(0,0,l/2+2.5,wd/2+2.5,0,0,TAU);g.fill();g.shadowColor=col;g.shadowBlur=wd*1.4;g.fillStyle=col;g.beginPath();g.ellipse(0,0,l/2,wd/2,0,0,TAU);g.fill();g.shadowBlur=0;g.fillStyle='#fff';g.beginPath();g.ellipse(0,0,l/2*.72,wd/2*.45,0,0,TAU);g.fill();}),hr:wd*.42,rot:true};}
 let SP={};
 function makeSprites(){
  SP.oRed=orb('#ff3355',13);SP.oOrange=orb('#ff8a1a',13);SP.oPurple=orb('#c24dff',14);SP.oBig=orb('#ff3a7a',24);SP.oPink=orb('#ff66dd',11);SP.oGreen=orb('#46e05a',12);
