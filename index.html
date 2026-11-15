@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.73</div>
+ <div id="tver">Ver.1.0</div>
 </div>
 
 <div id="hud">
@@ -1632,13 +1632,13 @@ function* lucLZ(b){b.lz=1;b.rage=true;cancelBullets();HZ=[];WARN=null;b.charge=f
  const col=()=>{let c;do c=Math.floor(rand(0,NC));while(c===lastC||Math.abs(c*cw+cw/2-P.x)<cw*.6);lastC=c;return c;};
  const row=()=>{let r;do r=2+Math.floor(rand(0,NR-2));while(r===lastR||Math.abs(top+r*rh+rh/2-P.y)<rh*.6);lastR=r;return r;};
  while(true){const q=Math.max(0,Math.min(1,(.55-b.hp/b.maxhp)/.25)),warn=1.0-.35*q,f=1.15+.25*q;
-  const pt=k<2?k:(k%5===4?4:Math.floor(rand(0,4)));k++;
+  const pt=k<2?k:(k%3===2?4:Math.floor(rand(0,4)));k++;
   const vert=(sc,w,dl)=>{for(let i=0;i<NC;i++)if(i!==sc)lzBeam('v',i*cw+cw/2,cw*f,w,dl);};
-  const hori=(sr,w)=>{for(let i=0;i<NR;i++)if(i!==sr)lzBeam('h',top+i*rh+rh/2,rh*f,w);};
+  const hori=(sr,w,dl)=>{for(let i=0;i<NR;i++)if(i!==sr)lzBeam('h',top+i*rh+rh/2,rh*f,w,dl);};
   if(pt===0)vert(col(),warn);
   else if(pt===1)hori(row(),warn);
   else if(pt===2||pt===3){vert(col(),warn);hori(row(),warn);}
-  else{const c1=col();vert(c1,warn);let c2;do c2=Math.floor(rand(0,NC));while(Math.abs(c2-c1)<2);lastC=c2;vert(c2,Math.max(.6,warn*.8),warn+.62);}
+  else{const n3=q>.4&&Math.random()<.5?3:2;let c1=col(),dl=0,w=warn;vert(c1,w,0);for(let m=1;m<n3;m++){dl+=w+.62;w=Math.max(.6,w*.85);if(m===2&&Math.random()<.5){lastR=-1;hori(row(),w,dl);}else{let c2;do c2=Math.floor(rand(0,NC));while(Math.abs(c2-c1)<2);vert(c2,w,dl);c1=c2;lastC=c2;}}}
   sfx('warn');if(Math.random()<.3)say(b,pick(['そこ、邪魔','動いて','異論は認めない','早く']),1.2);
   while(HZ.length)yield;yield* wait(.35+.25*(1-q));
  }}
@@ -2701,7 +2701,7 @@ function openStSel(cat){if(cat)SSCAT=cat;const U=SSCAT==='u';const L=$('#ssList'
  for(let c=9;c<=8;c++)L.insertAdjacentHTML('beforeend',`<div class="ssch" style="opacity:.35">第${c}章　${CHN[c]}　🔒 近日公開</div>`);
  show('stsel');guide('stage',0,()=>{if(Object.keys(SV.gold||{}).length)guide('gold');});}
 const GUIDE={
- fever:['さっき「フィーバー」になったの、気づいた？','コンボが300つながるとフィーバー！\n8秒間、コイン1.5倍・ダメージ1.1倍になるよ','被弾するとおしまいだから、よけ続けてね。\n600、900…でまたフィーバーになるよ！'],
+ fever:['さっき「フィーバー」になったの、気づいた？','コンボが300つながるとフィーバー！\n8秒間、コイン1.5倍・ダメージ1.1倍になるよ','被弾するとおしまいだから、よけ続けてね（バリアで防げばフィーバーは続くよ）。\n600、900…でまたフィーバーになるよ！'],
  gold:['ステージの「★ クリア」が金色なのは、\nお店のアイテムを使わずにクリアした印だよ','アイテムを使ってクリアすると、緑の「✓ クリア」になるの','ぜんぶ金色の★にできるか、ちょうせんしてみてね！'],
  daily:['ここは「デイリーミッション」！\n毎日3つ、お題が出るよ','クリアしたら「受け取る」でコインがもらえるの','3つぜんぶクリアすると、ボーナスもあるよ。\n毎日のぞいてみてね！'],
  home:['ねえねえ、このゲーム、\nホーム画面に追加して遊んでる？','iPhoneのSafariだと、しばらく開かないと\nセーブが消えちゃうことがあるの……','Safariの「共有ボタン（□に↑）」から\n「ホーム画面に追加」を押してね。\nAndroidは右上のメニューからだよ','⚠ でも、ホーム画面のアイコンから開くと\nセーブは別になっちゃうの','だから先に「設定」→「セーブコードをコピー」！\nアイコンから開いたら「設定」で\n貼り付けて「復元」してね'],
