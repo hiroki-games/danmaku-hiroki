@@ -240,7 +240,7 @@ html,body{touch-action:manipulation}
  <div id="lineWarn">LINEのアプリ内ブラウザだとセーブが消えることがあります。SafariかChromeで開いてね</div>
  <div id="tYado"><img src="assets/mei_yado.webp" alt=""></div><div id="tYbub"></div>
 <div id="tUpd">🔄 更新を確認</div>
- <div id="tver">Ver.3.69</div>
+ <div id="tver">Ver.3.70</div>
 </div>
 
 <div id="hud">
@@ -1671,7 +1671,7 @@ function* runBoss(b){{const ps=STAGES[curSt]||{};if(!ps.rush&&!preBomb){preBomb=
 function mz(b){return[b.x+b.mx,b.y+b.my];}
 function* spiral(b,dur,iv,arms,rot,sp,spr,both){let a=rand(0,TAU),t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;a+=rot*dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);for(let k=0;k<arms;k++){eb(x,y,a+k/arms*TAU,sp,spr);if(both)eb(x,y,-a+k/arms*TAU,sp*.85,SP.oPink);}sfx('eshot');}}}
 function* stream(b,dur,iv,sp,spr){let t=0,acc=0;while(t<dur){const dt=yield;t+=dt;acc+=dt;while(acc>=iv){acc-=iv;const[x,y]=mz(b);eb(x,y,aim(x,y),sp,spr);sfx('eshot');}}}
-function* bigMove(b,name,sec){WARN={name,t:sec,max:sec};b.charge=true;sfx('warn');while(WARN.t>0){const dt=yield;WARN.t-=dt;const[x,y]=mz(b);if(Math.random()<.8){const a=rand(0,TAU),r=rand(160,260);part(x+Math.cos(a)*r,y+Math.sin(a)*r,{vx:-Math.cos(a)*r*2.2,vy:-Math.sin(a)*r*2.2,life:.42,max:.42,size:7,col:pick(['#ff5a8a','#ffd34d','#c24dff'])});}}WARN=null;b.charge=false;flash=.5;shake(.5,12);sfx('big');}
+function* bigMove(b,name,sec){while(HZ.length)yield;WARN={name,t:sec,max:sec};b.charge=true;sfx('warn');while(WARN.t>0){const dt=yield;WARN.t-=dt;const[x,y]=mz(b);if(Math.random()<.8){const a=rand(0,TAU),r=rand(160,260);part(x+Math.cos(a)*r,y+Math.sin(a)*r,{vx:-Math.cos(a)*r*2.2,vy:-Math.sin(a)*r*2.2,life:.42,max:.42,size:7,col:pick(['#ff5a8a','#ffd34d','#c24dff'])});}}WARN=null;b.charge=false;HZB=Math.max(HZB,4);flash=.5;shake(.5,12);sfx('big');}
 function* elfAI(b){while(true){
  for(let i=0;i<3;i++){const[x,y]=mz(b);fan(x,y,aim(x,y),nn(7),.95,300,SP.arrow);sfx('arrow');yield* wait(.55);}
  yield* wait(.5);
@@ -2347,7 +2347,7 @@ function update(dt){
   else{it.vy=Math.min(170,it.vy+420*dt);it.vx*=.96;it.x+=it.vx*dt;it.y+=it.vy*dt;const R2=ST.mag?340:230;if(d<R2&&!P.dead&&it.t>.25){const k=(1-d/R2)*320*dt;it.x+=(P.x-it.x)/d*k;it.y+=(P.y-it.y)/d*k;}}
   if(d<42&&!P.dead){it.got=true;
    if(it.type==='coin'){runCoins+=it.v*P.coinMul*.8*(URA_ON?1.3:1)*(FEV>0?1.5:1);score+=it.v*10;sfx('coin');}
-   else if(it.type==='bomb'){if(P.bombs<5){P.bombs++;updBombBtn();toast('ボム+1');say(P,'ボム+1！',1);part(P.x,P.y,{type:'ring',life:.45,max:.45,size:110,col:'#ffd34d'});}else score+=5000;sfx('pow');}
+   else if(it.type==='bomb'){if(P.bombs<6){P.bombs++;updBombBtn();toast('ボム+1');say(P,'ボム+1！',1);part(P.x,P.y,{type:'ring',life:.45,max:.45,size:110,col:'#ffd34d'});}else score+=5000;sfx('pow');}
    else if(it.type==='chicken'){if(P.lives<8){P.lives++;toast('サラダチキン：残機+1');}else score+=10000;sfx('pow');}}}
  IT=IT.filter(it=>!it.got&&it.y<PB+30);
  // combo
